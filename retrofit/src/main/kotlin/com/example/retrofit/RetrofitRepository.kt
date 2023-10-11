@@ -32,16 +32,19 @@ class RetrofitRepository : Repository {
                 // response.isSuccessful() is true if the response code is 2xx
                 if (response.isSuccessful) {
                     val comic: Comic = response.body()!!
+                    callback.onSuccess(comic)
                 } else {
                     val statusCode = response.code()
 
                     // handle request errors yourself
                     val errorBody = response.errorBody()
+                    callback.onError("Status Code: $statusCode")
                 }
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
                 // handle execution failures like no internet connectivity
+                callback.onFailure(t)
             }
         })
     }
