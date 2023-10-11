@@ -1,4 +1,4 @@
-package com.example.retrofit
+package com.example.core
 
 data class Comic(
     val month: String,
