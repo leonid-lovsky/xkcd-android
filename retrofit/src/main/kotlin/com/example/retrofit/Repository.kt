@@ -23,13 +23,22 @@ class Repository {
             service.getComic(number)
         }
 
+        // asynchronous
         call.enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                TODO("Not yet implemented")
+                // response.isSuccessful() is true if the response code is 2xx
+                if (response.isSuccessful) {
+                    val comic: Comic = response.body()!!
+                } else {
+                    val statusCode = response.code()
+
+                    // handle request errors yourself
+                    val errorBody = response.errorBody()
+                }
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
-                TODO("Not yet implemented")
+                // handle execution failures like no internet connectivity
             }
         })
     }
