@@ -4,7 +4,6 @@ import com.example.core.Callback
 import com.example.core.Comic
 import com.example.core.Repository
 import retrofit2.Call
-// import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
