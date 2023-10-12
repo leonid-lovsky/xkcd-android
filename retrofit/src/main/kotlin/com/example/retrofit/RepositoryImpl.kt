@@ -8,39 +8,27 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RepositoryImpl : Repository {
-    private val retrofit: Retrofit = Retrofit.Builder().baseUrl("https://xkcd.com/")
+class RepositoryImpl(callback: Callback<Comic?>) : Repository {
+    private val retrofit = Retrofit.Builder().baseUrl("https://xkcd.com/")
         .addConverterFactory(GsonConverterFactory.create()).build()
 
-    private val service: Service = retrofit.create(Service::class.java)
+    private val service = retrofit.create(Service::class.java)
 
-    override fun getComic(number: Int?, callback: Callback<Comic>) {
-        val call = if (number == null) {
-            service.getComic()
-        } else {
-            service.getComic(number)
+    private val callback = object : retrofit2.Callback<Comic> {
+        override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
+            callback.onSuccess(response.body(), "Status Code: $response.statusCode")
         }
 
-        // asynchronous
-        call.enqueue(object : retrofit2.Callback<Comic> {
-            override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                // response.isSuccessful() is true if the response code is 2xx
-                if (response.isSuccessful) {
-                    val comic: Comic = response.body()!!
-                    callback.onSuccess(comic)
-                } else {
-                    val statusCode = response.code()
+        override fun onFailure(call: Call<Comic>, t: Throwable) {
+            callback.onFailure(t)
+        }
+    }
 
-                    // handle request errors yourself
-                    // val errorBody = response.errorBody()!!
-                    callback.onError("Status Code: $statusCode")
-                }
-            }
+    override fun getComic() {
+        service.getComic().enqueue(callback)
+    }
 
-            override fun onFailure(call: Call<Comic>, t: Throwable) {
-                // handle execution failures like no internet connectivity
-                callback.onFailure(t)
-            }
-        })
+    override fun getComic(number: Int) {
+        service.getComic(number).enqueue(callback)
     }
 }
