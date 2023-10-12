@@ -16,7 +16,7 @@ class RepositoryImpl(callback: Callback<Comic?>) : Repository {
 
     private val callback = object : retrofit2.Callback<Comic> {
         override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-            callback.onSuccess(response.body(), "Status Code: $response.statusCode")
+            callback.onSuccess(response.body(), "Response: $response")
         }
 
         override fun onFailure(call: Call<Comic>, t: Throwable) {
