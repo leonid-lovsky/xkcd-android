@@ -1,6 +1,6 @@
 package com.example.core
 
 interface Repository {
-    fun getComic()
-    fun getComic(number: Int)
+    fun requestComic()
+    fun requestComic(number: Int)
 }

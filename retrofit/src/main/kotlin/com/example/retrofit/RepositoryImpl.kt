@@ -24,11 +24,11 @@ class RepositoryImpl(callback: Callback<Comic?>) : Repository {
         }
     }
 
-    override fun getComic() {
+    override fun requestComic() {
         service.getComic().enqueue(callback)
     }
 
-    override fun getComic(number: Int) {
+    override fun requestComic(number: Int) {
         service.getComic(number).enqueue(callback)
     }
 }
