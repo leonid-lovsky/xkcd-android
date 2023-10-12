@@ -30,12 +30,13 @@ class MainActivity : AppCompatActivity() {
             textView?.text = t.message
         }
     }
+
     private val repository: Repository = RepositoryImpl(callback)
 
     private val comicNumberFirst = 1
     private var comicNumberLatest = 1
 
-    private var comicNumberRange = comicNumberFirst..comicNumberLatest
+    private val comicNumberRange = comicNumberFirst..comicNumberLatest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
