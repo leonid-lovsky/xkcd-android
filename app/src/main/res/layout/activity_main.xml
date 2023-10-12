@@ -19,6 +19,24 @@
         android:layout_height="wrap_content"
         android:text="Random" />
 
+    <Button
+        android:id="@+id/select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select" />
+
+    <Button
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="First" />
+
+    <Button
+        android:id="@+id/latest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Latest" />
+
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
