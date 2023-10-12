@@ -1,21 +1,17 @@
-@file:Suppress("unused", "UnusedImport") @file:JvmName("RetrofitServiceKt")
-
 package com.example.retrofit
 
 import com.example.core.Callback
 import com.example.core.Comic
 import com.example.core.Repository
 import retrofit2.Call
-//import retrofit2.Callback
+// import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitRepository : Repository {
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://xkcd.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+class RepositoryImpl : Repository {
+    private val retrofit: Retrofit = Retrofit.Builder().baseUrl("https://xkcd.com/")
+        .addConverterFactory(GsonConverterFactory.create()).build()
 
     private val service: Service = retrofit.create(Service::class.java)
 
@@ -37,7 +33,7 @@ class RetrofitRepository : Repository {
                     val statusCode = response.code()
 
                     // handle request errors yourself
-                    val errorBody = response.errorBody()
+                    // val errorBody = response.errorBody()!!
                     callback.onError("Status Code: $statusCode")
                 }
             }
