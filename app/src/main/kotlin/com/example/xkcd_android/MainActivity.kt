@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             repository.requestComic(comicNumberRange.random())
         }
         buttonSelect?.setOnClickListener {
+            SelectComicDialogFragment().show(supportFragmentManager, "GAME_DIALOG")
             repository.requestComic(5)
         }
         buttonFirst?.setOnClickListener {
