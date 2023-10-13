@@ -42,8 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     private val repository: Repository = RepositoryImpl(callback)
 
-    private val selectComicDialog: DialogFragment = SelectComicDialogFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -65,8 +63,13 @@ class MainActivity : AppCompatActivity() {
             repository.requestComic(comicNumberRange.random())
         }
         buttonSelect?.setOnClickListener {
-            selectComicDialog.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
-            repository.requestComic(5)
+            val selectComicDialogCallback = object : SelectComicDialogCallback {
+                override fun onSelect(number: Int) {
+                    repository.requestComic(number)
+                }
+            }
+            val selectComicDialogFragment = SelectComicDialogFragment(selectComicDialogCallback)
+            selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
         }
         buttonFirst?.setOnClickListener {
             repository.requestComic(comicNumberFirst)
