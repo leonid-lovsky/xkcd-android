@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.example.core.Callback
 import com.example.core.Comic
 import com.example.core.Repository
 import com.example.retrofit.RepositoryImpl
-import kotlin.math.max
-import kotlin.random.Random
-import kotlin.random.Random.Default.nextInt
 
 class MainActivity : AppCompatActivity() {
     private var buttonCurrent: Button? = null
@@ -45,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     private val repository: Repository = RepositoryImpl(callback)
 
+    private val selectComicDialog: DialogFragment = SelectComicDialogFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             repository.requestComic(comicNumberRange.random())
         }
         buttonSelect?.setOnClickListener {
-            SelectComicDialogFragment().show(supportFragmentManager, "GAME_DIALOG")
+            selectComicDialog.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
             repository.requestComic(5)
         }
         buttonFirst?.setOnClickListener {
