@@ -17,8 +17,8 @@ class SelectComicDialogFragment(private val callback: SelectComicDialogCallback)
         val editText = view.findViewById<EditText>(R.id.edit_text)
         builder.setView(view)
         builder.setPositiveButton("Select") { _, _ ->
-            val number = editText.text.toString().toInt()
-            callback.onSelect(number)
+            val number = editText.text.toString()
+            callback.onSelect(number.toInt())
         }
         builder.setNegativeButton("Cancel") { _, _ ->
             dialog?.cancel()
