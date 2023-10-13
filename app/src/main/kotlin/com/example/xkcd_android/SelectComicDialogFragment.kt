@@ -10,7 +10,7 @@ class SelectComicDialogFragment : DialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction.
             val builder = AlertDialog.Builder(it)
-            builder.setMessage("Start game")
+            builder.setTitle("Start game")
                 .setPositiveButton("Start") { dialog, id ->
                     // START THE GAME!
                 }
