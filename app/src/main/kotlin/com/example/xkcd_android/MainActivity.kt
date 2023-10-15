@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, Presenter {
     private var buttonCurrent: Button? = null
     private var buttonRandom: Button? = null
     private var buttonSelect: Button? = null
@@ -16,22 +16,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var buttonNext: Button? = null
     private var textView: TextView? = null
 
-    private val callback = object : Callback<Comic?> {
-        override fun onSuccess(value: Comic?, message: String) {
-            if (value != null) {
-                comicNumberLatest = maxOf(value.num, comicNumberLatest)
-                comicNumberSelected = value.num
-            }
-            textView?.text =
-                "first: " + comicNumberFirst + " " + "latest: " + comicNumberLatest + " " + "range: " + comicNumberRange + "\n" + value.toString() + "\n" + message
-        }
-
-        override fun onFailure(t: Throwable) {
-            textView?.text = t.message
-        }
-    }
-
-    private val repository: Repository = RetrofitRepository(callback)
+    private val repository = RetrofitRepository()
+    private val controller = Controller(repository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +37,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonLatest?.setOnClickListener(this)
         buttonPrevious?.setOnClickListener(this)
         buttonNext?.setOnClickListener(this)
+        repository.presenter = this
     }
 
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
             R.id.current -> repository.request()
-            R.id.random -> repository.request(comicNumberRange.random())
+            R.id.random -> repository.request()
             R.id.select -> {
                 val selectComicDialogCallback = object : SelectComicDialogCallback {
                     override fun onSelect(number: Int) {
@@ -73,5 +60,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.previous -> repository.request(comicNumberSelected - 1)
             R.id.next -> repository.request(comicNumberSelected + 1)
         }
+    }
+
+    override fun render(uiState: UIState?) {
+        if (value != null) {
+            comicNumberLatest = maxOf(value.num, comicNumberLatest)
+            comicNumberSelected = value.num
+        }
+        textView?.text =
+            "first: " + comicNumberFirst +
+                " " +
+                "latest: " + comicNumberLatest +
+                " " +
+                "range: " + comicNumberRange +
+                "\n" +
+                value.toString() +
+                "\n" +
+                message
+    }
+
+    override fun render(t: Throwable) {
+        textView?.text = t.message
     }
 }

@@ -1,24 +1,43 @@
 package com.example.xkcd_android
 
-class Controller(private val repository: Repository<Comic>) {
-    private val callback = object: Callback<Comic> {
-        override fun onSuccess(value: Comic) {
-            TODO("Not yet implemented")
-        }
+class Controller(private val repository: Repository) : Repository.Callback {
 
-        override fun onFailure(t: Throwable) {
-            TODO("Not yet implemented")
-        }
+    private var uiState = UIState()
+    var screen: Screen? = null
+
+    override fun onSuccess(comic: Comic?) {
+        if (comic == null) return
+        uiState = uiState.copy(comic)
+        screen?.render(uiState)
     }
+
+    override fun onFailure(t: Throwable) {}
 
     fun current() {
-        repository.current()
+        repository.getComic(this)
     }
 
-    fun random() {}
-    fun select() {}
-    fun first() {}
-    fun latest() {}
-    fun previous() {}
-    fun next() {}
+    fun random() {
+        repository.getComic(uiState.range.random(), this)
+    }
+
+    fun select(number: Int) {
+        repository.getComic(this)
+    }
+
+    fun first() {
+        repository.getComic(uiState.range.first, this)
+    }
+
+    fun latest() {
+        repository.getComic(uiState.range.last, this)
+    }
+
+    fun previous() {
+        repository.getComic(uiState.current - 1, this)
+    }
+
+    fun next() {
+        repository.getComic(uiState.current + 1, this)
+    }
 }

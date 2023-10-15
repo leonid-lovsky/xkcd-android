@@ -14,28 +14,26 @@ class RetrofitRepository : Repository {
 
     private val service = retrofit.create(RetrofitService::class.java)
 
-    var presenter: Presenter? = null
-
-    override fun getComic() {
+    override fun getComic(callback: Repository.Callback) {
         service.getComic().enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                presenter?.render(response.body())
+                callback.onSuccess(response.body())
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
-                presenter?.render(t)
+                callback.onFailure(t)
             }
         })
     }
 
-    override fun getComic(number: Int) {
+    override fun getComic(number: Int, callback: Repository.Callback) {
         service.getComic(number).enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                presenter?.render(response.body())
+                callback.onSuccess(response.body())
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
-                presenter?.render(t)
+                callback.onFailure(t)
             }
         })
     }
