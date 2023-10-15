@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.example.core.Callback
-import com.example.core.Comic
-import com.example.core.Repository
-import com.example.retrofit.RetrofitRepository
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var buttonCurrent: Button? = null

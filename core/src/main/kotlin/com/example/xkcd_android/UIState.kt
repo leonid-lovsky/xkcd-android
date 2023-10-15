@@ -1,4 +1,4 @@
-package com.example.core
+package com.example.xkcd_android
 
 data class UIState(
     val first: Int = 1,
