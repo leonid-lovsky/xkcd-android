@@ -3,15 +3,17 @@ package com.example.xkcd_android
 class Controller(private val repository: Repository) : Repository.Callback {
 
     private var uiState = UIState()
-    var screen: Screen? = null
+    var callback: Callback? = null
 
     override fun onSuccess(comic: Comic?) {
         if (comic == null) return
         uiState = uiState.copy(comic)
-        screen?.render(uiState)
+        callback?.render(uiState)
     }
 
-    override fun onFailure(t: Throwable) {}
+    override fun onFailure(t: Throwable) {
+        callback?.render(t)
+    }
 
     fun current() {
         repository.getComic(this)
@@ -39,5 +41,10 @@ class Controller(private val repository: Repository) : Repository.Callback {
 
     fun next() {
         repository.getComic(uiState.current + 1, this)
+    }
+
+    interface Callback {
+        fun render(uiState: UIState)
+        fun render(t: Throwable)
     }
 }

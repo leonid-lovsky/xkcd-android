@@ -1,12 +1,13 @@
 package com.example.xkcd_android
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, Presenter {
+class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListener {
     private var buttonCurrent: Button? = null
     private var buttonRandom: Button? = null
     private var buttonSelect: Button? = null
@@ -37,46 +38,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, Presenter {
         buttonLatest?.setOnClickListener(this)
         buttonPrevious?.setOnClickListener(this)
         buttonNext?.setOnClickListener(this)
-        repository.presenter = this
+        controller.callback = this
+    }
+
+    override fun onDestroy() {
+        controller.callback = null
+        super.onDestroy()
     }
 
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.current -> repository.request()
-            R.id.random -> repository.request()
+            R.id.current -> controller.current()
+            R.id.random -> controller.random()
+            R.id.first -> controller.first()
+            R.id.latest -> controller.latest()
+            R.id.previous -> controller.previous()
+            R.id.next -> controller.next()
             R.id.select -> {
-                val selectComicDialogCallback = object : SelectComicDialogCallback {
-                    override fun onSelect(number: Int) {
-                        repository.request(number)
-                    }
-                }
-                val selectComicDialogFragment = SelectComicDialogFragment(selectComicDialogCallback)
+                val selectComicDialogFragment = SelectComicDialogFragment(controller)
                 selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
             }
-
-            R.id.first -> repository.request(comicNumberFirst)
-            R.id.latest -> repository.request(comicNumberLatest)
-            R.id.previous -> repository.request(comicNumberSelected - 1)
-            R.id.next -> repository.request(comicNumberSelected + 1)
         }
     }
 
-    override fun render(uiState: UIState?) {
-        if (value != null) {
-            comicNumberLatest = maxOf(value.num, comicNumberLatest)
-            comicNumberSelected = value.num
-        }
-        textView?.text =
-            "first: " + comicNumberFirst +
-                " " +
-                "latest: " + comicNumberLatest +
-                " " +
-                "range: " + comicNumberRange +
-                "\n" +
-                value.toString() +
-                "\n" +
-                message
+    override fun render(uiState: UIState) {
+        textView?.text = uiState.toString()
     }
 
     override fun render(t: Throwable) {
