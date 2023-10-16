@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        comicTitle = findViewById(R.id.comic_title)
         comicImage = findViewById(R.id.comic_image)
-        comicText = findViewById(R.id.comic_transcript)
+        comicText = findViewById(R.id.comic_text)
         comicUrlTextView = findViewById(R.id.comic_link)
         imageUrlTextView = findViewById(R.id.image_url)
         buttonCurrent = findViewById(R.id.current)
@@ -73,12 +74,12 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
 
     override fun render(uiState: UIState) {
         val comic = uiState.comic ?: return
-        comicTitle?.text = comic.title
+        comicTitle!!.text = comic.title
         Glide.with(this).load(comic.img).into(comicImage!!)
-        // comicImage?.tooltipText = comic.alt
-        comicText?.text = comic.transcript
-        comicUrlTextView?.text = comic.link
-        imageUrlTextView?.text = comic.img
+        // comicImage!!.tooltipText = comic.alt
+        // comicText!!.text = comic.extraParts
+        comicUrlTextView!!.text = comic.link
+        imageUrlTextView!!.text = comic.img
     }
 
     override fun render(t: Throwable) {}
