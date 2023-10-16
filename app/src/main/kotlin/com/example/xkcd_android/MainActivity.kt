@@ -75,27 +75,11 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun render(uiState: UIState) {
         val comic = uiState.comic ?: return
         Glide.with(this).load(comic.img).into(comicImageView!!)
+        comicTitleView!!.text = comic.title
         // comicImage!!.tooltipText = comic.alt
-        if (comic.title.isNotEmpty()) {
-            comicTitleView!!.text = comic.title
-        } else {
-            comicTitleView!!.visibility = View.GONE
-        }
-        // if (comic.extraParts.isNotEmpty()) {
-        //     comicDescriptionTextView!!.text = comic.extraParts
-        // } else {
-        comicDescriptionTextView!!.visibility = View.GONE
-        // }
-        if (comic.link.isNotEmpty()) {
-            comicUrlTextView!!.text = comic.link
-        } else {
-            comicUrlTextView!!.visibility = View.GONE
-        }
-        if (comic.img.isNotEmpty()) {
-            imageUrlTextView!!.text = comic.img
-        } else {
-            imageUrlTextView!!.visibility = View.GONE
-        }
+        // comicDescriptionTextView!!.text = comic.extraParts
+        comicUrlTextView!!.text = comic.link
+        imageUrlTextView!!.text = comic.img
     }
 
     override fun render(t: Throwable) {}
