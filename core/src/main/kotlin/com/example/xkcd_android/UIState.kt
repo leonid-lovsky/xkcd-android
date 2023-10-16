@@ -6,13 +6,14 @@ data class UIState(
     val last: Int = 1,
 ) {
 
+    val first = UIState.first
     val range get() = first..last
 
     fun copy(comic: Comic): UIState {
         return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))
     }
 
-    companion object {
+    private companion object {
         const val first = 1
     }
 }

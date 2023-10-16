@@ -1,6 +1,5 @@
 package com.example.xkcd_android
 
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
             R.id.current -> controller.current()
             R.id.random -> controller.random()
             R.id.first -> controller.first()
-            R.id.latest -> controller.latest()
+            R.id.latest -> controller.last()
             R.id.previous -> controller.previous()
             R.id.next -> controller.next()
             R.id.select -> {

@@ -24,15 +24,15 @@ class Controller(private val repository: Repository) : Repository.Callback {
     }
 
     fun select(number: Int) {
-        repository.getComic(this)
+        repository.getComic(number, this)
     }
 
     fun first() {
-        repository.getComic(uiState.range.first, this)
+        repository.getComic(uiState.first, this)
     }
 
-    fun latest() {
-        repository.getComic(uiState.range.last, this)
+    fun last() {
+        repository.getComic(uiState.last, this)
     }
 
     fun previous() {
