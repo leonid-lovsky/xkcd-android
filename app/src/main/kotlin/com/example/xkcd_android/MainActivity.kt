@@ -6,10 +6,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListener {
-    private var imageView: ImageView? = null
-    private var textView: TextView? = null
+    private var comicTitle: TextView? = null
+    private var comicImage: ImageView? = null
+    private var comicText: TextView? = null
     private var comicUrlTextView: TextView? = null
     private var imageUrlTextView: TextView? = null
 
@@ -27,10 +29,10 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        imageView = findViewById(R.id.image_view)
-        textView = findViewById(R.id.text_view)
-        comicUrlTextView = findViewById(R.id.comic_url_text)
-        imageUrlTextView = findViewById(R.id.image_url_text)
+        comicImage = findViewById(R.id.comic_image)
+        comicText = findViewById(R.id.comic_transcript)
+        comicUrlTextView = findViewById(R.id.comic_link)
+        imageUrlTextView = findViewById(R.id.image_url)
         buttonCurrent = findViewById(R.id.current)
         buttonRandom = findViewById(R.id.random)
         buttonSelect = findViewById(R.id.select)
@@ -70,10 +72,14 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     }
 
     override fun render(uiState: UIState) {
-        textView?.text = uiState.toString()
+        val comic = uiState.comic ?: return
+        comicTitle?.text = comic.title
+        Glide.with(this).load(comic.img).into(comicImage!!)
+        // comicImage?.tooltipText = comic.alt
+        comicText?.text = comic.transcript
+        comicUrlTextView?.text = comic.link
+        imageUrlTextView?.text = comic.img
     }
 
-    override fun render(t: Throwable) {
-        textView?.text = t.message
-    }
+    override fun render(t: Throwable) {}
 }

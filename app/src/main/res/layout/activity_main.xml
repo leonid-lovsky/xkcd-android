@@ -21,30 +21,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/comic_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="TextView" />
+
             <ImageView
-                android:id="@+id/image_view"
+                android:id="@+id/comic_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/text_view"
+                android:id="@+id/comic_transcript"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="TextView" />
 
             <TextView
-                android:id="@+id/comic_url_text"
+                android:id="@+id/comic_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 tools:text="https://xkcd.com/2841/" />
 
             <TextView
-                android:id="@+id/image_url_text"
+                android:id="@+id/image_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
