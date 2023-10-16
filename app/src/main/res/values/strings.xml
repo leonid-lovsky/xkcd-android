@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">xkcd android</string>
+    <!--<string name="comic_url">Permanent link to this comic: %1$s</string>-->
+    <!--<string name="image_url">Image URL (for hotlinking/embedding): %1$s</string>-->
 </resources>

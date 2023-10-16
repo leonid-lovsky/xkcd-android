@@ -9,9 +9,9 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListener {
-    private var comicTitle: TextView? = null
-    private var comicImage: ImageView? = null
-    private var comicText: TextView? = null
+    private var comicImageView: ImageView? = null
+    private var comicTitleView: TextView? = null
+    private var comicDescriptionTextView: TextView? = null
     private var comicUrlTextView: TextView? = null
     private var imageUrlTextView: TextView? = null
 
@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        comicTitle = findViewById(R.id.comic_title)
-        comicImage = findViewById(R.id.comic_image)
-        comicText = findViewById(R.id.comic_text)
+        comicTitleView = findViewById(R.id.comic_title)
+        comicImageView = findViewById(R.id.comic_image)
+        comicDescriptionTextView = findViewById(R.id.comic_description)
         comicUrlTextView = findViewById(R.id.comic_link)
         imageUrlTextView = findViewById(R.id.image_url)
         buttonCurrent = findViewById(R.id.current)
@@ -74,12 +74,28 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
 
     override fun render(uiState: UIState) {
         val comic = uiState.comic ?: return
-        comicTitle!!.text = comic.title
-        Glide.with(this).load(comic.img).into(comicImage!!)
+        Glide.with(this).load(comic.img).into(comicImageView!!)
         // comicImage!!.tooltipText = comic.alt
-        // comicText!!.text = comic.extraParts
-        comicUrlTextView!!.text = comic.link
-        imageUrlTextView!!.text = comic.img
+        if (comic.title.isNotEmpty()) {
+            comicTitleView!!.text = comic.title
+        } else {
+            comicTitleView!!.visibility = View.GONE
+        }
+        // if (comic.extraParts.isNotEmpty()) {
+        //     comicDescriptionTextView!!.text = comic.extraParts
+        // } else {
+        comicDescriptionTextView!!.visibility = View.GONE
+        // }
+        if (comic.link.isNotEmpty()) {
+            comicUrlTextView!!.text = comic.link
+        } else {
+            comicUrlTextView!!.visibility = View.GONE
+        }
+        if (comic.img.isNotEmpty()) {
+            imageUrlTextView!!.text = comic.img
+        } else {
+            imageUrlTextView!!.visibility = View.GONE
+        }
     }
 
     override fun render(t: Throwable) {}

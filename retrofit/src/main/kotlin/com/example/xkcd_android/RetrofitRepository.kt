@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitRepository : Repository {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://xkcd.com/")
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -17,7 +17,8 @@ class RetrofitRepository : Repository {
     override fun getComic(callback: Repository.Callback) {
         service.getComic().enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                callback.onSuccess(response.body())
+                val comic = response.body() ?: return
+                callback.onSuccess(comic.copy(link = "$baseUrl${comic.num}/"))
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
@@ -29,12 +30,17 @@ class RetrofitRepository : Repository {
     override fun getComic(number: Int, callback: Repository.Callback) {
         service.getComic(number).enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                callback.onSuccess(response.body())
+                val comic = response.body() ?: return
+                callback.onSuccess(comic.copy(link = "$baseUrl${comic.num}/"))
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
                 callback.onFailure(t)
             }
         })
+    }
+
+    private companion object {
+        const val baseUrl = "https://xkcd.com/"
     }
 }
