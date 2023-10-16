@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="Current" />
+            android:text="_" />
 
         <Button
             android:id="@+id/random"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="Random" />
+            android:text="*" />
 
         <Button
             android:id="@+id/select"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="Select" />
+            android:text="^" />
 
         <Button
             android:id="@+id/first"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="First" />
+            android:text="|&lt;" />
 
         <Button
             android:id="@+id/latest"
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="Latest" />
+            android:text="&gt;|" />
 
         <Button
             android:id="@+id/previous"
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="Previous" />
+            android:text="&lt;" />
 
         <Button
             android:id="@+id/next"
@@ -125,6 +125,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="Next" />
+            android:text="&gt;" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
