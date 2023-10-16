@@ -4,9 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListener {
+    private var imageView: ImageView? = null
+    private var textView: TextView? = null
+    private var comicUrlTextView: TextView? = null
+    private var imageUrlTextView: TextView? = null
+
     private var buttonCurrent: Button? = null
     private var buttonRandom: Button? = null
     private var buttonSelect: Button? = null
@@ -14,7 +20,6 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     private var buttonLatest: Button? = null
     private var buttonPrevious: Button? = null
     private var buttonNext: Button? = null
-    private var textView: TextView? = null
 
     private val repository = RetrofitRepository()
     private val controller = Controller(repository)
@@ -22,6 +27,10 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        imageView = findViewById(R.id.image_view)
+        textView = findViewById(R.id.text_view)
+        comicUrlTextView = findViewById(R.id.comic_url_text)
+        imageUrlTextView = findViewById(R.id.image_url_text)
         buttonCurrent = findViewById(R.id.current)
         buttonRandom = findViewById(R.id.random)
         buttonSelect = findViewById(R.id.select)
@@ -29,7 +38,6 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
         buttonLatest = findViewById(R.id.latest)
         buttonPrevious = findViewById(R.id.previous)
         buttonNext = findViewById(R.id.next)
-        textView = findViewById(R.id.text_view)
         buttonCurrent?.setOnClickListener(this)
         buttonRandom?.setOnClickListener(this)
         buttonSelect?.setOnClickListener(this)
