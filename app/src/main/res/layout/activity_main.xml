@@ -73,33 +73,6 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/current"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@string/button_current" />
-
-        <Button
-            android:id="@+id/random"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@string/button_random" />
-
-        <Button
-            android:id="@+id/select"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@string/button_select" />
-
-        <Button
             android:id="@+id/first"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
