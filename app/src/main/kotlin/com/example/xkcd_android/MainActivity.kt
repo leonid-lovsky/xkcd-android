@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     override fun render(uiState: UIState) {
         val comic = uiState.comic ?: return
         Glide.with(this).load(comic.img).into(comicImageView!!)
+        title = comic.title
         comicTitleView!!.text = comic.title
         comicUrlTextView!!.text = comic.link
         imageUrlTextView!!.text = comic.img
