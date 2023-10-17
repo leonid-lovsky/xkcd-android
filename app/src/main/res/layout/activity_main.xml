@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/button_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/content"
@@ -25,9 +23,10 @@
                 android:id="@+id/comic_title"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:textAllCaps="false"
                 tools:text="Title" />
 
             <ImageView
@@ -42,6 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Description" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/comic_link"
@@ -58,73 +62,76 @@
                 android:autoLink="web"
                 android:fontFamily="sans-serif-smallcaps"
                 tools:text="https://imgs.xkcd.com/comics/sign_combo.png" />
-
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/button_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/current"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="_" />
+            android:text="@string/button_current" />
 
         <Button
             android:id="@+id/random"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="*" />
+            android:text="@string/button_random" />
 
         <Button
             android:id="@+id/select"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="^" />
+            android:text="@string/button_select" />
 
         <Button
             android:id="@+id/first"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="|&lt;" />
+            android:text="@string/button_first" />
 
         <Button
             android:id="@+id/latest"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="&gt;|" />
+            android:text="@string/button_latest" />
 
         <Button
             android:id="@+id/previous"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="&lt;" />
+            android:text="@string/button_previous" />
 
         <Button
             android:id="@+id/next"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="&gt;" />
+            android:text="@string/button_next" />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">xkcd android</string>
-    <!--<string name="comic_url">Permanent link to this comic: %1$s</string>-->
-    <!--<string name="image_url">Image URL (for hotlinking/embedding): %1$s</string>-->
+    <string name="app_name">xkcd</string>
+    <string name="button_current">_</string>
+    <string name="button_random">*</string>
+    <string name="button_select">^</string>
+    <string name="button_first"><![CDATA[|<]]></string>
+    <string name="button_latest"><![CDATA[>|]]></string>
+    <string name="button_previous"><![CDATA[<]]></string>
+    <string name="button_next"><![CDATA[>]]></string>
 </resources>

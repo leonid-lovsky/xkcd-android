@@ -76,8 +76,6 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
         val comic = uiState.comic ?: return
         Glide.with(this).load(comic.img).into(comicImageView!!)
         comicTitleView!!.text = comic.title
-        // comicImage!!.tooltipText = comic.alt
-        // comicDescriptionTextView!!.text = comic.extraParts
         comicUrlTextView!!.text = comic.link
         imageUrlTextView!!.text = comic.img
     }
