@@ -82,15 +82,6 @@
             android:text="@string/button_first" />
 
         <Button
-            android:id="@+id/latest"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@string/button_latest" />
-
-        <Button
             android:id="@+id/previous"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
@@ -107,5 +98,14 @@
             android:layout_weight="1"
             android:singleLine="true"
             android:text="@string/button_next" />
+
+        <Button
+            android:id="@+id/latest"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/button_latest" />
     </LinearLayout>
 </LinearLayout>
