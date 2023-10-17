@@ -2,6 +2,9 @@ package com.example.xkcd_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -54,6 +57,27 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun onDestroy() {
         controller.callback = null
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            // R.id.action_settings -> {
+            //     // User chooses the "Settings" item. Show the app settings UI.
+            //     true
+            // }
+            // R.id.action_favorite -> {
+            //     // User chooses the "Favorite" action. Mark the current item as a
+            //     // favorite.
+            //     true
+            // }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onClick(v: View?) {

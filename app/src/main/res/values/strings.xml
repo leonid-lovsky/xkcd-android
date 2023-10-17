@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">xkcd</string>
+    <string name="menu_current">Current</string>
+    <string name="menu_random">Random</string>
+    <string name="menu_select">Select</string>
     <string name="button_current">_</string>
     <string name="button_random">*</string>
     <string name="button_select">^</string>
@@ -7,4 +10,5 @@
     <string name="button_latest"><![CDATA[>|]]></string>
     <string name="button_previous"><![CDATA[<]]></string>
     <string name="button_next"><![CDATA[>]]></string>
+    <string name="input_comic_number_hint">Comic number</string>
 </resources>
