@@ -8,5 +8,7 @@
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
