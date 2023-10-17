@@ -11,16 +11,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 
-class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListener {
+class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     private var comicImageView: ImageView? = null
     private var comicTitleView: TextView? = null
     private var comicDescriptionTextView: TextView? = null
     private var comicUrlTextView: TextView? = null
     private var imageUrlTextView: TextView? = null
 
-    private var buttonCurrent: Button? = null
-    private var buttonRandom: Button? = null
-    private var buttonSelect: Button? = null
     private var buttonFirst: Button? = null
     private var buttonLatest: Button? = null
     private var buttonPrevious: Button? = null
@@ -37,25 +34,19 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
         comicDescriptionTextView = findViewById(R.id.comic_description)
         comicUrlTextView = findViewById(R.id.comic_link)
         imageUrlTextView = findViewById(R.id.image_url)
-        buttonCurrent = findViewById(R.id.current)
-        buttonRandom = findViewById(R.id.random)
-        buttonSelect = findViewById(R.id.select)
         buttonFirst = findViewById(R.id.first)
         buttonLatest = findViewById(R.id.latest)
         buttonPrevious = findViewById(R.id.previous)
         buttonNext = findViewById(R.id.next)
-        buttonCurrent?.setOnClickListener(this)
-        buttonRandom?.setOnClickListener(this)
-        buttonSelect?.setOnClickListener(this)
         buttonFirst?.setOnClickListener(this)
         buttonLatest?.setOnClickListener(this)
         buttonPrevious?.setOnClickListener(this)
         buttonNext?.setOnClickListener(this)
-        controller.callback = this
+        controller.presenter = this
     }
 
     override fun onDestroy() {
-        controller.callback = null
+        controller.presenter = null
         super.onDestroy()
     }
 
@@ -67,15 +58,21 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            // R.id.action_settings -> {
-            //     // User chooses the "Settings" item. Show the app settings UI.
-            //     true
-            // }
-            // R.id.action_favorite -> {
-            //     // User chooses the "Favorite" action. Mark the current item as a
-            //     // favorite.
-            //     true
-            // }
+            R.id.menu_current -> {
+                controller.current()
+                true
+            }
+
+            R.id.menu_random -> {
+                controller.random()
+                true
+            }
+
+            R.id.menu_select -> {
+                controller.select()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -83,16 +80,10 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.current -> controller.current()
-            R.id.random -> controller.random()
             R.id.first -> controller.first()
             R.id.latest -> controller.last()
             R.id.previous -> controller.previous()
             R.id.next -> controller.next()
-            R.id.select -> {
-                val selectComicDialogFragment = SelectComicDialogFragment(controller)
-                selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
-            }
         }
     }
 
@@ -105,4 +96,8 @@ class MainActivity : AppCompatActivity(), Controller.Callback, View.OnClickListe
     }
 
     override fun render(t: Throwable) {}
+    override fun showSelectComicDialog() {
+        val selectComicDialogFragment = SelectComicDialogFragment(controller)
+        selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
+    }
 }

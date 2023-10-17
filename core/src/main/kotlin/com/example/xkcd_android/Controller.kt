@@ -3,16 +3,16 @@ package com.example.xkcd_android
 class Controller(private val repository: Repository) : Repository.Callback {
 
     private var uiState = UIState()
-    var callback: Callback? = null
+    var presenter: Presenter? = null
 
     override fun onSuccess(comic: Comic?) {
         if (comic == null) return
         uiState = uiState.copy(comic)
-        callback?.render(uiState)
+        presenter?.render(uiState)
     }
 
     override fun onFailure(t: Throwable) {
-        callback?.render(t)
+        presenter?.render(t)
     }
 
     fun current() {
@@ -21,6 +21,10 @@ class Controller(private val repository: Repository) : Repository.Callback {
 
     fun random() {
         repository.getComic(uiState.range.random(), this)
+    }
+
+    fun select() {
+        presenter?.showSelectComicDialog()
     }
 
     fun select(number: Int) {
@@ -43,8 +47,4 @@ class Controller(private val repository: Repository) : Repository.Callback {
         repository.getComic(uiState.current + 1, this)
     }
 
-    interface Callback {
-        fun render(uiState: UIState)
-        fun render(t: Throwable)
-    }
 }
