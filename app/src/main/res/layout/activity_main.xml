@@ -73,7 +73,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/first"
+            android:id="@+id/button_first"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:text="@string/button_first" />
 
         <Button
-            android:id="@+id/previous"
+            android:id="@+id/button_previous"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:text="@string/button_previous" />
 
         <Button
-            android:id="@+id/next"
+            android:id="@+id/button_next"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             android:text="@string/button_next" />
 
         <Button
-            android:id="@+id/latest"
+            android:id="@+id/button_last"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

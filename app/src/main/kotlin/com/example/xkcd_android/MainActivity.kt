@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
         comicDescriptionTextView = findViewById(R.id.comic_description)
         comicUrlTextView = findViewById(R.id.comic_link)
         imageUrlTextView = findViewById(R.id.image_url)
-        buttonFirst = findViewById(R.id.first)
-        buttonLatest = findViewById(R.id.latest)
-        buttonPrevious = findViewById(R.id.previous)
-        buttonNext = findViewById(R.id.next)
+        buttonFirst = findViewById(R.id.button_first)
+        buttonLatest = findViewById(R.id.button_last)
+        buttonPrevious = findViewById(R.id.button_previous)
+        buttonNext = findViewById(R.id.button_next)
         buttonFirst?.setOnClickListener(this)
         buttonLatest?.setOnClickListener(this)
         buttonPrevious?.setOnClickListener(this)
@@ -80,10 +80,10 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.first -> controller.first()
-            R.id.latest -> controller.last()
-            R.id.previous -> controller.previous()
-            R.id.next -> controller.next()
+            R.id.button_first -> controller.first()
+            R.id.button_last -> controller.last()
+            R.id.button_previous -> controller.previous()
+            R.id.button_next -> controller.next()
         }
     }
 
