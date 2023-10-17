@@ -6,8 +6,9 @@
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_height="?attr/minTouchTargetSize"
+        android:layout_margin="12dp"
         android:hint="@string/input_comic_number_hint"
+        android:importantForAutofill="no"
         android:inputType="number" />
 </LinearLayout>
