@@ -1,6 +1,5 @@
 package com.example.xkcd_android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,9 +8,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 
 class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     private var toolbar: Toolbar? = null
@@ -95,7 +94,11 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
 
     override fun render(uiState: UIState) {
         val comic = uiState.comic ?: return
-        Glide.with(this).load(comic.img).override(Target.SIZE_ORIGINAL).into(comicImageView!!)
+        Glide
+            .with(this)
+            .load(comic.img)
+            // .override(Target.SIZE_ORIGINAL)
+            .into(comicImageView!!)
         title = comic.title
         comicTitleView!!.text = comic.title
         comicUrlTextView!!.text = comic.link
