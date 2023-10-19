@@ -11,8 +11,8 @@
     <string name="button_previous"><![CDATA[<]]></string>
     <string name="button_next"><![CDATA[>]]></string>
     <string name="dialog_select_comic_title">Select comic</string>
-    <string name="dialog_select_comic_text">Input comic number</string>
-    <string name="dialog_select_comic_input_hint">Input number</string>
+    <string name="dialog_select_comic_text">Comic number</string>
+    <string name="dialog_select_comic_input_hint">Comic number</string>
     <string name="dialog_select_comic_positive_button">Select</string>
     <string name="dialog_select_comic_negative_button">Cancel</string>
 </resources>
