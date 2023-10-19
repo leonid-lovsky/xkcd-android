@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:subtitleCentered="true"
         app:titleCentered="true"
+        tools:menu="@menu/menu_main"
         tools:subtitle="@tools:sample/lorem"
         tools:title="@tools:sample/lorem" />
 

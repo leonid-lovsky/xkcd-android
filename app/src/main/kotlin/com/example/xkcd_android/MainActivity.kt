@@ -9,9 +9,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
+    private var toolbar: Toolbar? = null
+
     private var comicImageView: ImageView? = null
     private var comicTitleView: TextView? = null
     private var comicDescriptionTextView: TextView? = null
@@ -29,6 +32,8 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
         comicTitleView = findViewById(R.id.comic_title)
         comicImageView = findViewById(R.id.comic_image)
         comicDescriptionTextView = findViewById(R.id.comic_description)
@@ -52,7 +57,7 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu, menu)
+        inflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
