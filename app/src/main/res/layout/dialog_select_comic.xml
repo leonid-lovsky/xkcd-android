@@ -1,14 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:paddingLeft="?dialogPreferredPadding"
+    android:paddingRight="?dialogPreferredPadding">
 
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="?attr/minTouchTargetSize"
-        android:layout_margin="12dp"
-        android:hint="@string/input_comic_number_hint"
+        android:hint="@string/dialog_select_comic_input_hint"
         android:importantForAutofill="no"
         android:inputType="number" />
-</LinearLayout>
+
+</FrameLayout>
