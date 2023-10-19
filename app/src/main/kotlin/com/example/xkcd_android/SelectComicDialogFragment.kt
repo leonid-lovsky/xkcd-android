@@ -16,11 +16,12 @@ class SelectComicDialogFragment(private val controller: Controller) : DialogFrag
         val editText = view.findViewById<EditText>(R.id.edit_text)
         val builder = AlertDialog.Builder(activity)
             .setView(view)
-            .setPositiveButton("Select") { _, _ ->
+            .setTitle(R.string.dialog_select_comic_title)
+            .setPositiveButton(R.string.dialog_select_comic_positive_button) { _, _ ->
                 val number = editText.text.toString()
                 controller.select(number.toInt())
             }
-            .setNegativeButton("Cancel") { _, _ ->
+            .setNegativeButton(R.string.dialog_select_comic_negative_button) { _, _ ->
                 dialog?.cancel()
             }
         return builder.create()
