@@ -96,8 +96,6 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
         val comic = uiState.comic ?: return
         Picasso.get()
             .load(comic.img)
-            // .override(Target.SIZE_ORIGINAL)
-            // .dontTransform()
             .into(comicImageView!!)
         title = comic.title
         comicTitleView!!.text = comic.title
