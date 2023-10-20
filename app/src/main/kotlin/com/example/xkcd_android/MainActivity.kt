@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     private var toolbar: Toolbar? = null
@@ -94,10 +94,8 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
 
     override fun render(uiState: UIState) {
         val comic = uiState.comic ?: return
-        Glide
-            .with(this)
+        Picasso.get()
             .load(comic.img)
-            // .override(Target.SIZE_ORIGINAL)
             .into(comicImageView!!)
         title = comic.title
         comicTitleView!!.text = comic.title
@@ -106,6 +104,7 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     }
 
     override fun render(t: Throwable) {}
+
     override fun showSelectComicDialog() {
         val selectComicDialogFragment = SelectComicDialogFragment(controller)
         selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")

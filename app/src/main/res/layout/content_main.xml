@@ -12,8 +12,9 @@
 
         <TextView
             android:id="@+id/comic_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif-smallcaps"
             android:gravity="center"
             android:singleLine="true"
@@ -24,13 +25,14 @@
             android:id="@+id/comic_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/comic_description"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             tools:text="@tools:sample/lorem/random" />
@@ -42,7 +44,7 @@
 
         <TextView
             android:id="@+id/comic_link"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:fontFamily="sans-serif-smallcaps"
@@ -50,7 +52,7 @@
 
         <TextView
             android:id="@+id/image_url"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:fontFamily="sans-serif-smallcaps"
