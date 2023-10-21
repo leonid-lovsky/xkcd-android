@@ -1,15 +1,15 @@
 package com.example.xkcd_android
 
-data class UIState(
+data class State(
     val comic: Comic? = null,
     val current: Int = 1,
     val last: Int = 1,
 ) {
 
-    val first = UIState.first
+    val first = State.first
     val range get() = first..last
 
-    fun copy(comic: Comic): UIState {
+    fun copy(comic: Comic): State {
         return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))
     }
 

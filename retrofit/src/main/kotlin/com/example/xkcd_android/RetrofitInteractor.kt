@@ -5,16 +5,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-class RetrofitRepository : Repository {
+class RetrofitInteractor : Interactor {
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val service = retrofit.create(RetrofitService::class.java)
+    private val service = retrofit.create(Service::class.java)
 
-    override fun getComic(callback: Repository.Callback) {
+    override fun getComic(callback: Interactor.Callback) {
         service.getComic().enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
                 val comic = response.body() ?: return
@@ -27,7 +29,7 @@ class RetrofitRepository : Repository {
         })
     }
 
-    override fun getComic(number: Int, callback: Repository.Callback) {
+    override fun getComic(number: Int, callback: Interactor.Callback) {
         service.getComic(number).enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
                 val comic = response.body() ?: return
@@ -38,6 +40,17 @@ class RetrofitRepository : Repository {
                 callback.onFailure(t)
             }
         })
+    }
+
+    override fun cache(comic: Comic) {
+        TODO("Not yet implemented")
+    }
+
+    interface Service {
+        @GET("info.0.json")
+        fun getComic(): Call<Comic>
+        @GET("{number}/info.0.json")
+        fun getComic(@Path("number") number: Int): Call<Comic>
     }
 
     private companion object {

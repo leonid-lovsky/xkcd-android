@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     private var buttonPrevious: Button? = null
     private var buttonNext: Button? = null
 
-    private val repository = RetrofitRepository()
+    private val repository = RoomInteractor()
     private val controller = Controller(repository)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,8 +92,8 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
         }
     }
 
-    override fun render(uiState: UIState) {
-        val comic = uiState.comic ?: return
+    override fun render(state: State) {
+        val comic = state.comic ?: return
         Picasso.get()
             .load(comic.img)
             .into(comicImageView!!)

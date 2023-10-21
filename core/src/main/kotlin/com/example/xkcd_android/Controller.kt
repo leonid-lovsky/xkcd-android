@@ -1,14 +1,14 @@
 package com.example.xkcd_android
 
-class Controller(private val repository: Repository) : Repository.Callback {
+class Controller(private val interactor: Interactor) : Interactor.Callback {
 
-    private var uiState = UIState()
+    private var state = State()
     var presenter: Presenter? = null
 
     override fun onSuccess(comic: Comic?) {
         if (comic == null) return
-        uiState = uiState.copy(comic)
-        presenter?.render(uiState)
+        state = state.copy(comic)
+        presenter?.render(state)
     }
 
     override fun onFailure(t: Throwable) {
@@ -16,11 +16,11 @@ class Controller(private val repository: Repository) : Repository.Callback {
     }
 
     fun current() {
-        repository.getComic(this)
+        interactor.getComic(this)
     }
 
     fun random() {
-        repository.getComic(uiState.range.random(), this)
+        interactor.getComic(state.range.random(), this)
     }
 
     fun select() {
@@ -28,23 +28,23 @@ class Controller(private val repository: Repository) : Repository.Callback {
     }
 
     fun select(number: Int) {
-        repository.getComic(number, this)
+        interactor.getComic(number, this)
     }
 
     fun first() {
-        repository.getComic(uiState.first, this)
+        interactor.getComic(state.first, this)
     }
 
     fun last() {
-        repository.getComic(uiState.last, this)
+        interactor.getComic(state.last, this)
     }
 
     fun previous() {
-        repository.getComic(uiState.current - 1, this)
+        interactor.getComic(state.current - 1, this)
     }
 
     fun next() {
-        repository.getComic(uiState.current + 1, this)
+        interactor.getComic(state.current + 1, this)
     }
 
 }
