@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
+class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener {
     private var toolbar: Toolbar? = null
 
     private var comicImageView: ImageView? = null
@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     private var buttonPrevious: Button? = null
     private var buttonNext: Button? = null
 
-    private val repository = RoomInteractor()
-    private val controller = Controller(repository)
+    private val comitStorage = ComicStorageRetrofit()
+    private val comicUIController = ComicUIController(comitStorage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +47,11 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
         buttonLatest?.setOnClickListener(this)
         buttonPrevious?.setOnClickListener(this)
         buttonNext?.setOnClickListener(this)
-        controller.presenter = this
+        comicUIController.comicUIPresenter = this
     }
 
     override fun onDestroy() {
-        controller.presenter = null
+        comicUIController.comicUIPresenter = null
         super.onDestroy()
     }
 
@@ -64,17 +64,17 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_current -> {
-                controller.current()
+                comicUIController.current()
                 true
             }
 
             R.id.menu_random -> {
-                controller.random()
+                comicUIController.random()
                 true
             }
 
             R.id.menu_select -> {
-                controller.select()
+                comicUIController.select()
                 true
             }
 
@@ -85,15 +85,15 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.button_first -> controller.first()
-            R.id.button_last -> controller.last()
-            R.id.button_previous -> controller.previous()
-            R.id.button_next -> controller.next()
+            R.id.button_first -> comicUIController.first()
+            R.id.button_last -> comicUIController.last()
+            R.id.button_previous -> comicUIController.previous()
+            R.id.button_next -> comicUIController.next()
         }
     }
 
-    override fun render(state: State) {
-        val comic = state.comic ?: return
+    override fun render(comicUIState: ComicUIState) {
+        val comic = comicUIState.comic ?: return
         Picasso.get()
             .load(comic.img)
             .into(comicImageView!!)
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), Presenter, View.OnClickListener {
     override fun render(t: Throwable) {}
 
     override fun showSelectComicDialog() {
-        val selectComicDialogFragment = SelectComicDialogFragment(controller)
+        val selectComicDialogFragment = SelectComicDialogFragment(comicUIController)
         selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
     }
 }
