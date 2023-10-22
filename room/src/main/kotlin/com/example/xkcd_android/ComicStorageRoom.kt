@@ -8,4 +8,8 @@ class ComicStorageRoom : ComicStorageLocal {
     override fun getComic(number: Int, callback: ComicCallback) {
         TODO("Not yet implemented")
     }
+
+    override fun save(comic: Comic?) {
+        TODO("Not yet implemented")
+    }
 }
