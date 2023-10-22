@@ -12,13 +12,15 @@ class ComicStorageRetrofit : ComicStorage {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val service = retrofit.create(ComicServiceRetrofit::class.java)
+    private val comicService = retrofit.create(ComicServiceRetrofit::class.java)
 
     override fun getComic(callback: ComicCallback) {
-        service.getComic().enqueue(object : Callback<Comic> {
+        comicService.getComic().enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                val comic = response.body() ?: return
-                callback.onResponse(comic.copy(link = "$baseUrl${comic.num}/"))
+                val comic = response.body()?.run {
+                    copy(link = "${baseUrl}$num/")
+                }
+                callback.onResponse(comic)
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
@@ -28,10 +30,12 @@ class ComicStorageRetrofit : ComicStorage {
     }
 
     override fun getComic(number: Int, callback: ComicCallback) {
-        service.getComic(number).enqueue(object : Callback<Comic> {
+        comicService.getComic(number).enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
-                val comic = response.body() ?: return
-                callback.onResponse(comic.copy(link = "$baseUrl${comic.num}/"))
+                val comic = response.body()?.run {
+                    copy(link = "${baseUrl}$num/")
+                }
+                callback.onResponse(comic)
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
