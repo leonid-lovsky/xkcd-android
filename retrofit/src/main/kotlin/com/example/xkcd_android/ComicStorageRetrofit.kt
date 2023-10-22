@@ -18,7 +18,7 @@ class ComicStorageRetrofit : ComicStorage {
         service.getComic().enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
                 val comic = response.body() ?: return
-                callback.onSuccess(comic.copy(link = "$baseUrl${comic.num}/"))
+                callback.onResponse(comic.copy(link = "$baseUrl${comic.num}/"))
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {
@@ -31,7 +31,7 @@ class ComicStorageRetrofit : ComicStorage {
         service.getComic(number).enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
                 val comic = response.body() ?: return
-                callback.onSuccess(comic.copy(link = "$baseUrl${comic.num}/"))
+                callback.onResponse(comic.copy(link = "$baseUrl${comic.num}/"))
             }
 
             override fun onFailure(call: Call<Comic>, t: Throwable) {

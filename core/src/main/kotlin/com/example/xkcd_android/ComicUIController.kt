@@ -6,7 +6,7 @@ class ComicUIController(
     private var comicUIState = ComicUIState()
     var comicUIPresenter: ComicUIPresenter? = null
 
-    override fun onSuccess(comic: Comic?) {
+    override fun onResponse(comic: Comic?) {
         if (comic == null) return
         comicUIState = comicUIState.copy(comic)
         comicUIPresenter?.render(comicUIState)
