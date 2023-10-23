@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener {
+class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener {
     private var toolbar: Toolbar? = null
 
     private var comicImageView: ImageView? = null
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener
     private var buttonNext: Button? = null
 
     private val comitStorage = ComicStorageRetrofit()
-    private val comicUIController = ComicUIController(comitStorage)
+    private val comicController = ComicController(comitStorage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +51,12 @@ class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener
 
     override fun onStart() {
         super.onStart()
-        comicUIController.comicUIPresenter = this
+        comicController.comicPresenter = this
     }
 
     override fun onStop() {
         super.onStop()
-        comicUIController.comicUIPresenter = null
+        comicController.comicPresenter = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,20 +68,17 @@ class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_current -> {
-                comicUIController.current()
+                comicController.current()
                 true
             }
-
             R.id.menu_random -> {
-                comicUIController.random()
+                comicController.random()
                 true
             }
-
             R.id.menu_select -> {
-                comicUIController.select()
+                comicController.select()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -89,18 +86,16 @@ class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.button_first -> comicUIController.first()
-            R.id.button_last -> comicUIController.last()
-            R.id.button_previous -> comicUIController.previous()
-            R.id.button_next -> comicUIController.next()
+            R.id.button_first -> comicController.first()
+            R.id.button_last -> comicController.last()
+            R.id.button_previous -> comicController.previous()
+            R.id.button_next -> comicController.next()
         }
     }
 
     override fun render(comicUIState: ComicUIState) {
         val comic = comicUIState.comic ?: return
-        Picasso.get()
-            .load(comic.img)
-            .into(comicImageView!!)
+        Picasso.get().load(comic.img).into(comicImageView!!)
         title = comic.title
         comicTitleView!!.text = comic.title
         comicUrlTextView!!.text = comic.link
@@ -110,7 +105,7 @@ class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener
     override fun render(t: Throwable) {}
 
     override fun showSelectComicDialog() {
-        val selectComicDialogFragment = SelectComicDialogFragment(comicUIController)
-        selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
+        val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
+        comicSelectDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
     }
 }

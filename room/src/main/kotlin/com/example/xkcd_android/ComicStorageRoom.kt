@@ -1,15 +1,49 @@
 package com.example.xkcd_android
 
-class ComicStorageRoom : ComicStorageLocal {
-    override fun getComic(callback: ComicCallback) {
-        TODO("Not yet implemented")
+class ComicStorageRoom(
+    private val comicDaoRoom: ComicDaoRoom
+) : ComicStorageLocal {
+    override fun comic(num: Int): Comic {
+        val comicEntityRoom = comicDaoRoom.comic(num)
+        return comicEntityRoom.toComic()
     }
 
-    override fun getComic(number: Int, callback: ComicCallback) {
-        TODO("Not yet implemented")
+    override fun save(comic: Comic) {
+        val comicEntityRoom = comic.toComicEntityRoom()
+        comicDaoRoom.save(comicEntityRoom)
     }
 
-    override fun save(comic: Comic?) {
-        TODO("Not yet implemented")
+    private companion object {
+        fun ComicEntityRoom.toComic(): Comic {
+            return Comic(
+                month = month,
+                num = num,
+                link = link,
+                year = year,
+                news = news,
+                safeTitle = safeTitle,
+                transcript = transcript,
+                alt = alt,
+                img = img,
+                title = title,
+                day = day,
+            )
+        }
+
+        fun Comic.toComicEntityRoom(): ComicEntityRoom {
+            return ComicEntityRoom(
+                month = month,
+                num = num,
+                link = link,
+                year = year,
+                news = news,
+                safeTitle = safeTitle,
+                transcript = transcript,
+                alt = alt,
+                img = img,
+                title = title,
+                day = day,
+            )
+        }
     }
 }

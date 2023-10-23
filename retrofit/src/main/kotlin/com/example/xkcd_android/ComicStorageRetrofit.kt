@@ -12,10 +12,10 @@ class ComicStorageRetrofit : ComicStorage {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val comicService = retrofit.create(ComicServiceRetrofit::class.java)
+    private val comicServiceRetrofit = retrofit.create(ComicServiceRetrofit::class.java)
 
     override fun getComic(callback: ComicCallback) {
-        comicService.getComic().enqueue(object : Callback<Comic> {
+        comicServiceRetrofit.getComic().enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
                 val comic = response.body()?.run {
                     copy(link = "${baseUrl}$num/")
@@ -30,7 +30,7 @@ class ComicStorageRetrofit : ComicStorage {
     }
 
     override fun getComic(number: Int, callback: ComicCallback) {
-        comicService.getComic(number).enqueue(object : Callback<Comic> {
+        comicServiceRetrofit.getComic(number).enqueue(object : Callback<Comic> {
             override fun onResponse(call: Call<Comic>, response: Response<Comic>) {
                 val comic = response.body()?.run {
                     copy(link = "${baseUrl}$num/")

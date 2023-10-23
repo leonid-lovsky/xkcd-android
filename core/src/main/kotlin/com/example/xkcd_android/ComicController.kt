@@ -1,19 +1,19 @@
 package com.example.xkcd_android
 
-class ComicUIController(
+class ComicController(
     private val comicStorage: ComicStorage,
 ) : ComicCallback {
     private var comicUIState = ComicUIState()
-    var comicUIPresenter: ComicUIPresenter? = null
+    var comicPresenter: ComicPresenter? = null
 
     override fun onResponse(comic: Comic?) {
         if (comic == null) return
         comicUIState = comicUIState.copy(comic)
-        comicUIPresenter?.render(comicUIState)
+        comicPresenter?.render(comicUIState)
     }
 
     override fun onFailure(t: Throwable) {
-        comicUIPresenter?.render(t)
+        comicPresenter?.render(t)
     }
 
     fun current() {
@@ -25,7 +25,7 @@ class ComicUIController(
     }
 
     fun select() {
-        comicUIPresenter?.showSelectComicDialog()
+        comicPresenter?.showSelectComicDialog()
     }
 
     fun select(number: Int) {

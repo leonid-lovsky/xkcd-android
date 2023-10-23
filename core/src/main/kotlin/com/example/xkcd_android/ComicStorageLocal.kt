@@ -1,5 +1,6 @@
 package com.example.xkcd_android
 
-interface ComicStorageLocal : ComicStorage {
-    fun save(comic: Comic?)
+interface ComicStorageLocal {
+    fun comic(num: Int): Comic
+    fun save(comic: Comic)
 }
