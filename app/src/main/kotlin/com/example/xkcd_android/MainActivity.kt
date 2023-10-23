@@ -47,12 +47,16 @@ class MainActivity : AppCompatActivity(), ComicUIPresenter, View.OnClickListener
         buttonLatest?.setOnClickListener(this)
         buttonPrevious?.setOnClickListener(this)
         buttonNext?.setOnClickListener(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
         comicUIController.comicUIPresenter = this
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
+        super.onStop()
         comicUIController.comicUIPresenter = null
-        super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
