@@ -8,8 +8,8 @@
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
         <!--<item name="android:textColor">@color/black</item>-->
-        <item name="android:statusBarColor" tools:targetApi="23">@color/white</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:statusBarColor" tools:ignore="ObsoleteSdkInt" tools:targetApi="23">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:ignore="ObsoleteSdkInt" tools:targetApi="23">true</item>
         <item name="android:navigationBarColor" tools:targetApi="27">@color/white</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
