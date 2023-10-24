@@ -13,21 +13,20 @@ import androidx.appcompat.widget.Toolbar
 import com.squareup.picasso.Picasso
 
 class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener {
-    private var toolbar: Toolbar? = null
+    private lateinit var toolbar: Toolbar
 
-    private var comicImageView: ImageView? = null
-    private var comicTitleView: TextView? = null
-    private var comicDescriptionTextView: TextView? = null
-    private var comicUrlTextView: TextView? = null
-    private var imageUrlTextView: TextView? = null
+    private lateinit var comicImageView: ImageView
+    private lateinit var comicTitleView: TextView
+    private lateinit var comicDescriptionTextView: TextView
+    private lateinit var comicUrlTextView: TextView
+    private lateinit var imageUrlTextView: TextView
 
-    private var buttonFirst: Button? = null
-    private var buttonLatest: Button? = null
-    private var buttonPrevious: Button? = null
-    private var buttonNext: Button? = null
+    private lateinit var buttonFirst: Button
+    private lateinit var buttonLatest: Button
+    private lateinit var buttonPrevious: Button
+    private lateinit var buttonNext: Button
 
-    private val comitStorage = ComicStorageRetrofit()
-    private val comicController = ComicController(comitStorage)
+    private val comicController = (application as ComicDependencies).comicController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +42,10 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
         buttonLatest = findViewById(R.id.button_last)
         buttonPrevious = findViewById(R.id.button_previous)
         buttonNext = findViewById(R.id.button_next)
-        buttonFirst?.setOnClickListener(this)
-        buttonLatest?.setOnClickListener(this)
-        buttonPrevious?.setOnClickListener(this)
-        buttonNext?.setOnClickListener(this)
+        buttonFirst.setOnClickListener(this)
+        buttonLatest.setOnClickListener(this)
+        buttonPrevious.setOnClickListener(this)
+        buttonNext.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -95,11 +94,10 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
 
     override fun render(comicUIState: ComicUIState) {
         val comic = comicUIState.comic ?: return
-        Picasso.get().load(comic.img).into(comicImageView!!)
-        title = comic.title
-        comicTitleView!!.text = comic.title
-        comicUrlTextView!!.text = comic.link
-        imageUrlTextView!!.text = comic.img
+        Picasso.get().load(comic.img).into(comicImageView)
+        comicTitleView.text = comic.title
+        comicUrlTextView.text = comic.link
+        imageUrlTextView.text = comic.img
     }
 
     override fun render(t: Throwable) {}
