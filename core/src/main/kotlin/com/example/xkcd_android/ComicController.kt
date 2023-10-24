@@ -19,14 +19,6 @@ class ComicController(
         comicStorage.getComic(this)
     }
 
-    fun random() {
-        comicStorage.getComic(comicState.random(), this)
-    }
-
-    fun select() {
-        comicPresenter?.showSelectComicDialog()
-    }
-
     fun select(number: Int) {
         comicStorage.getComic(number, this)
     }
@@ -45,5 +37,9 @@ class ComicController(
 
     fun previous() {
         comicStorage.getComic(comicState.previous(), this)
+    }
+
+    fun random() {
+        comicStorage.getComic(comicState.random(), this)
     }
 }

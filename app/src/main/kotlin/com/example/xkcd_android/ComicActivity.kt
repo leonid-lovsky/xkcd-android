@@ -75,7 +75,9 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
                 true
             }
             R.id.comic_menu_select -> {
-                comicController.select()
+                val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
+                comicSelectDialogFragment.show(supportFragmentManager,
+                    "COMIC_SELECT_DIALOG_FRAGMENT")
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -101,9 +103,4 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     }
 
     override fun render(t: Throwable) {}
-
-    override fun showSelectComicDialog() {
-        val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
-        comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
-    }
 }
