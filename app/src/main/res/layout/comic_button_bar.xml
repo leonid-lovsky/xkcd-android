@@ -9,7 +9,7 @@
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/button_comic_first"
+        android:id="@+id/comic_button_first"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:text="@string/button_first" />
 
     <Button
-        android:id="@+id/button_comic_previous"
+        android:id="@+id/comic_button_previous"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:text="@string/button_previous" />
 
     <Button
-        android:id="@+id/button_comic_next"
+        android:id="@+id/comic_button_next"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:text="@string/button_next" />
 
     <Button
-        android:id="@+id/button_comic_last"
+        android:id="@+id/comic_button_last"
         style="?android:attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

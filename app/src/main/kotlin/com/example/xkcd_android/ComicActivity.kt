@@ -21,10 +21,10 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     private lateinit var comicLinkTextView: TextView
     private lateinit var comicImageUrlTextView: TextView
 
-    private lateinit var buttonComicFirst: Button
-    private lateinit var buttonComicLast: Button
-    private lateinit var buttonComicPrevious: Button
-    private lateinit var buttonComicNext: Button
+    private lateinit var comicButtonFirst: Button
+    private lateinit var comicButtonLast: Button
+    private lateinit var comicButtonPrevious: Button
+    private lateinit var comicButtonNext: Button
 
     private val comicController = (application as ComicDependencies).comicController()
 
@@ -38,14 +38,14 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
         comicDescriptionTextView = findViewById(R.id.comic_description)
         comicLinkTextView = findViewById(R.id.comic_link)
         comicImageUrlTextView = findViewById(R.id.comic_image_url)
-        buttonComicFirst = findViewById(R.id.button_comic_first)
-        buttonComicLast = findViewById(R.id.button_comic_last)
-        buttonComicPrevious = findViewById(R.id.button_comic_previous)
-        buttonComicNext = findViewById(R.id.button_comic_next)
-        buttonComicFirst.setOnClickListener(this)
-        buttonComicLast.setOnClickListener(this)
-        buttonComicPrevious.setOnClickListener(this)
-        buttonComicNext.setOnClickListener(this)
+        comicButtonFirst = findViewById(R.id.comic_button_first)
+        comicButtonLast = findViewById(R.id.comic_button_last)
+        comicButtonPrevious = findViewById(R.id.comic_button_previous)
+        comicButtonNext = findViewById(R.id.comic_button_next)
+        comicButtonFirst.setOnClickListener(this)
+        comicButtonLast.setOnClickListener(this)
+        comicButtonPrevious.setOnClickListener(this)
+        comicButtonNext.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -66,15 +66,15 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_comic_current -> {
+            R.id.comic_menu_current -> {
                 comicController.current()
                 true
             }
-            R.id.menu_comic_random -> {
+            R.id.comic_menu_random -> {
                 comicController.random()
                 true
             }
-            R.id.menu_comic_select -> {
+            R.id.comic_menu_select -> {
                 comicController.select()
                 true
             }
@@ -85,10 +85,10 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.button_comic_first -> comicController.first()
-            R.id.button_comic_last -> comicController.last()
-            R.id.button_comic_previous -> comicController.previous()
-            R.id.button_comic_next -> comicController.next()
+            R.id.comic_button_first -> comicController.first()
+            R.id.comic_button_last -> comicController.last()
+            R.id.comic_button_previous -> comicController.previous()
+            R.id.comic_button_next -> comicController.next()
         }
     }
 
