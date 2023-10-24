@@ -18,7 +18,7 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     private lateinit var comicImageView: ImageView
     private lateinit var comicTitleView: TextView
     private lateinit var comicDescriptionTextView: TextView
-    private lateinit var comicUrlTextView: TextView
+    private lateinit var comicLinkTextView: TextView
     private lateinit var comicImageUrlTextView: TextView
 
     private lateinit var buttonComicFirst: Button
@@ -36,7 +36,7 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
         comicTitleView = findViewById(R.id.comic_title)
         comicImageView = findViewById(R.id.comic_image)
         comicDescriptionTextView = findViewById(R.id.comic_description)
-        comicUrlTextView = findViewById(R.id.comic_link)
+        comicLinkTextView = findViewById(R.id.comic_link)
         comicImageUrlTextView = findViewById(R.id.comic_image_url)
         buttonComicFirst = findViewById(R.id.button_comic_first)
         buttonComicLast = findViewById(R.id.button_comic_last)
@@ -96,7 +96,7 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
         val comic = comicState.comic
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
-        comicUrlTextView.text = comic.link
+        comicLinkTextView.text = comic.link
         comicImageUrlTextView.text = comic.img
     }
 
