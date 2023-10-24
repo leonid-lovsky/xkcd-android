@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">xkcd</string>
-    <string name="menu_current">Current</string>
-    <string name="menu_random">Random</string>
-    <string name="menu_select">Select</string>
-    <string name="button_current">_</string>
-    <string name="button_random">*</string>
-    <string name="button_select">^</string>
-    <string name="button_first"><![CDATA[|<]]></string>
-    <string name="button_latest"><![CDATA[>|]]></string>
-    <string name="button_previous"><![CDATA[<]]></string>
-    <string name="button_next"><![CDATA[>]]></string>
-    <string name="dialog_select_comic_title">Select comic</string>
-    <string name="dialog_select_comic_text">Comic number</string>
-    <string name="dialog_select_comic_input_hint">Comic number</string>
-    <string name="dialog_select_comic_positive_button">Select</string>
-    <string name="dialog_select_comic_negative_button">Cancel</string>
+    <string name="comic_application_name">xkcd</string>
+    <string name="comic_menu_current">Current</string>
+    <string name="comic_menu_random">Random</string>
+    <string name="comic_menu_select">Select</string>
+    <string name="comic_button_current">_</string>
+    <string name="comic_button_random">*</string>
+    <string name="comic_button_select">^</string>
+    <string name="comic_button_first"><![CDATA[|<]]></string>
+    <string name="comic_button_latest"><![CDATA[>|]]></string>
+    <string name="comic_button_previous"><![CDATA[<]]></string>
+    <string name="comic_button_next"><![CDATA[>]]></string>
+    <string name="comic_select_dialog_title">Select comic</string>
+    <string name="comic_select_dialog_text">Comic number</string>
+    <string name="comic_select_dialog_input_hint">Comic number</string>
+    <string name="comic_select_dialog_positive_button">Select</string>
+    <string name="comic_select_dialog_negative_button">Cancel</string>
 </resources>

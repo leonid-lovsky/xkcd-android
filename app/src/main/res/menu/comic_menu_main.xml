@@ -4,15 +4,15 @@
         android:id="@+id/comic_menu_current"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/menu_current" />
+        android:title="@string/comic_menu_current" />
     <item
         android:id="@+id/comic_menu_random"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/menu_random" />
+        android:title="@string/comic_menu_random" />
     <item
         android:id="@+id/comic_menu_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/menu_select" />
+        android:title="@string/comic_menu_select" />
 </menu>

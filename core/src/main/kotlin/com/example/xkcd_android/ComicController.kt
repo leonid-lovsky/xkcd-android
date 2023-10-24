@@ -6,8 +6,7 @@ class ComicController(
     private var comicState = ComicState()
     var comicPresenter: ComicPresenter? = null
 
-    override fun onResponse(comic: Comic?) {
-        if (comic == null) return
+    override fun onResponse(comic: Comic) {
         comicState = comicState.copy(comic)
         comicPresenter?.render(comicState)
     }
@@ -21,7 +20,7 @@ class ComicController(
     }
 
     fun random() {
-        comicStorage.getComic(comicState.range.random(), this)
+        comicStorage.getComic(comicState.random(), this)
     }
 
     fun select() {
@@ -33,18 +32,18 @@ class ComicController(
     }
 
     fun first() {
-        comicStorage.getComic(comicState.first, this)
+        comicStorage.getComic(comicState.first(), this)
     }
 
     fun last() {
-        comicStorage.getComic(comicState.last, this)
-    }
-
-    fun previous() {
-        comicStorage.getComic(comicState.current - 1, this)
+        comicStorage.getComic(comicState.last(), this)
     }
 
     fun next() {
-        comicStorage.getComic(comicState.current + 1, this)
+        comicStorage.getComic(comicState.next(), this)
+    }
+
+    fun previous() {
+        comicStorage.getComic(comicState.previous(), this)
     }
 }

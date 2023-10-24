@@ -12,12 +12,12 @@ class ComicSelectDialogFragment(private val comicController: ComicController) : 
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.comic_select_dialog, null) as View
-        val editText = view.findViewById<EditText>(R.id.edit_text)
+        val inputView = view.findViewById<EditText>(R.id.comic_select_dialog_input)
         val builder = AlertDialog.Builder(activity).setView(view)
-            .setPositiveButton(R.string.dialog_select_comic_positive_button) { _, _ ->
-                val number = editText.text.toString()
-                comicController.select(number.toInt())
-            }.setNegativeButton(R.string.dialog_select_comic_negative_button) { _, _ ->
+            .setPositiveButton(R.string.comic_select_dialog_positive_button) { _, _ ->
+                val comicNumber = inputView.text.toString()
+                comicController.select(comicNumber.toInt())
+            }.setNegativeButton(R.string.comic_select_dialog_negative_button) { _, _ ->
                 dialog?.cancel()
             }
         return builder.create()

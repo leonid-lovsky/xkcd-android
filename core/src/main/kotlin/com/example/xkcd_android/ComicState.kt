@@ -1,14 +1,33 @@
 package com.example.xkcd_android
 
+import kotlin.random.Random
+
 data class ComicState(
     val comic: Comic,
     val current: Int,
     val last: Int,
 ) {
-    val first = ComicState.first
-    val next = current + 1
-    val previous = current - 1
-    val range = first..last
+    private val first = ComicState.first
+
+    fun first(): Int {
+        return first
+    }
+
+    fun last(): Int {
+        return last
+    }
+
+    fun next(): Int {
+        return current + 1
+    }
+
+    fun previous(): Int {
+        return current - 1
+    }
+
+    fun random(): Int {
+        return Random.nextInt(first, last)
+    }
 
     fun copy(comic: Comic): ComicState {
         return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))

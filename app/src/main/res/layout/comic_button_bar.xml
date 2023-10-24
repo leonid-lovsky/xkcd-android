@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:singleLine="true"
-        android:text="@string/button_first" />
+        android:text="@string/comic_button_first" />
 
     <Button
         android:id="@+id/comic_button_previous"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:singleLine="true"
-        android:text="@string/button_previous" />
+        android:text="@string/comic_button_previous" />
 
     <Button
         android:id="@+id/comic_button_next"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:singleLine="true"
-        android:text="@string/button_next" />
+        android:text="@string/comic_button_next" />
 
     <Button
         android:id="@+id/comic_button_last"
@@ -42,5 +42,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:singleLine="true"
-        android:text="@string/button_latest" />
+        android:text="@string/comic_button_latest" />
 </LinearLayout>

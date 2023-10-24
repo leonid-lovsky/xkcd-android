@@ -6,9 +6,9 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/comic_application_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.XKCD_android">
+        android:theme="@style/Theme.ComicApplication">
         <activity
             android:name=".ComicActivity"
             android:exported="true">

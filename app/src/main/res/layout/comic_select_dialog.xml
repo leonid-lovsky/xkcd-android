@@ -4,14 +4,14 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/edit_text"
+        android:id="@+id/comic_select_dialog_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
-        android:hint="@string/dialog_select_comic_input_hint"
+        android:hint="@string/comic_select_dialog_input_hint"
         android:importantForAutofill="no"
         android:inputType="number"
         android:minHeight="?attr/minTouchTargetSize" />
