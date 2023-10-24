@@ -8,10 +8,11 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
         app:subtitleCentered="true"
         app:titleCentered="true"
-        tools:menu="@menu/menu_main"
+        tools:menu="@menu/comic_menu_main"
         tools:subtitle="@tools:sample/lorem"
         tools:title="@tools:sample/lorem" />
 </FrameLayout>

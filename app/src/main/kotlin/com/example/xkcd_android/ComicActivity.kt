@@ -60,7 +60,7 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_main, menu)
+        inflater.inflate(R.menu.comic_menu_main, menu)
         return true
     }
 
