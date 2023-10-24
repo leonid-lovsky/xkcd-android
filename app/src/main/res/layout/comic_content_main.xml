@@ -49,7 +49,7 @@
             tools:text="https://xkcd.com/2841/" />
 
         <TextView
-            android:id="@+id/image_url"
+            android:id="@+id/comic_image_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"

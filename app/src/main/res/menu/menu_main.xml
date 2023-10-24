@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_current"
+        android:id="@+id/menu_comic_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/menu_current" />
     <item
-        android:id="@+id/menu_random"
+        android:id="@+id/menu_comic_random"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/menu_random" />
     <item
-        android:id="@+id/menu_select"
+        android:id="@+id/menu_comic_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="@string/menu_select" />

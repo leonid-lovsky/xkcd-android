@@ -7,20 +7,17 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class ComicSelectDialogFragment(private val ComicController: ComicController) :
-    DialogFragment() {
+class ComicSelectDialogFragment(private val comicController: ComicController) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
         val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.dialog_select_comic, null) as View
+        val view = inflater.inflate(R.layout.comic_select_dialog, null) as View
         val editText = view.findViewById<EditText>(R.id.edit_text)
-        val builder = AlertDialog.Builder(activity)
-            .setView(view)
+        val builder = AlertDialog.Builder(activity).setView(view)
             .setPositiveButton(R.string.dialog_select_comic_positive_button) { _, _ ->
                 val number = editText.text.toString()
-                ComicController.select(number.toInt())
-            }
-            .setNegativeButton(R.string.dialog_select_comic_negative_button) { _, _ ->
+                comicController.select(number.toInt())
+            }.setNegativeButton(R.string.dialog_select_comic_negative_button) { _, _ ->
                 dialog?.cancel()
             }
         return builder.create()

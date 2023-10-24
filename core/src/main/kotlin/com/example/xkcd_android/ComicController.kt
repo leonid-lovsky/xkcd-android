@@ -3,13 +3,13 @@ package com.example.xkcd_android
 class ComicController(
     private val comicStorage: ComicStorage,
 ) : ComicCallback {
-    private var comicUIState = ComicUIState()
+    private var comicState = ComicState()
     var comicPresenter: ComicPresenter? = null
 
     override fun onResponse(comic: Comic?) {
         if (comic == null) return
-        comicUIState = comicUIState.copy(comic)
-        comicPresenter?.render(comicUIState)
+        comicState = comicState.copy(comic)
+        comicPresenter?.render(comicState)
     }
 
     override fun onFailure(t: Throwable) {
@@ -21,7 +21,7 @@ class ComicController(
     }
 
     fun random() {
-        comicStorage.getComic(comicUIState.range.random(), this)
+        comicStorage.getComic(comicState.range.random(), this)
     }
 
     fun select() {
@@ -33,18 +33,18 @@ class ComicController(
     }
 
     fun first() {
-        comicStorage.getComic(comicUIState.first, this)
+        comicStorage.getComic(comicState.first, this)
     }
 
     fun last() {
-        comicStorage.getComic(comicUIState.last, this)
+        comicStorage.getComic(comicState.last, this)
     }
 
     fun previous() {
-        comicStorage.getComic(comicUIState.current - 1, this)
+        comicStorage.getComic(comicState.current - 1, this)
     }
 
     fun next() {
-        comicStorage.getComic(comicUIState.current + 1, this)
+        comicStorage.getComic(comicState.current + 1, this)
     }
 }

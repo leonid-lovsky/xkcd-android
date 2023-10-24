@@ -19,33 +19,33 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     private lateinit var comicTitleView: TextView
     private lateinit var comicDescriptionTextView: TextView
     private lateinit var comicUrlTextView: TextView
-    private lateinit var imageUrlTextView: TextView
+    private lateinit var comicImageUrlTextView: TextView
 
-    private lateinit var buttonFirst: Button
-    private lateinit var buttonLatest: Button
-    private lateinit var buttonPrevious: Button
-    private lateinit var buttonNext: Button
+    private lateinit var buttonComicFirst: Button
+    private lateinit var buttonComicLast: Button
+    private lateinit var buttonComicPrevious: Button
+    private lateinit var buttonComicNext: Button
 
     private val comicController = (application as ComicDependencies).comicController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.comic_activity_main)
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         comicTitleView = findViewById(R.id.comic_title)
         comicImageView = findViewById(R.id.comic_image)
         comicDescriptionTextView = findViewById(R.id.comic_description)
         comicUrlTextView = findViewById(R.id.comic_link)
-        imageUrlTextView = findViewById(R.id.image_url)
-        buttonFirst = findViewById(R.id.button_first)
-        buttonLatest = findViewById(R.id.button_last)
-        buttonPrevious = findViewById(R.id.button_previous)
-        buttonNext = findViewById(R.id.button_next)
-        buttonFirst.setOnClickListener(this)
-        buttonLatest.setOnClickListener(this)
-        buttonPrevious.setOnClickListener(this)
-        buttonNext.setOnClickListener(this)
+        comicImageUrlTextView = findViewById(R.id.comic_image_url)
+        buttonComicFirst = findViewById(R.id.button_comic_first)
+        buttonComicLast = findViewById(R.id.button_comic_last)
+        buttonComicPrevious = findViewById(R.id.button_comic_previous)
+        buttonComicNext = findViewById(R.id.button_comic_next)
+        buttonComicFirst.setOnClickListener(this)
+        buttonComicLast.setOnClickListener(this)
+        buttonComicPrevious.setOnClickListener(this)
+        buttonComicNext.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -66,15 +66,15 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.menu_current -> {
+            R.id.menu_comic_current -> {
                 comicController.current()
                 true
             }
-            R.id.menu_random -> {
+            R.id.menu_comic_random -> {
                 comicController.random()
                 true
             }
-            R.id.menu_select -> {
+            R.id.menu_comic_select -> {
                 comicController.select()
                 true
             }
@@ -85,25 +85,25 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.button_first -> comicController.first()
-            R.id.button_last -> comicController.last()
-            R.id.button_previous -> comicController.previous()
-            R.id.button_next -> comicController.next()
+            R.id.button_comic_first -> comicController.first()
+            R.id.button_comic_last -> comicController.last()
+            R.id.button_comic_previous -> comicController.previous()
+            R.id.button_comic_next -> comicController.next()
         }
     }
 
-    override fun render(comicUIState: ComicUIState) {
-        val comic = comicUIState.comic ?: return
+    override fun render(comicState: ComicState) {
+        val comic = comicState.comic
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicUrlTextView.text = comic.link
-        imageUrlTextView.text = comic.img
+        comicImageUrlTextView.text = comic.img
     }
 
     override fun render(t: Throwable) {}
 
     override fun showSelectComicDialog() {
         val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
-        comicSelectDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG")
+        comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
     }
 }
