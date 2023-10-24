@@ -14,5 +14,4 @@
         tools:menu="@menu/menu_main"
         tools:subtitle="@tools:sample/lorem"
         tools:title="@tools:sample/lorem" />
-
 </FrameLayout>
