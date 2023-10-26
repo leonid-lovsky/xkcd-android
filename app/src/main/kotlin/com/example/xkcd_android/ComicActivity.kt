@@ -76,8 +76,7 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
             }
             R.id.comic_menu_select -> {
                 val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
-                comicSelectDialogFragment.show(supportFragmentManager,
-                    "COMIC_SELECT_DIALOG_FRAGMENT")
+                comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
                 true
             }
             else -> super.onOptionsItemSelected(item)

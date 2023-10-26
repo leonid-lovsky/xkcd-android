@@ -7,7 +7,7 @@ class ComicRepository(
     override fun getComic(callback: ComicCallback) {
         comicStorageRemote.getComic(object : ComicCallback {
             override fun onResponse(comic: Comic?) {
-                comicStorageLocal.save(comic)
+                comicStorageLocal.insert(comic)
             }
 
             override fun onFailure(t: Throwable) {
@@ -29,7 +29,7 @@ class ComicRepository(
     override fun getComic(number: Int, callback: ComicCallback) {
         comicStorageRemote.getComic(number, object : ComicCallback {
             override fun onResponse(comic: Comic?) {
-                comicStorageLocal.save(comic)
+                comicStorageLocal.insert(comic)
             }
 
             override fun onFailure(t: Throwable) {

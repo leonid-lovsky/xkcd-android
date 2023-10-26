@@ -10,8 +10,10 @@ class ComicDependenciesRoom(applicationContext: Context) : ComicDependenciesLoca
     ).build()
 
     private val comicDaoRoom = database.comicDaoRoom()
+    private val comicConverterRetrofit = ComicConverterRoomDefault()
+    private val comicStorageRoom = ComicStorageRoom(comicDaoRoom, comicConverterRetrofit)
 
     override fun comicStorageLocal(): ComicStorageLocal {
-        return ComicStorageRoom(comicDaoRoom)
+        return comicStorageRoom
     }
 }

@@ -8,8 +8,8 @@ import androidx.room.Query
 @Dao
 interface ComicDaoRoom {
     @Query("SELECT * FROM comic WHERE num = :num")
-    fun comic(num: Int): ComicEntityRoom
+    fun comic(number: Int): ComicEntityRoom
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(comic: ComicEntityRoom)
+    fun insert(comic: ComicEntityRoom)
 }

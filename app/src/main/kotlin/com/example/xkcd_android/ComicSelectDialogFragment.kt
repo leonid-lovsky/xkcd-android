@@ -13,7 +13,8 @@ class ComicSelectDialogFragment(private val comicController: ComicController) : 
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.comic_select_dialog, null) as View
         val inputView = view.findViewById<EditText>(R.id.comic_select_dialog_input)
-        val builder = AlertDialog.Builder(activity).setView(view)
+        val builder = AlertDialog.Builder(activity)
+            .setView(view)
             .setPositiveButton(R.string.comic_select_dialog_positive_button) { _, _ ->
                 val comicNumber = inputView.text.toString()
                 comicController.select(comicNumber.toInt())

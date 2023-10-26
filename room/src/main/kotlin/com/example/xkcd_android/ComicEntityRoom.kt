@@ -28,4 +28,5 @@ data class ComicEntityRoom(
     @ColumnInfo(name = "title")
     val title: String,
     @ColumnInfo(name = "day")
-    val day: String)
+    val day: String
+)
