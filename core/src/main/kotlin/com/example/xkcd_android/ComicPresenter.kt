@@ -1,45 +1,39 @@
 package com.example.xkcd_android
 
-class ComicPresenter(
-    private val comicRepository: ComicRepository,
-) : ComicCallback {
-    private var comicUIState = ComicUIState()
+class ComicPresenter(private val comicRepository: ComicRepository) : ComicCallback {
+    private var comicUIState: ComicUIState? = null
     var comicView: ComicView? = null
 
-    override fun onResponse(comic: Comic) {
-        comicUIState = comicUIState.copy(comic)
+    override fun onChanged(comic: Comic) {
+        comicUIState = comicUIState?.copy(comic)
         comicView?.render(comicUIState)
     }
 
-    override fun onFailure(t: Throwable) {
-        comicView?.render(t)
-    }
-
     fun current() {
-        comicStorage.getComic(this)
+        comicRepository.comic(this)
     }
 
     fun select(number: Int) {
-        comicStorage.getComic(number, this)
+        comicRepository.comic(number, this)
     }
 
     fun first() {
-        comicStorage.getComic(comicUIState.first(), this)
+        comicRepository.comic(comicUIState.first(), this)
     }
 
     fun last() {
-        comicStorage.getComic(comicUIState.last(), this)
-    }
-
-    fun next() {
-        comicStorage.getComic(comicUIState.next(), this)
+        comicRepository.comic(comicUIState.last(), this)
     }
 
     fun previous() {
-        comicStorage.getComic(comicUIState.previous(), this)
+        comicRepository.comic(comicUIState.previous(), this)
+    }
+
+    fun next() {
+        comicRepository.comic(comicUIState.next(), this)
     }
 
     fun random() {
-        comicStorage.getComic(comicUIState.random(), this)
+        comicRepository.comic(comicUIState.random(), this)
     }
 }

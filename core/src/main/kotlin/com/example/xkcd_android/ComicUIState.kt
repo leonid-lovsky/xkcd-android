@@ -7,7 +7,6 @@ data class ComicUIState(
     val current: Int,
     val last: Int,
 ) {
-    private val first = ComicUIState.first
 
     fun first(): Int {
         return first
@@ -17,12 +16,12 @@ data class ComicUIState(
         return last
     }
 
-    fun next(): Int {
-        return current + 1
-    }
-
     fun previous(): Int {
         return current - 1
+    }
+
+    fun next(): Int {
+        return current + 1
     }
 
     fun random(): Int {
