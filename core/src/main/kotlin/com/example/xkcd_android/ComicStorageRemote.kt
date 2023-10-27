@@ -1,3 +1,6 @@
 package com.example.xkcd_android
 
-interface ComicStorageRemote : ComicStorage
+interface ComicStorageRemote {
+    fun comic(): Comic
+    fun comic(number: Int): Comic
+}

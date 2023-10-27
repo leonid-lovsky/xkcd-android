@@ -7,8 +7,8 @@ class ComicApplication : Application(), ComicDependencies {
     private val comicDependenciesRemote = ComicDependenciesRetrofit()
     private val comicStorageLocal = comicDependenciesLocal.comicStorageLocal()
     private val comicStorageRemote = comicDependenciesRemote.comicStorageRemote()
-    private val comicRepository = ComicRepository(comicStorageLocal, comicStorageRemote)
-    private val comicController = ComicController(comicRepository)
+    private val comicInteractor = ComicInteractor(comicStorageLocal, comicStorageRemote)
+    private val comicController = ComicController(comicInteractor)
 
     override fun comicController(): ComicController {
         return comicController
