@@ -7,7 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class ComicSelectDialogFragment(private val comicController: ComicController) : DialogFragment() {
+class ComicSelectDialogFragment(private val comicPresenter: ComicPresenter) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
         val inflater = requireActivity().layoutInflater
@@ -17,7 +17,7 @@ class ComicSelectDialogFragment(private val comicController: ComicController) : 
             .setView(view)
             .setPositiveButton(R.string.comic_select_dialog_positive_button) { _, _ ->
                 val comicNumber = inputView.text.toString()
-                comicController.select(comicNumber.toInt())
+                comicPresenter.select(comicNumber.toInt())
             }.setNegativeButton(R.string.comic_select_dialog_negative_button) { _, _ ->
                 dialog?.cancel()
             }

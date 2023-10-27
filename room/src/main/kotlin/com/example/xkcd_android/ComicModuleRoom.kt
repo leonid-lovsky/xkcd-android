@@ -3,7 +3,7 @@ package com.example.xkcd_android
 import android.content.Context
 import androidx.room.Room
 
-class ComicDependenciesRoom(applicationContext: Context) : ComicDependenciesLocal {
+class ComicModuleRoom(applicationContext: Context) : ComicModuleLocal {
     private val database = Room.databaseBuilder(
         applicationContext,
         ComicDatabaseRoom::class.java, "database"

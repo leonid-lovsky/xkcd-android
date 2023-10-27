@@ -3,7 +3,7 @@ package com.example.xkcd_android
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ComicDependenciesRetrofit : ComicDependenciesRemote {
+class ComicModuleRetrofit : ComicModuleRemote {
     private val baseUrl = "https://xkcd.com/"
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)

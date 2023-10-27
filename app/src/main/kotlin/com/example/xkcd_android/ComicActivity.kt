@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.squareup.picasso.Picasso
 
-class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener {
+class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     private lateinit var toolbar: Toolbar
 
     private lateinit var comicImageView: ImageView
@@ -26,7 +26,7 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
     private lateinit var comicButtonPrevious: Button
     private lateinit var comicButtonNext: Button
 
-    private val comicController = (application as ComicDependencies).comicController()
+    private val comicController = (application as ComicApplication).comicController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +50,12 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
 
     override fun onStart() {
         super.onStart()
-        comicController.comicPresenter = this
+        comicController.comicView = this
     }
 
     override fun onStop() {
         super.onStop()
-        comicController.comicPresenter = null
+        comicController.comicView = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -93,8 +93,8 @@ class ComicActivity : AppCompatActivity(), ComicPresenter, View.OnClickListener 
         }
     }
 
-    override fun render(comicState: ComicState) {
-        val comic = comicState.comic
+    override fun render(comicUIState: ComicUIState) {
+        val comic = comicUIState.comic
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicLinkTextView.text = comic.link

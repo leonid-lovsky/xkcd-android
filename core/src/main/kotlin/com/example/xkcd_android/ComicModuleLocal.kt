@@ -1,5 +1,5 @@
 package com.example.xkcd_android
 
-interface ComicDependenciesLocal {
+interface ComicModuleLocal {
     fun comicStorageLocal(): ComicStorageLocal
 }

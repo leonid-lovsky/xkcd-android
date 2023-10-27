@@ -1,5 +1,5 @@
 package com.example.xkcd_android
 
-interface ComicDependenciesRemote {
+interface ComicModuleRemote {
     fun comicStorageRemote(): ComicStorageRemote
 }

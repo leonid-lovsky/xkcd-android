@@ -2,14 +2,14 @@ package com.example.xkcd_android
 
 import java.util.concurrent.ExecutorService
 
-class ComicInteractor(
+class ComicRepository(
     private val comicStorageLocal: ComicStorageLocal,
     private val comicStorageRemote: ComicStorageRemote,
-    private val executorService: ExecutorService
+    private val executorServiceBackground: ExecutorService
 ) {
 
     fun comic(comicCallback: ComicCallback) {
-        executorService.execute {
+        executorServiceBackground.execute {
             val comicRemote = comicStorageRemote.comic()
             if (comicRemote != null) {
                 comicStorageLocal.comic(comicRemote)
@@ -22,7 +22,7 @@ class ComicInteractor(
     }
 
     fun comic(number: Int, comicCallback: ComicCallback) {
-        executorService.execute {
+        executorServiceBackground.execute {
             val comicRemote = comicStorageRemote.comic(number)
             if (comicRemote != null) {
                 comicStorageLocal.comic(comicRemote)
