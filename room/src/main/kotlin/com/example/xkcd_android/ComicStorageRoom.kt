@@ -1,16 +1,16 @@
 package com.example.xkcd_android
 
 class ComicStorageRoom(
-    private val comicDaoRoom: ComicDaoRoom,
+    private val comicServiceRoom: ComicServiceRoom,
     private val comicConverterRoom: ComicConverterRoom
 ) : ComicStorageLocal {
     override fun comic(number: Int): Comic {
-        val comicEntityRoom = comicDaoRoom.comic(number)
+        val comicEntityRoom = comicServiceRoom.comic(number)
         return comicConverterRoom.from(comicEntityRoom)
     }
 
-    override fun insert(comic: Comic) {
+    override fun comic(comic: Comic) {
         val comicEntityRoom = comicConverterRoom.from(comic)
-        comicDaoRoom.insert(comicEntityRoom)
+        comicServiceRoom.comic(comicEntityRoom)
     }
 }

@@ -1,24 +1,24 @@
 package com.example.xkcd_android
 
 class ComicConverterRoomDefault : ComicConverterRoom {
-    override fun from(comicEntityRoom: ComicEntityRoom): Comic {
+    override fun from(comicValueRoom: ComicValueRoom): Comic {
         return Comic(
-            month = comicEntityRoom.month,
-            num = comicEntityRoom.num,
-            link = comicEntityRoom.link,
-            year = comicEntityRoom.year,
-            news = comicEntityRoom.news,
-            safeTitle = comicEntityRoom.safeTitle,
-            transcript = comicEntityRoom.transcript,
-            alt = comicEntityRoom.alt,
-            img = comicEntityRoom.img,
-            title = comicEntityRoom.title,
-            day = comicEntityRoom.day
+            month = comicValueRoom.month,
+            num = comicValueRoom.num,
+            link = comicValueRoom.link,
+            year = comicValueRoom.year,
+            news = comicValueRoom.news,
+            safeTitle = comicValueRoom.safeTitle,
+            transcript = comicValueRoom.transcript,
+            alt = comicValueRoom.alt,
+            img = comicValueRoom.img,
+            title = comicValueRoom.title,
+            day = comicValueRoom.day
         )
     }
 
-    override fun from(comic: Comic): ComicEntityRoom {
-        return ComicEntityRoom(
+    override fun from(comic: Comic): ComicValueRoom {
+        return ComicValueRoom(
             month = comic.month,
             num = comic.num,
             link = comic.link,

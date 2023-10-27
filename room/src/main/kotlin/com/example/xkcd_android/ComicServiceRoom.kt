@@ -6,10 +6,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface ComicDaoRoom {
+interface ComicServiceRoom {
     @Query("SELECT * FROM comic WHERE num = :num")
-    fun comic(number: Int): ComicEntityRoom
+    fun comic(number: Int): ComicValueRoom
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(comic: ComicEntityRoom)
+    fun comic(comic: ComicValueRoom)
 }

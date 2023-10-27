@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
 interface ComicConverterRoom {
-    fun from(comicEntityRoom: ComicEntityRoom): Comic
-    fun from(comic: Comic): ComicEntityRoom
+    fun from(comicValueRoom: ComicValueRoom): Comic
+    fun from(comic: Comic): ComicValueRoom
 }

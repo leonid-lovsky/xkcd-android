@@ -6,8 +6,8 @@ import retrofit2.http.Path
 
 interface ComicServiceRetrofit {
     @GET("info.0.json")
-    fun comic(): Call<ComicDataRetrofit>
+    fun comic(): Call<ComicValueRetrofit>
 
     @GET("{number}/info.0.json")
-    fun comic(@Path("number") number: Int): Call<ComicDataRetrofit>
+    fun comic(@Path("number") number: Int): Call<ComicValueRetrofit>
 }

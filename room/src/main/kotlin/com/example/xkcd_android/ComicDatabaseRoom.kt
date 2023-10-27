@@ -5,5 +5,5 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [Comic::class], version = 1)
 abstract class ComicDatabaseRoom : RoomDatabase() {
-    abstract fun comicDaoRoom(): ComicDaoRoom
+    abstract fun comicServiceRoom(): ComicServiceRoom
 }
