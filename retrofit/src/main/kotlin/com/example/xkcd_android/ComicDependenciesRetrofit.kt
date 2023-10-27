@@ -11,7 +11,7 @@ class ComicDependenciesRetrofit : ComicDependenciesRemote {
         .build()
 
     private val comicServiceRetrofit = retrofit.create(ComicServiceRetrofit::class.java)
-    private val comicConverterRetrofit = ComicConverterRetrofitDefault(baseUrl)
+    private val comicConverterRetrofit = ComicConverterDefaultRetrofit(baseUrl)
     private val comicStorageRetrofit = ComicStorageRetrofit(comicServiceRetrofit, comicConverterRetrofit)
 
     override fun comicStorageRemote(): ComicStorageRemote {

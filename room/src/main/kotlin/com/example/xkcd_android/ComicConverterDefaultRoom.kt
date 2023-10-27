@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-class ComicConverterRoomDefault : ComicConverterRoom {
+class ComicConverterDefaultRoom : ComicConverterRoom {
     override fun from(comicValueRoom: ComicValueRoom): Comic {
         return Comic(
             month = comicValueRoom.month,

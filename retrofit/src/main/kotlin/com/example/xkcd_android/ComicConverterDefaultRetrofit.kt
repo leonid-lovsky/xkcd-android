@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-class ComicConverterRetrofitDefault(private val baseUrl: String) : ComicConverterRetrofit {
+class ComicConverterDefaultRetrofit(private val baseUrl: String) : ComicConverterRetrofit {
     override fun from(comicValueRetrofit: ComicValueRetrofit): Comic {
         return Comic(
             month = comicValueRetrofit.month,

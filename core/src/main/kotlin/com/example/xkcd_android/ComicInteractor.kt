@@ -8,23 +8,29 @@ class ComicInteractor(
     private val executorServiceWorker: ExecutorService
 ) {
 
-    fun comic() {
+    fun comic(comicCallback: ComicCallback) {
         executorServiceWorker.execute {
             val comicRemote = comicStorageRemote.comic()
             if (comicRemote != null) {
                 comicStorageLocal.comic(comicRemote)
             }
             val comicLocal = comicStorageLocal.comic()
+            if (comicLocal != null) {
+                comicCallback.comic(comicLocal)
+            }
         }
     }
 
-    fun comic(number: Int) {
+    fun comic(number: Int, comicCallback: ComicCallback) {
         executorServiceWorker.execute {
             val comicRemote = comicStorageRemote.comic(number)
             if (comicRemote != null) {
                 comicStorageLocal.comic(comicRemote)
             }
             val comicLocal = comicStorageLocal.comic(number)
+            if (comicLocal != null) {
+                comicCallback.comic(comicLocal)
+            }
         }
     }
 }
