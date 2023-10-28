@@ -10,17 +10,30 @@
 
     <include layout="@layout/comic_toolbar" />
 
-    <ProgressBar
-        android:id="@+id/comic_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="-8dp"
-        android:layout_marginBottom="-8dp"
-        android:indeterminate="true"
-        android:visibility="invisible"
-        tools:visibility="visible" />
+        android:layout_height="4dp">
+
+        <ProgressBar
+            android:id="@+id/comic_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <!--<ProgressBar-->
+    <!--    style="?android:attr/progressBarStyleHorizontal"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:layout_marginTop="-8dp"-->
+    <!--    android:layout_marginBottom="-8dp"-->
+    <!--    android:indeterminate="true"-->
+    <!--    android:visibility="invisible"-->
+    <!--    tools:visibility="visible" />-->
 
     <FrameLayout
         android:layout_width="match_parent"
