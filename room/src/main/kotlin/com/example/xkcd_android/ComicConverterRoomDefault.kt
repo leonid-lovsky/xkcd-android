@@ -1,8 +1,7 @@
 package com.example.xkcd_android
 
 class ComicConverterRoomDefault : ComicConverterRoom {
-    override fun convert(comicDataRoom: ComicDataRoom?): Comic? {
-        if (comicDataRoom == null) return null
+    override fun convert(comicDataRoom: ComicDataRoom): Comic {
         return Comic(
             month = comicDataRoom.month,
             num = comicDataRoom.num,
@@ -18,8 +17,7 @@ class ComicConverterRoomDefault : ComicConverterRoom {
         )
     }
 
-    override fun convert(comic: Comic?): ComicDataRoom? {
-        if (comic == null) return null
+    override fun convert(comic: Comic): ComicDataRoom {
         return ComicDataRoom(
             month = comic.month,
             num = comic.num,

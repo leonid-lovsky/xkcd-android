@@ -1,16 +1,28 @@
 package com.example.xkcd_android
 
 class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Resource<Comic>> {
-    private var comicUIState = ComicUIState()
+    private var comicPage = ComicPage()
     var comicView: ComicView? = null
 
     override fun onChanged(value: Resource<Comic>) {
-        comicUIState = comicUIState.copy(value)
-        comicView?.render(comicUIState)
+        if (value.loading) {
+            comicView?.showProgress()
+        } else {
+            comicView?.hideProgress()
+        }
+        val comic = value.data
+        if (comic != null) {
+            comicPage = comicPage.copy(comic)
+            comicView?.render(comicPage)
+        }
     }
 
     fun current() {
         comicRepository.comic(this)
+    }
+
+    fun select() {
+        comicView?.showComicSelectDialog()
     }
 
     fun select(number: Int) {
@@ -18,26 +30,26 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
     }
 
     fun first() {
-        comicRepository.comic(comicUIState.first(), this)
+        comicRepository.comic(comicPage.first(), this)
     }
 
     fun last() {
-        comicRepository.comic(comicUIState.last(), this)
+        comicRepository.comic(comicPage.last(), this)
     }
 
     fun previous() {
-        comicRepository.comic(comicUIState.previous(), this)
+        comicRepository.comic(comicPage.previous(), this)
     }
 
     fun next() {
-        comicRepository.comic(comicUIState.next(), this)
+        comicRepository.comic(comicPage.next(), this)
     }
 
     fun refresh() {
-        comicRepository.comic(comicUIState.current(), this)
+        comicRepository.comic(comicPage.current(), this)
     }
 
     fun random() {
-        comicRepository.comic(comicUIState.random(), this)
+        comicRepository.comic(comicPage.random(), this)
     }
 }

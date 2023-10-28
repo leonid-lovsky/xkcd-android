@@ -13,14 +13,16 @@ class ComicRepository(
     fun comic(callback: Callback<Resource<Comic>>) {
         executorServiceBackground.execute {
             executorMain.execute {
-                val resource = Resource(Status.LOADING, null)
+                val resource = Resource(true, null)
                 callback.onChanged(resource)
             }
-            val comicRemote = comicStorageRemote.comic()
-            comicStorageLocal.comic(comicRemote)
+            val comicDataRemote = comicStorageRemote.comic()
+            if (comicDataRemote != null) {
+                comicStorageLocal.comic(comicDataRemote)
+            }
             val comicLocal = comicStorageLocal.comic()
             executorMain.execute {
-                val resource = Resource(Status.SUCCESS, comicLocal)
+                val resource = Resource(false, comicLocal)
                 callback.onChanged(resource)
             }
         }
@@ -29,14 +31,16 @@ class ComicRepository(
     fun comic(number: Int, callback: Callback<Resource<Comic>>) {
         executorServiceBackground.execute {
             executorMain.execute {
-                val resource = Resource(Status.LOADING, null)
+                val resource = Resource(true, null)
                 callback.onChanged(resource)
             }
-            val comicRemote = comicStorageRemote.comic(number)
-            comicStorageLocal.comic(comicRemote)
+            val comicDataRemote = comicStorageRemote.comic()
+            if (comicDataRemote != null) {
+                comicStorageLocal.comic(comicDataRemote)
+            }
             val comicLocal = comicStorageLocal.comic(number)
             executorMain.execute {
-                val resource = Resource(Status.SUCCESS, comicLocal)
+                val resource = Resource(false, comicLocal)
                 callback.onChanged(resource)
             }
         }

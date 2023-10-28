@@ -71,8 +71,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
                 true
             }
             R.id.comic_menu_select -> {
-                val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
-                comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
+                comicController.select()
                 true
             }
             R.id.comic_menu_refresh -> {
@@ -97,13 +96,24 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         }
     }
 
-    override fun render(comicUIState: ComicUIState) {
-        val comic = comicUIState.comic ?: return
+    override fun render(comicPage: ComicPage) {
+        val comic = comicPage.comic ?: return
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicLinkTextView.text = comic.link
         comicImageUrlTextView.text = comic.img
     }
 
-    override fun render(t: Throwable) {}
+    override fun showComicSelectDialog() {
+        val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
+        comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
+    }
+
+    override fun showProgress() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hideProgress() {
+        TODO("Not yet implemented")
+    }
 }

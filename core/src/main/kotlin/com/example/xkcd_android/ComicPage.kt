@@ -2,13 +2,13 @@ package com.example.xkcd_android
 
 import kotlin.random.Random
 
-data class ComicUIState(
+data class ComicPage(
     val comic: Comic? = null,
     val current: Int = 1,
     val last: Int = 1,
 ) {
 
-    fun copy(comic: Comic): ComicUIState {
+    fun copy(comic: Comic): ComicPage {
         return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))
     }
 

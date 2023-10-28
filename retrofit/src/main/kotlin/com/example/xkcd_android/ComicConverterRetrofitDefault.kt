@@ -1,8 +1,7 @@
 package com.example.xkcd_android
 
 class ComicConverterRetrofitDefault(private val baseUrl: String) : ComicConverterRetrofit {
-    override fun convert(comicDataRetrofit: ComicDataRetrofit?): Comic? {
-        if (comicDataRetrofit == null) return null
+    override fun convert(comicDataRetrofit: ComicDataRetrofit): Comic {
         return Comic(
             month = comicDataRetrofit.month,
             num = comicDataRetrofit.num,
