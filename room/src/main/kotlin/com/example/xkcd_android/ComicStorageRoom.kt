@@ -5,19 +5,19 @@ class ComicStorageRoom(
     private val comicConverterRoom: ComicConverterRoom
 ) : ComicStorageLocal {
     override fun comic(): Comic? {
-        val comicEntityRoom = comicServiceRoom.comic()
-        if (comicEntityRoom == null) return null
-        return comicConverterRoom.from(comicEntityRoom)
+        val comicDataRoom = comicServiceRoom.comicDataRoom()
+        if (comicDataRoom == null) return null
+        return comicConverterRoom.convert(comicDataRoom)
     }
 
     override fun comic(number: Int): Comic? {
-        val comicEntityRoom = comicServiceRoom.comic(number)
-        if (comicEntityRoom == null) return null
-        return comicConverterRoom.from(comicEntityRoom)
+        val comicDataRoom = comicServiceRoom.comicDataRoom(number)
+        if (comicDataRoom == null) return null
+        return comicConverterRoom.convert(comicDataRoom)
     }
 
     override fun comic(comic: Comic) {
-        val comicEntityRoom = comicConverterRoom.from(comic)
-        comicServiceRoom.comic(comicEntityRoom)
+        val comicDataRoom = comicConverterRoom.convert(comic)
+        comicServiceRoom.comicDataRoom(comicDataRoom)
     }
 }

@@ -1,5 +1,5 @@
 package com.example.xkcd_android
 
 interface ComicConverterRetrofit {
-    fun from(comicValueRetrofit: ComicValueRetrofit): Comic
+    fun convert(comicDataRetrofit: ComicDataRetrofit): Comic
 }

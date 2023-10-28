@@ -5,18 +5,18 @@ class ComicStorageRetrofit(
     private val comicConverterRetrofit: ComicConverterRetrofit
 ) : ComicStorageRemote {
     override fun comic(): Comic? {
-        val call = comicServiceRetrofit.comic()
+        val call = comicServiceRetrofit.comicDataRetrofit()
         val response = call.execute()
         val comicDataRetrofit = response.body()
         if (comicDataRetrofit == null) return null
-        return comicConverterRetrofit.from(comicDataRetrofit)
+        return comicConverterRetrofit.convert(comicDataRetrofit)
     }
 
     override fun comic(number: Int): Comic? {
-        val call = comicServiceRetrofit.comic()
+        val call = comicServiceRetrofit.comicDataRetrofit()
         val response = call.execute()
         val comicDataRetrofit = response.body()
         if (comicDataRetrofit == null) return null
-        return comicConverterRetrofit.from(comicDataRetrofit)
+        return comicConverterRetrofit.convert(comicDataRetrofit)
     }
 }

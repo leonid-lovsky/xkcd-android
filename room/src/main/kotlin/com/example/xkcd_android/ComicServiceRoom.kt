@@ -8,11 +8,11 @@ import androidx.room.Query
 @Dao
 interface ComicServiceRoom {
     @Query("SELECT * FROM comics WHERE num = (SELECT MAX(num) FROM comics)")
-    fun comic(): ComicValueRoom?
+    fun comicDataRoom(): ComicDataRoom?
 
     @Query("SELECT * FROM comics WHERE num = :number")
-    fun comic(number: Int): ComicValueRoom?
+    fun comicDataRoom(number: Int): ComicDataRoom?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun comic(comic: ComicValueRoom)
+    fun comicDataRoom(comicDataRoom: ComicDataRoom)
 }

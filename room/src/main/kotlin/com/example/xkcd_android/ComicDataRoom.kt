@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "comics")
-data class ComicValueRoom(
+data class ComicDataRoom(
     @ColumnInfo(name = "month")
     val month: String,
     @PrimaryKey

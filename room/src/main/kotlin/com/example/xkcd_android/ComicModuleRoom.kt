@@ -10,7 +10,7 @@ class ComicModuleRoom(applicationContext: Context) : ComicModuleLocal {
     ).build()
 
     private val comicServiceRoom = database.comicServiceRoom()
-    private val comicConverterRoom = ComicConverterDefaultRoom()
+    private val comicConverterRoom = ComicConverterRoomDefault()
     private val comicStorageRoom = ComicStorageRoom(comicServiceRoom, comicConverterRoom)
 
     override fun comicStorageLocal(): ComicStorageLocal {

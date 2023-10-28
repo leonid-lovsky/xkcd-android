@@ -8,7 +8,7 @@ class ComicRepository(
     private val executorServiceBackground: ExecutorService
 ) {
 
-    fun comic(comicCallback: ComicCallback) {
+    fun comic(callback: Callback<Comic>) {
         executorServiceBackground.execute {
             val comicRemote = comicStorageRemote.comic()
             if (comicRemote != null) {
@@ -16,12 +16,12 @@ class ComicRepository(
             }
             val comicLocal = comicStorageLocal.comic()
             if (comicLocal != null) {
-                comicCallback.onChanged(comicLocal)
+                callback.onChanged(comicLocal)
             }
         }
     }
 
-    fun comic(number: Int, comicCallback: ComicCallback) {
+    fun comic(number: Int, callback: Callback<Comic>) {
         executorServiceBackground.execute {
             val comicRemote = comicStorageRemote.comic(number)
             if (comicRemote != null) {
@@ -29,7 +29,7 @@ class ComicRepository(
             }
             val comicLocal = comicStorageLocal.comic(number)
             if (comicLocal != null) {
-                comicCallback.onChanged(comicLocal)
+                callback.onChanged(comicLocal)
             }
         }
     }

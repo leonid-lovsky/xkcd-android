@@ -8,6 +8,14 @@ data class ComicUIState(
     val last: Int = 1,
 ) {
 
+    fun copy(comic: Comic): ComicUIState {
+        return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))
+    }
+
+    fun current(): Int {
+        return current
+    }
+
     fun first(): Int {
         return first
     }
@@ -26,14 +34,6 @@ data class ComicUIState(
 
     fun random(): Int {
         return Random.nextInt(first, last)
-    }
-
-    fun current(): Int {
-        return current
-    }
-
-    fun copy(comic: Comic): ComicUIState {
-        return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))
     }
 
     companion object {
