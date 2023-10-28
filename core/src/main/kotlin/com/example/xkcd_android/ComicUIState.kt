@@ -3,9 +3,9 @@ package com.example.xkcd_android
 import kotlin.random.Random
 
 data class ComicUIState(
-    val comic: Comic,
-    val current: Int,
-    val last: Int,
+    val comic: Comic? = null,
+    val current: Int = 1,
+    val last: Int = 1,
 ) {
 
     fun first(): Int {
