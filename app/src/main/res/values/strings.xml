@@ -4,9 +4,10 @@
     <string name="comic_menu_current">Current</string>
     <string name="comic_menu_random">Random</string>
     <string name="comic_menu_select">Select</string>
-    <string name="comic_button_current">_</string>
-    <string name="comic_button_random">*</string>
-    <string name="comic_button_select">^</string>
+    <string name="comic_menu_refresh">Refresh</string>
+    <string name="comic_button_current">Current</string>
+    <string name="comic_button_random">Random</string>
+    <string name="comic_button_select">Select</string>
     <string name="comic_button_first"><![CDATA[|<]]></string>
     <string name="comic_button_latest"><![CDATA[>|]]></string>
     <string name="comic_button_previous"><![CDATA[<]]></string>

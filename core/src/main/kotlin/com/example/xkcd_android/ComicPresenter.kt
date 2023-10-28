@@ -33,6 +33,10 @@ class ComicPresenter(private val comicRepository: ComicRepository) : ComicCallba
         comicRepository.comic(comicUIState.next(), this)
     }
 
+    fun refresh() {
+        comicRepository.comic(comicUIState.current(), this)
+    }
+
     fun random() {
         comicRepository.comic(comicUIState.random(), this)
     }

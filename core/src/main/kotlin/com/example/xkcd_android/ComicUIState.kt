@@ -28,6 +28,10 @@ data class ComicUIState(
         return Random.nextInt(first, last)
     }
 
+    fun current(): Int {
+        return current
+    }
+
     fun copy(comic: Comic): ComicUIState {
         return copy(comic = comic, current = comic.num, last = maxOf(last, comic.num))
     }

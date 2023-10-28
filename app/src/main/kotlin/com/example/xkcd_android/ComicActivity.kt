@@ -70,13 +70,17 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
                 comicController.current()
                 true
             }
-            R.id.comic_menu_random -> {
-                comicController.random()
-                true
-            }
             R.id.comic_menu_select -> {
                 val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
                 comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
+                true
+            }
+            R.id.comic_menu_refresh -> {
+                comicController.refresh()
+                true
+            }
+            R.id.comic_menu_random -> {
+                comicController.random()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -94,7 +98,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     }
 
     override fun render(comicUIState: ComicUIState) {
-        val comic = comicUIState.comic
+        val comic = comicUIState.comic ?: return
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicLinkTextView.text = comic.link
