@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -26,6 +27,8 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     private lateinit var comicButtonPrevious: Button
     private lateinit var comicButtonNext: Button
 
+    private lateinit var comicProgressBar: ProgressBar
+
     private val comicController = (application as ComicApplication).comicController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +45,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         comicButtonLast = findViewById(R.id.comic_button_last)
         comicButtonPrevious = findViewById(R.id.comic_button_previous)
         comicButtonNext = findViewById(R.id.comic_button_next)
+        comicProgressBar = findViewById(R.id.comic_progress_bar)
         comicButtonFirst.setOnClickListener(this)
         comicButtonLast.setOnClickListener(this)
         comicButtonPrevious.setOnClickListener(this)
@@ -110,10 +114,10 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     }
 
     override fun showProgress() {
-        TODO("Not yet implemented")
+        comicProgressBar.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        TODO("Not yet implemented")
+        comicProgressBar.visibility = View.INVISIBLE
     }
 }
