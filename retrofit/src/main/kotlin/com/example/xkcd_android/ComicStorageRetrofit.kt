@@ -8,7 +8,6 @@ class ComicStorageRetrofit(
         val call = comicServiceRetrofit.comicDataRetrofit()
         val response = call.execute()
         val comicDataRetrofit = response.body()
-        if (comicDataRetrofit == null) return null
         return comicConverterRetrofit.convert(comicDataRetrofit)
     }
 
@@ -16,7 +15,6 @@ class ComicStorageRetrofit(
         val call = comicServiceRetrofit.comicDataRetrofit()
         val response = call.execute()
         val comicDataRetrofit = response.body()
-        if (comicDataRetrofit == null) return null
         return comicConverterRetrofit.convert(comicDataRetrofit)
     }
 }

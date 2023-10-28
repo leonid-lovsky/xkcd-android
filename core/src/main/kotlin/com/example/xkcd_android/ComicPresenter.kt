@@ -1,10 +1,10 @@
 package com.example.xkcd_android
 
-class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Comic> {
+class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Resource<Comic>> {
     private var comicUIState = ComicUIState()
     var comicView: ComicView? = null
 
-    override fun onChanged(value: Comic) {
+    override fun onChanged(value: Resource<Comic>) {
         comicUIState = comicUIState.copy(value)
         comicView?.render(comicUIState)
     }

@@ -10,7 +10,10 @@ class ComicApplication : Application() {
     private val comicStorageLocal = comicDependenciesLocal.comicStorageLocal()
     private val comicStorageRemote = comicDependenciesRemote.comicStorageRemote()
     private val executorServiceBackground = Executors.newFixedThreadPool(threadPoolSize)
-    private val comicRepository = ComicRepository(comicStorageLocal, comicStorageRemote, executorServiceBackground)
+    private val mainThreadExecutor = MainThreadExecutor()
+    private val comicRepository = ComicRepository(
+        comicStorageLocal, comicStorageRemote, executorServiceBackground, mainThreadExecutor
+    )
     private val comicPresenter = ComicPresenter(comicRepository)
 
     fun comicController(): ComicPresenter {
