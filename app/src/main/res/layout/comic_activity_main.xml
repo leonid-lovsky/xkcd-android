@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".ComicActivity">
 
-    <LinearLayout
+    <include layout="@layout/comic_toolbar" />
+
+    <ProgressBar
+        android:id="@+id/comic_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:indeterminate="true"
+        android:visibility="visible" />
 
-        <include
-            layout="@layout/comic_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <include
-            layout="@layout/comic_content_main"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <include layout="@layout/comic_content_main" />
+    </FrameLayout>
 
-        <include
-            layout="@layout/comic_button_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <include layout="@layout/comic_button_bar" />
+</LinearLayout>
