@@ -55,6 +55,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onStart() {
         super.onStart()
         comicController.comicView = this
+        comicController.init()
     }
 
     override fun onStop() {

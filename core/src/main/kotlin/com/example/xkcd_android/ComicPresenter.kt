@@ -1,5 +1,7 @@
 package com.example.xkcd_android
 
+import kotlin.random.Random
+
 class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Resource<Comic>> {
     private var comicPage = ComicPage()
     var comicView: ComicView? = null
@@ -22,7 +24,11 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
     }
 
     fun init() {
-        comicRepository.comic(comicPage.current(), this)
+        if (comicPage.comic == null) {
+            comicRepository.comic(comicPage.current, this)
+        } else {
+            comicView?.render(comicPage)
+        }
     }
 
     fun current() {
@@ -38,26 +44,26 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
     }
 
     fun first() {
-        comicRepository.comic(comicPage.first(), this)
+        comicRepository.comic(comicPage.first, this)
     }
 
     fun last() {
-        comicRepository.comic(comicPage.last(), this)
+        comicRepository.comic(comicPage.last, this)
     }
 
     fun previous() {
-        comicRepository.comic(comicPage.previous(), this)
+        comicRepository.comic(comicPage.current - 1, this)
     }
 
     fun next() {
-        comicRepository.comic(comicPage.next(), this)
+        comicRepository.comic(comicPage.current + 1, this)
     }
 
     fun refresh() {
-        comicRepository.comic(comicPage.current(), this)
+        comicRepository.comic(comicPage.current, this)
     }
 
     fun random() {
-        comicRepository.comic(comicPage.random(), this)
+        comicRepository.comic(Random.nextInt(comicPage.first, comicPage.last), this)
     }
 }
