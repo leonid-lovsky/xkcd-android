@@ -15,6 +15,14 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
             comicPage = comicPage.copy(comic)
             comicView?.render(comicPage)
         }
+        val error = value.error
+        if (error != null) {
+            comicView?.render(error)
+        }
+    }
+
+    fun init() {
+        comicRepository.comic(comicPage.current(), this)
     }
 
     fun current() {

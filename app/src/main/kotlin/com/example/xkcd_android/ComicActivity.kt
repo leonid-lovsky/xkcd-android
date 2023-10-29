@@ -108,6 +108,9 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         comicImageUrlTextView.text = comic.img
     }
 
+    override fun render(error: Throwable) {
+    }
+
     override fun showComicSelectDialog() {
         val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
         comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
