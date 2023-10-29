@@ -72,7 +72,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.comic_menu_current -> {
-                comicController.current()
+                comicController.latest()
                 true
             }
             R.id.comic_menu_select -> {

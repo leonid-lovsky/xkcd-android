@@ -31,7 +31,7 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
         }
     }
 
-    fun current() {
+    fun latest() {
         comicRepository.comic(this)
     }
 
