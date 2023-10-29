@@ -3,7 +3,7 @@ package com.example.xkcd_android
 import kotlin.random.Random
 
 class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Resource<Comic>> {
-    private var comicPage = ComicPage()
+    private var comicState = ComicState()
     var comicView: ComicView? = null
 
     override fun onChanged(value: Resource<Comic>) {
@@ -14,8 +14,8 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
         }
         val comic = value.data
         if (comic != null) {
-            comicPage = comicPage.copy(comic)
-            comicView?.render(comicPage)
+            comicState = comicState.copy(comic)
+            comicView?.render(comicState)
         }
         val error = value.error
         if (error != null) {
@@ -24,10 +24,10 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
     }
 
     fun init() {
-        if (comicPage.comic == null) {
-            comicRepository.comic(comicPage.current, this)
+        if (comicState.comic == null) {
+            comicRepository.comic(comicState.current, this)
         } else {
-            comicView?.render(comicPage)
+            comicView?.render(comicState)
         }
     }
 
@@ -44,26 +44,26 @@ class ComicPresenter(private val comicRepository: ComicRepository) : Callback<Re
     }
 
     fun first() {
-        comicRepository.comic(comicPage.first, this)
+        comicRepository.comic(comicState.first, this)
     }
 
     fun last() {
-        comicRepository.comic(comicPage.last, this)
+        comicRepository.comic(comicState.last, this)
     }
 
     fun previous() {
-        comicRepository.comic(comicPage.current - 1, this)
+        comicRepository.comic(comicState.current - 1, this)
     }
 
     fun next() {
-        comicRepository.comic(comicPage.current + 1, this)
+        comicRepository.comic(comicState.current + 1, this)
     }
 
     fun refresh() {
-        comicRepository.comic(comicPage.current, this)
+        comicRepository.comic(comicState.current, this)
     }
 
     fun random() {
-        comicRepository.comic(Random.nextInt(comicPage.first, comicPage.last), this)
+        comicRepository.comic(Random.nextInt(comicState.first, comicState.last), this)
     }
 }

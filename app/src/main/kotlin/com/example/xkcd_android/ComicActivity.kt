@@ -101,8 +101,8 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         }
     }
 
-    override fun render(comicPage: ComicPage) {
-        val comic = comicPage.comic ?: return
+    override fun render(comicState: ComicState) {
+        val comic = comicState.comic ?: return
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicLinkTextView.text = comic.link
