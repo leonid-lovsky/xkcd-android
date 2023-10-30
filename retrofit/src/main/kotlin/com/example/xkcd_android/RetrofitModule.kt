@@ -13,6 +13,7 @@ class RetrofitModule : StorageModule {
 
     private val service = retrofit.create(RetrofitService::class.java)
     private val converter = RetrofitConverter(baseUrl)
+
     private val storage = RetrofitStorage(service, converter)
 
     override fun storage() = storage

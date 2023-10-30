@@ -11,6 +11,7 @@ class RoomModule(applicationContext: Context) : StorageModule {
 
     private val service = database.service()
     private val converter = RoomConverter()
+
     private val storage = RoomStorage(service, converter)
 
     override fun storage() = storage
