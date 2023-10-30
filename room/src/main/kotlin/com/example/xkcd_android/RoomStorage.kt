@@ -1,12 +1,12 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.contract.ComicStorage
+import com.example.xkcd_android.contract.ComicLocalStorage
 import com.example.xkcd_android.data.Comic
 
 class RoomStorage(
     private val service: RoomService,
     private val converter: RoomConverter
-) : ComicStorage {
+) : ComicLocalStorage {
     override fun comic(): Comic? {
         val data = service.invoke()
         if (data == null) return null

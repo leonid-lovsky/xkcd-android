@@ -2,9 +2,9 @@ package com.example.xkcd_android
 
 import android.content.Context
 import androidx.room.Room
-import com.example.xkcd_android.module.StorageModule
+import com.example.xkcd_android.module.LocalStorageModule
 
-class RoomModule(applicationContext: Context) : StorageModule {
+class RoomModule(applicationContext: Context) : LocalStorageModule {
     private val database = Room.databaseBuilder(
         applicationContext, MainDatabase::class.java, "database"
     ).build()
@@ -12,7 +12,7 @@ class RoomModule(applicationContext: Context) : StorageModule {
     private val service = database.service()
     private val converter = RoomConverter()
 
-    private val storage = RoomStorage(service, converter)
+    private val localStorage = RoomStorage(service, converter)
 
-    override fun storage() = storage
+    override fun localStorage() = localStorage
 }
