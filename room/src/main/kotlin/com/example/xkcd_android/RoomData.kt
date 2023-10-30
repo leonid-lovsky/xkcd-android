@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "comics")
-data class ComicDataRoom(
+@Entity(tableName = "comic")
+data class RoomData(
     @ColumnInfo(name = "month")
     val month: String,
     @PrimaryKey

@@ -11,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.xkcd_android.contract.ComicView
 import com.squareup.picasso.Picasso
 
 class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
@@ -29,7 +30,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     private lateinit var comicProgressBar: ProgressBar
 
-    private val comicController = (application as ComicApplication).comicController()
+    private val comicPresenter = (application as ComicApplication).comicController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +51,27 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         comicButtonLast.setOnClickListener(this)
         comicButtonPrevious.setOnClickListener(this)
         comicButtonNext.setOnClickListener(this)
+        comicPresenter.create()
     }
 
     override fun onStart() {
         super.onStart()
-        comicController.comicView = this
-        comicController.init()
+        comicPresenter.start(this)
     }
 
     override fun onStop() {
         super.onStop()
-        comicController.comicView = null
+        comicPresenter.stop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        comicPresenter.saveInstanceState()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        comicPresenter.restoreInstanceState()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,19 +83,19 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.comic_menu_current -> {
-                comicController.latest()
+                comicPresenter.latest()
                 true
             }
             R.id.comic_menu_select -> {
-                comicController.select()
+                comicPresenter.select()
                 true
             }
             R.id.comic_menu_refresh -> {
-                comicController.refresh()
+                comicPresenter.refresh()
                 true
             }
             R.id.comic_menu_random -> {
-                comicController.random()
+                comicPresenter.random()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -94,10 +105,10 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.comic_button_first -> comicController.first()
-            R.id.comic_button_last -> comicController.last()
-            R.id.comic_button_previous -> comicController.previous()
-            R.id.comic_button_next -> comicController.next()
+            R.id.comic_button_first -> comicPresenter.first()
+            R.id.comic_button_last -> comicPresenter.last()
+            R.id.comic_button_previous -> comicPresenter.previous()
+            R.id.comic_button_next -> comicPresenter.next()
         }
     }
 
@@ -113,7 +124,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     }
 
     override fun showComicSelectDialog() {
-        val comicSelectDialogFragment = ComicSelectDialogFragment(comicController)
+        val comicSelectDialogFragment = ComicSelectDialogFragment(comicPresenter)
         comicSelectDialogFragment.show(supportFragmentManager, "COMIC_SELECT_DIALOG_FRAGMENT")
     }
 

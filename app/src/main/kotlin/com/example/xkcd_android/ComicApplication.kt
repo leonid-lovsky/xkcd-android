@@ -5,18 +5,21 @@ import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
     private val threadPoolSize = Runtime.getRuntime().availableProcessors()
-    private val comicDependenciesLocal = ComicModuleRoom(this)
-    private val comicDependenciesRemote = ComicModuleRetrofit()
-    private val comicStorageLocal = comicDependenciesLocal.comicStorageLocal()
-    private val comicStorageRemote = comicDependenciesRemote.comicStorageRemote()
     private val executorServiceBackground = Executors.newFixedThreadPool(threadPoolSize)
     private val mainThreadExecutor = MainThreadExecutor()
-    private val comicRepository = ComicRepository(
+
+    private val comicDependenciesLocal = RoomModule(this)
+    private val comicDependenciesRemote = RetrofitModule()
+
+    private val comicStorageLocal = comicDependenciesLocal.storage()
+    private val comicStorageRemote = comicDependenciesRemote.storage()
+
+    private val comicRepository = ComicRepositoryDefault(
         comicStorageLocal, comicStorageRemote, executorServiceBackground, mainThreadExecutor
     )
-    private val comicPresenter = ComicPresenter(comicRepository)
+    private val comicPresenter = ComicPresenterDefault(comicRepository)
 
-    fun comicController(): ComicPresenter {
+    fun comicController(): ComicPresenterDefault {
         return comicPresenter
     }
 }

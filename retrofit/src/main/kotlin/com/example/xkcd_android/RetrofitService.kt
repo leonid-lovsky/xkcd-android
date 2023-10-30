@@ -4,10 +4,10 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface ComicServiceRetrofit {
+interface RetrofitService {
     @GET("info.0.json")
-    fun comicDataRetrofit(): Call<ComicDataRetrofit>
+    operator fun invoke(): Call<RetrofitData>
 
     @GET("{number}/info.0.json")
-    fun comicDataRetrofit(@Path("number") number: Int): Call<ComicDataRetrofit>
+    operator fun invoke(@Path("number") number: Int): Call<RetrofitData>
 }

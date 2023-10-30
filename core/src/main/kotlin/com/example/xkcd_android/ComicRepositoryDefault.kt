@@ -1,11 +1,14 @@
 package com.example.xkcd_android
 
+import com.example.xkcd_android.function.Callback
+import com.example.xkcd_android.storage.LocalStorage
+import com.example.xkcd_android.storage.RemoteStorage
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-class ComicRepository(
-    private val comicStorageLocal: ComicStorageLocal,
-    private val comicStorageRemote: ComicStorageRemote,
+class ComicRepositoryDefault(
+    private val localStorage: LocalStorage,
+    private val remoteStorage: RemoteStorage,
     private val executorServiceBackground: ExecutorService,
     private val executorMain: Executor
 ) {
@@ -14,16 +17,16 @@ class ComicRepository(
         executorServiceBackground.execute {
             executorMain.execute {
                 val resource = Resource(true, null, null)
-                callback.onChanged(resource)
+                callback.invoke(resource)
             }
-            val comicDataRemote = comicStorageRemote.comic()
+            val comicDataRemote = remoteStorage.comic()
             if (comicDataRemote != null) {
-                comicStorageLocal.comic(comicDataRemote)
+                localStorage.comic(comicDataRemote)
             }
-            val comicLocal = comicStorageLocal.comic()
+            val comicLocal = localStorage.comic()
             executorMain.execute {
                 val resource = Resource(false, comicLocal, null)
-                callback.onChanged(resource)
+                callback.invoke(resource)
             }
         }
     }
@@ -32,16 +35,16 @@ class ComicRepository(
         executorServiceBackground.execute {
             executorMain.execute {
                 val resource = Resource(true, null, null)
-                callback.onChanged(resource)
+                callback.invoke(resource)
             }
-            val comicDataRemote = comicStorageRemote.comic()
+            val comicDataRemote = remoteStorage.comic()
             if (comicDataRemote != null) {
-                comicStorageLocal.comic(comicDataRemote)
+                localStorage.comic(comicDataRemote)
             }
-            val comicLocal = comicStorageLocal.comic(number)
+            val comicLocal = localStorage.comic(number)
             executorMain.execute {
                 val resource = Resource(false, comicLocal, null)
-                callback.onChanged(resource)
+                callback.invoke(resource)
             }
         }
     }
