@@ -1,15 +1,14 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.function.Callback
-import com.example.xkcd_android.contract.ComicPreferences
 import com.example.xkcd_android.contract.ComicPresenter
+import com.example.xkcd_android.contract.ComicRepository
 import com.example.xkcd_android.contract.ComicView
+import com.example.xkcd_android.data.Comic
 import kotlin.random.Random
 
 class ComicPresenterDefault(
-    private val comicRepository: ComicRepositoryDefault,
-    private val comicPreferences: ComicPreferences
-) : ComicPresenter, Callback<Resource<Comic>> {
+    private val repository: ComicRepository
+) : ComicPresenter {
     private var comicState = ComicState()
     private var comicView: ComicView? = null
 
@@ -33,13 +32,13 @@ class ComicPresenterDefault(
     fun create() {
         val comicState = comicPreferences.restoreInstanceState()
         if (comicState == null) {
-            comicRepository.comic(this)
+            repository.comic(this)
         }
         if (this.comicState.comic == null) {
-            comicRepository.comic(this.comicState.current, this)
+            repository.comic(this.comicState.current, this)
         }
         if (comicState?.last == comicState?.first) {
-            comicRepository.comic(this)
+            repository.comic(this)
         }
     }
 
@@ -52,12 +51,12 @@ class ComicPresenterDefault(
         comicView = null
     }
 
-    fun saveInstanceState() {
+    fun saveState() {
         // TODO: thread
         comicPreferences.saveInstanceState(comicState)
     }
 
-    fun restoreInstanceState() {
+    fun restoreState() {
         // TODO: thread
         val comicState = comicPreferences.restoreInstanceState()
         if (comicState != null) {
@@ -66,38 +65,38 @@ class ComicPresenterDefault(
     }
 
     fun latest() {
-        comicRepository.comic(this)
+        repository.comic(this)
     }
 
     fun select() {
-        comicView?.showComicSelectDialog()
+        comicView?.showSelectComicDialog()
     }
 
     fun select(number: Int) {
-        comicRepository.comic(number, this)
+        repository.comic(number, this)
     }
 
     fun first() {
-        comicRepository.comic(comicState.first, this)
+        repository.comic(comicState.first, this)
     }
 
     fun last() {
-        comicRepository.comic(comicState.last, this)
+        repository.comic(comicState.last, this)
     }
 
     fun previous() {
-        comicRepository.comic(comicState.current - 1, this)
+        repository.comic(comicState.current - 1, this)
     }
 
     fun next() {
-        comicRepository.comic(comicState.current + 1, this)
+        repository.comic(comicState.current + 1, this)
     }
 
     fun refresh() {
-        comicRepository.comic(comicState.current, this)
+        repository.comic(comicState.current, this)
     }
 
     fun random() {
-        comicRepository.comic(Random.nextInt(comicState.first, comicState.last), this)
+        repository.comic(Random.nextInt(comicState.first, comicState.last), this)
     }
 }

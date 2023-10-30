@@ -6,5 +6,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    tools:menu="@menu/comic_menu_main"
+    tools:menu="@menu/main_menu"
     tools:title="@tools:sample/lorem" />

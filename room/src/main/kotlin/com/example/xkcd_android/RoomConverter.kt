@@ -1,5 +1,6 @@
 package com.example.xkcd_android
 
+import com.example.xkcd_android.data.Comic
 import com.example.xkcd_android.function.Converter
 
 class RoomConverter : Converter<Comic, RoomData> {

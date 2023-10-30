@@ -1,11 +1,11 @@
 package com.example.xkcd_android.contract
 
-import com.example.xkcd_android.ComicState
+import com.example.xkcd_android.data.Comic
 
 interface ComicView {
-    fun render(comicState: ComicState)
+    fun render(comic: Comic)
     fun render(error: Throwable)
-    fun showComicSelectDialog()
+    fun showSelectComicDialog()
     fun showProgress()
     fun hideProgress()
 }

@@ -1,6 +1,7 @@
 package com.example.xkcd_android
 
 import com.example.xkcd_android.contract.ComicStorage
+import com.example.xkcd_android.data.Comic
 
 class RetrofitStorage(
     private val service: RetrofitService,

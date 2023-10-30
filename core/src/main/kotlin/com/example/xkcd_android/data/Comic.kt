@@ -1,4 +1,4 @@
-package com.example.xkcd_android
+package com.example.xkcd_android.data
 
 data class Comic(
     val month: String,
