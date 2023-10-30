@@ -1,6 +1,5 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.storage.RemoteStorage
 import com.example.xkcd_android.module.RemoteModule
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +15,5 @@ class RetrofitModule : RemoteModule {
     private val converter = RetrofitConverter(baseUrl)
     private val storage = RetrofitStorage(service, converter)
 
-    override fun storage(): RemoteStorage {
-        return storage
-    }
+    override fun storage() = storage
 }
