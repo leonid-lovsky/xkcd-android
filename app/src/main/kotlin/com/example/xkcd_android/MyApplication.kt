@@ -1,23 +1,27 @@
 package com.example.xkcd_android
 
 import android.app.Application
+import com.example.xkcd_android.module.PresenterModule
 import java.util.concurrent.Executors
 
-class MyApplication : Application() {
+class MyApplication : Application(), PresenterModule {
     private val availableProcessors = Runtime.getRuntime().availableProcessors()
     private val backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
     private val mainThreadExecutor = MainThreadExecutor()
 
-    private val roomModule = RoomModule(this)
-    private val retrofitModule = RetrofitModule()
+    private val localStorageModule = RoomModule(this)
+    private val remoteStorageModule = RetrofitModule()
 
-    private val roomStorage = roomModule.storage()
-    private val retrofitStorage = retrofitModule.storage()
+    private val preferencesModule = DefaultPreferencesModule()
 
-    private val comicRepository = ComicRepositoryDefault(
-        roomStorage, retrofitStorage, backgroundExecutor, mainThreadExecutor
+    private val repositoryModule = DefaultRepositoryModule(
+        localStorageModule, remoteStorageModule, preferencesModule,
+        backgroundExecutor, mainThreadExecutor
     )
-    private val comicPresenter = ComicPresenterDefault(comicRepository)
 
-    fun presenter() = comicPresenter
+    private val presenterModule = DefaultPresenterModule(repositoryModule)
+
+    private val presenter = presenterModule.presenter()
+
+    override fun presenter() = presenter
 }

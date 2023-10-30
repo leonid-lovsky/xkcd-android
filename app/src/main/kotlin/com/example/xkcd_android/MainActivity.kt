@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.xkcd_android.contract.ComicView
 import com.example.xkcd_android.data.Comic
+import com.example.xkcd_android.module.PresenterModule
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     private lateinit var comicProgressBar: ProgressBar
 
-    private val presenter = (application as MyApplication).presenter()
+    private val presenter = (application as PresenterModule).presenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,23 +63,13 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onStart() {
         super.onStart()
         presenter.setView(this)
-        presenter.start()
+        presenter.restoreState()
     }
 
     override fun onStop() {
         super.onStop()
         presenter.setView(null)
-        presenter.stop()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         presenter.saveState()
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        presenter.restoreState()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

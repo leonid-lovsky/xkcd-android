@@ -7,20 +7,20 @@ import com.example.xkcd_android.module.RepositoryModule
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-class RepositoryModuleDefault(
+class DefaultRepositoryModule(
     localStorageModule: LocalStorageModule,
-    remoteStorageModule: RemoteStorageModule,
+    remoteModule: RemoteStorageModule,
     preferencesModule: PreferencesModule,
     backgroundExecutor: ExecutorService,
     mainThreadExecutor: Executor
 ) : RepositoryModule {
     private val localStorage = localStorageModule.localStorage()
-    private val remoteStorage = remoteStorageModule.remoteStorage()
+    private val remoteStorage = remoteModule.localStorage()
     private val preferences = preferencesModule.preferences()
     // private val backgroundExecutor = backgroundExecutor
     // private val mainThreadExecutor = mainThreadExecutor
 
-    private val repository = ComicRepositoryDefault(
+    private val repository = DefaultComicRepository(
         localStorage, remoteStorage, preferences, backgroundExecutor, mainThreadExecutor
     )
 

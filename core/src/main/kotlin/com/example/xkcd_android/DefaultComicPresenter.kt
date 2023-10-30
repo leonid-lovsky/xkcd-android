@@ -6,7 +6,7 @@ import com.example.xkcd_android.contract.ComicView
 import com.example.xkcd_android.data.Comic
 import kotlin.random.Random
 
-class ComicPresenterDefault(
+class DefaultComicPresenter(
     private val repository: ComicRepository
 ) : ComicPresenter {
     private var comicState = ComicState()
@@ -47,7 +47,7 @@ class ComicPresenterDefault(
         this.comicView?.render(comicState)
     }
 
-    fun stop() {
+    fun restoreState() {
         comicView = null
     }
 

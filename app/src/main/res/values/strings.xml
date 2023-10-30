@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="comic_application_name">xkcd</string>
-    <string name="comic_menu_current">Current</string>
-    <string name="comic_menu_random">Random</string>
-    <string name="comic_menu_select">Select</string>
-    <string name="comic_menu_refresh">Refresh</string>
-    <string name="comic_button_current">Current</string>
-    <string name="comic_button_random">Random</string>
-    <string name="comic_button_select">Select</string>
-    <string name="comic_button_first"><![CDATA[|<]]></string>
-    <string name="comic_button_latest"><![CDATA[>|]]></string>
-    <string name="comic_button_previous"><![CDATA[<]]></string>
-    <string name="comic_button_next"><![CDATA[>]]></string>
-    <string name="comic_select_dialog_title">Select comic</string>
-    <string name="comic_select_dialog_text">Comic number</string>
-    <string name="comic_select_dialog_input_hint">Comic number</string>
-    <string name="comic_select_dialog_positive_button">Select</string>
-    <string name="comic_select_dialog_negative_button">Cancel</string>
+    <string name="app_name">xkcd</string>
+    <string name="latest_comic_menuitem">Latest</string>
+    <string name="random_comic_menuitem">Random</string>
+    <string name="select_comic_menuitem">Select</string>
+    <string name="refresh_comic_menuitem">Refresh</string>
+    <string name="current_comic_button">Current</string>
+    <string name="random_comic_button">Random</string>
+    <string name="select_comic_button">Select</string>
+    <string name="first_comic_button"><![CDATA[|<]]></string>
+    <string name="last_comic_button"><![CDATA[>|]]></string>
+    <string name="previous_comic_button"><![CDATA[<]]></string>
+    <string name="next_comic_button"><![CDATA[>]]></string>
+    <string name="select_comic_dialog_title">Select comic</string>
+    <string name="select_comic_dialog_text">Comic number</string>
+    <string name="select_comic_dialog_input_hint">Comic number</string>
+    <string name="select_comic_dialog_positive_button">Select</string>
+    <string name="select_comic_dialog_negative_button">Cancel</string>
 </resources>

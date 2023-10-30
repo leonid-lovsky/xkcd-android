@@ -16,5 +16,5 @@ class RetrofitModule : RemoteStorageModule {
 
     private val remoteStorage = RetrofitStorage(service, converter)
 
-    override fun remoteStorage() = remoteStorage
+    override fun localStorage() = remoteStorage
 }
