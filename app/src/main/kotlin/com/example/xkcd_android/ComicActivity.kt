@@ -13,10 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.xkcd_android.contract.ComicView
 import com.example.xkcd_android.data.Comic
-import com.example.xkcd_android.module.PresenterModule
 import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
+class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     private lateinit var toolbar: Toolbar
 
     private lateinit var comicImageView: ImageView
@@ -32,11 +31,11 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     private lateinit var comicProgressBar: ProgressBar
 
-    private val presenter = (application as PresenterModule).presenter()
+    private val presenter = (application as ComicApplication).presenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.comic_main_activity)
+        setContentView(R.layout.comic_activity)
 
         toolbar = findViewById(R.id.comic_toolbar)
         setSupportActionBar(toolbar)
@@ -63,13 +62,13 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onStart() {
         super.onStart()
         presenter.setView(this)
-        presenter.restoreState()
+        presenter.start()
     }
 
     override fun onStop() {
         super.onStop()
         presenter.setView(null)
-        presenter.saveState()
+        presenter.stop()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -10,7 +10,7 @@ import com.example.xkcd_android.data.Resource
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-class DefaultRepository(
+class CoreRepository(
     private val localStorage: ComicLocalStorage,
     private val remoteStorage: ComicRemoteStorage,
     private val preferences: ComicPreferences,

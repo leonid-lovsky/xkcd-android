@@ -3,8 +3,8 @@ package com.example.xkcd_android.contract
 interface ComicPresenter {
     fun setView(view: ComicView?)
 
-    fun saveState()
-    fun restoreState()
+    fun start()
+    fun stop()
 
     fun latest()
 

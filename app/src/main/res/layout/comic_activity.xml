@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ComicActivity">
 
     <include layout="@layout/comic_toolbar" />
 
@@ -40,7 +40,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <include layout="@layout/comic_main_content" />
+        <include layout="@layout/comic_content" />
     </FrameLayout>
 
     <include layout="@layout/comic_button_bar" />
