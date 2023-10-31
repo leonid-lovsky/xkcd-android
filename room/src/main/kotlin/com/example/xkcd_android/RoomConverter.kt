@@ -1,7 +1,7 @@
 package com.example.xkcd_android
 
 import com.example.xkcd_android.data.Comic
-import com.example.xkcd_android.function.Converter
+import com.example.xkcd_android.data.Converter
 
 class RoomConverter : Converter<Comic, RoomData> {
     override fun invoke(value: Comic): RoomData {

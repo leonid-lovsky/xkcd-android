@@ -12,7 +12,7 @@ class MyApplication : Application(), PresenterModule {
     private val localStorageModule = RoomModule(this)
     private val remoteStorageModule = RetrofitModule()
 
-    private val preferencesModule = DefaultPreferencesModule()
+    private val preferencesModule = AndroidModule()
 
     private val repositoryModule = DefaultRepositoryModule(
         localStorageModule, remoteStorageModule, preferencesModule,

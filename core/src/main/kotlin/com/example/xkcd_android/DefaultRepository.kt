@@ -4,9 +4,9 @@ import com.example.xkcd_android.contract.ComicLocalStorage
 import com.example.xkcd_android.contract.ComicPreferences
 import com.example.xkcd_android.contract.ComicRemoteStorage
 import com.example.xkcd_android.contract.ComicRepository
+import com.example.xkcd_android.data.Callback
 import com.example.xkcd_android.data.Comic
-import com.example.xkcd_android.function.Callback
-import com.example.xkcd_android.function.Resource
+import com.example.xkcd_android.data.Resource
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
@@ -19,66 +19,72 @@ class DefaultRepository(
 ) : ComicRepository {
 
     override fun comic(callback: Resource<Comic>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun comic(number: Int, callback: Resource<Comic>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun comic(comic: Comic) {
-        TODO("Not yet implemented")
-    }
-
-    override fun current(callback: Callback<Int>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun current(number: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun latest(callback: Callback<Int>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun latest(number: Int) {
-        TODO("Not yet implemented")
-    }
-
-    fun comic(callback: Callback<Resource<Comic>>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
-                val resource = Resource(true, null, null)
-                callback.invoke(resource)
+                callback.loading()
             }
-            val comicDataRemote = remoteStorage.comic()
-            if (comicDataRemote != null) {
-                localStorage.comic(comicDataRemote)
+            val remoteComic = remoteStorage.comic()
+            if (remoteComic != null) {
+                localStorage.comic(remoteComic)
             }
-            val comicLocal = localStorage.comic()
+            val localComic = localStorage.comic()
             mainThreadExecutor.execute {
-                val resource = Resource(false, comicLocal, null)
-                callback.invoke(resource)
+                if (localComic != null) {
+                    callback.success(localComic)
+                }
             }
         }
     }
 
-    fun comic(number: Int, callback: Callback<Resource<Comic>>) {
+    override fun comic(number: Int, callback: Resource<Comic>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
-                val resource = Resource(true, null, null)
-                callback.invoke(resource)
+                callback.loading()
             }
-            val comicDataRemote = remoteStorage.comic()
-            if (comicDataRemote != null) {
-                localStorage.comic(comicDataRemote)
+            val remoteComic = remoteStorage.comic(number)
+            if (remoteComic != null) {
+                localStorage.comic(remoteComic)
             }
-            val comicLocal = localStorage.comic(number)
+            val localComic = localStorage.comic(number)
             mainThreadExecutor.execute {
-                val resource = Resource(false, comicLocal, null)
-                callback.invoke(resource)
+                if (localComic != null) {
+                    callback.success(localComic)
+                }
             }
+        }
+    }
+
+    override fun current(callback: Callback<Int>) {
+        backgroundExecutor.execute {
+            val current = preferences.current()
+            mainThreadExecutor.execute {
+                if (current != null) {
+                    callback.invoke(current)
+                }
+            }
+        }
+    }
+
+    override fun current(number: Int) {
+        backgroundExecutor.execute {
+            preferences.current(number)
+        }
+    }
+
+    override fun latest(callback: Callback<Int>) {
+        backgroundExecutor.execute {
+            val current = preferences.current()
+            mainThreadExecutor.execute {
+                if (current != null) {
+                    callback.invoke(current)
+                }
+            }
+        }
+    }
+
+    override fun latest(number: Int) {
+        backgroundExecutor.execute {
+            preferences.latest(number)
         }
     }
 }

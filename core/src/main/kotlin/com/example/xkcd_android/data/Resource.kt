@@ -1,4 +1,4 @@
-package com.example.xkcd_android.function
+package com.example.xkcd_android.data
 
 interface Resource<T> {
     fun loading()
