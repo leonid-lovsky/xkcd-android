@@ -1,7 +1,7 @@
 package com.example.xkcd_android
 
 import com.example.xkcd_android.contract.ComicLocalStorage
-import com.example.xkcd_android.contract.ComicPreferences
+import com.example.xkcd_android.contract.ComicKeyValueStore
 import com.example.xkcd_android.contract.ComicRemoteStorage
 import com.example.xkcd_android.contract.ComicRepository
 import com.example.xkcd_android.data.Callback
@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService
 class CoreRepository(
     private val localStorage: ComicLocalStorage,
     private val remoteStorage: ComicRemoteStorage,
-    private val preferences: ComicPreferences,
+    private val preferences: ComicKeyValueStore,
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
 ) : ComicRepository {

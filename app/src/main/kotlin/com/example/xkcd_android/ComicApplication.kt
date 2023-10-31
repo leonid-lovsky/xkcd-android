@@ -14,8 +14,8 @@ class ComicApplication : Application() {
     private val remoteStorageModule = RetrofitModule()
     private val remoteStorage = remoteStorageModule.remoteStorage()
 
-    private val preferencesModule = AppPreferencesModule()
-    private val preferences = preferencesModule.preferences()
+    private val preferencesModule = AppKeyValueStoreModule()
+    private val preferences = preferencesModule.keyValueStore()
 
     private val repositoryModule = CoreRepositoryModule(
         localStorage, remoteStorage, preferences,
@@ -26,5 +26,5 @@ class ComicApplication : Application() {
     private val presenterModule = CorePresenterModule(repository)
     private val presenter = presenterModule.presenter()
 
-    fun presenter() = presenter // interface
+    fun presenter() = presenter // interface?
 }

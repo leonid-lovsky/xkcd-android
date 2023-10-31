@@ -1,6 +1,6 @@
 package com.example.xkcd_android.contract
 
-interface ComicPreferences {
+interface ComicKeyValueStore {
     fun current(): Int?
     fun current(number: Int)
     fun latest(): Int?
