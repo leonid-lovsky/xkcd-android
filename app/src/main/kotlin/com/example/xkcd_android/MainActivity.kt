@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+        setContentView(R.layout.comic_main_activity)
 
-        toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.comic_toolbar)
         setSupportActionBar(toolbar)
 
         comicTitleView = findViewById(R.id.comic_title)
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
+        inflater.inflate(R.menu.comic_main_menu, menu)
         return true
     }
 

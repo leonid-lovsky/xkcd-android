@@ -20,7 +20,7 @@ class DefaultRepositoryModule(
     // private val backgroundExecutor = backgroundExecutor
     // private val mainThreadExecutor = mainThreadExecutor
 
-    private val repository = DefaultComicRepository(
+    private val repository = DefaultRepository(
         localStorage, remoteStorage, preferences, backgroundExecutor, mainThreadExecutor
     )
 

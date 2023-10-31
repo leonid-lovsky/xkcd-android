@@ -6,7 +6,7 @@ import com.example.xkcd_android.contract.ComicView
 import com.example.xkcd_android.data.Comic
 import kotlin.random.Random
 
-class DefaultComicPresenter(
+class DefaultPresenter(
     private val repository: ComicRepository
 ) : ComicPresenter {
     private var comicState = ComicState()

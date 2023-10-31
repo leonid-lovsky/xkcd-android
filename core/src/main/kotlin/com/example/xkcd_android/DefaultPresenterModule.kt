@@ -8,7 +8,7 @@ class DefaultPresenterModule(
 ) : PresenterModule {
     private val repository = repositoryModule.repository()
 
-    private val presenter = DefaultComicPresenter(repository)
+    private val presenter = DefaultPresenter(repository)
 
     override fun presenter() = presenter
 }
