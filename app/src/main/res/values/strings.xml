@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">xkcd</string>
-    <string name="latest_comic_menuitem">Latest</string>
-    <string name="random_comic_menuitem">Random</string>
-    <string name="select_comic_menuitem">Select</string>
-    <string name="refresh_comic_menuitem">Refresh</string>
-    <string name="current_comic_button">Current</string>
+    <string name="latest_comic_menu_item">Latest</string>
+    <string name="random_comic_menu_item">Random</string>
+    <string name="select_comic_menu_item">Select</string>
+    <string name="refresh_comic_menu_item">Refresh</string>
+    <string name="latest_comic_button">Latest</string>
     <string name="random_comic_button">Random</string>
     <string name="select_comic_button">Select</string>
     <string name="first_comic_button"><![CDATA[|<]]></string>

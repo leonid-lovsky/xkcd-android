@@ -4,23 +4,23 @@
         android:id="@+id/latest_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/latest_comic_menuitem" />
+        android:title="@string/latest_comic_menu_item" />
 
     <item
         android:id="@+id/select_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/select_comic_menuitem" />
+        android:title="@string/select_comic_menu_item" />
 
     <item
         android:id="@+id/refresh_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/refresh_comic_menuitem" />
+        android:title="@string/refresh_comic_menu_item" />
 
     <item
         android:id="@+id/random_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@string/random_comic_menuitem" />
+        android:title="@string/random_comic_menu_item" />
 </menu>
