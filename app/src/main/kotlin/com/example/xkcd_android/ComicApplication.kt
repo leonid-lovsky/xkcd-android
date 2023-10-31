@@ -26,5 +26,5 @@ class ComicApplication : Application() {
     private val presenterModule = CorePresenterModule(repository)
     private val presenter = presenterModule.presenter()
 
-    fun presenter() = presenter // presenter
+    fun presenter() = presenter // interface
 }
