@@ -14,11 +14,11 @@ class ComicApplication : Application() {
     private val remoteStorageModule = RetrofitModule()
     private val remoteStorage = remoteStorageModule.remoteStorage()
 
-    private val preferencesModule = AppKeyValueStoreModule()
-    private val preferences = preferencesModule.keyValueStore()
+    private val keyValueStoreModule = AppKeyValueStoreModule(this)
+    private val keyValueStore = keyValueStoreModule.keyValueStore()
 
     private val repositoryModule = CoreRepositoryModule(
-        localStorage, remoteStorage, preferences,
+        localStorage, remoteStorage, keyValueStore,
         backgroundExecutor, mainThreadExecutor
     )
     private val repository = repositoryModule.repository()
