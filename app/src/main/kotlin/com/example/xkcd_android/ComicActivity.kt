@@ -117,7 +117,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     }
 
     override fun renderError(error: Throwable) {
-        throw error
+        throw error // TODO
     }
 
     override fun showSelectComicDialog() {
