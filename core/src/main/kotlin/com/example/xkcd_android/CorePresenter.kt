@@ -28,6 +28,7 @@ class CorePresenter(
     override fun restoreState() {
         repository.loadCurrentNumber(currentNumberCallback)
         repository.loadLatestNumber(latestNumberCallback)
+        repository.loadCurrentComic()
     }
 
     override fun saveState() {
@@ -88,7 +89,6 @@ class CorePresenter(
             this@CorePresenter.latest = value
         }
     }
-
     // override fun invoke(value: Resource<Comic>) {
     //     if (value.loading) {
     //         view?.showProgress()

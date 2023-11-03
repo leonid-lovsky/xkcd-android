@@ -6,7 +6,7 @@ import com.example.xkcd_android.module.LocalStorageModule
 
 class RoomModule(applicationContext: Context) : LocalStorageModule {
     private val database = Room.databaseBuilder(
-        applicationContext, MainDatabase::class.java, "comic-database"
+        applicationContext, MainDatabase::class.java, "database"
     ).build()
 
     private val service = database.service()

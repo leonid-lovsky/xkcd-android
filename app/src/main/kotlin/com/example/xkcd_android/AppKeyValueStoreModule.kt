@@ -7,7 +7,7 @@ import com.example.xkcd_android.module.KeyValueStoreModule
 class AppKeyValueStoreModule(applicationContext: Context) : KeyValueStoreModule {
     // private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
     private val sharedPreferences = applicationContext.getSharedPreferences(
-        "comic-preferences", MODE_PRIVATE
+        "preferences", MODE_PRIVATE
     )
     private val keyValueStore = AppKeyValueStore(sharedPreferences)
 

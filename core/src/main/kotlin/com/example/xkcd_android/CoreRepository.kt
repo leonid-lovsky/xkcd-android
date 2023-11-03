@@ -17,8 +17,7 @@ class CoreRepository(
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
 ) : ComicRepository {
-
-    override fun loadLatestComic(callback: Resource<Comic>) {
+    override fun loadLatestComic(callback: Resource<Comic?>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
                 callback.loading()
@@ -29,14 +28,12 @@ class CoreRepository(
             }
             val localComic = localStorage.loadLatestComic()
             mainThreadExecutor.execute {
-                if (localComic != null) {
-                    callback.success(localComic)
-                }
+                callback.success(localComic)
             }
         }
     }
 
-    override fun loadComicByNumber(number: Int, callback: Resource<Comic>) {
+    override fun loadComicByNumber(number: Int, callback: Resource<Comic?>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
                 callback.loading()
@@ -47,20 +44,16 @@ class CoreRepository(
             }
             val localComic = localStorage.loadComicByNumber(number)
             mainThreadExecutor.execute {
-                if (localComic != null) {
-                    callback.success(localComic)
-                }
+                callback.success(localComic)
             }
         }
     }
 
-    override fun loadCurrentNumber(callback: Callback<Int>) {
+    override fun loadCurrentNumber(callback: Callback<Int?>) {
         backgroundExecutor.execute {
             val current = keyValueStore.loadCurrentNumber()
             mainThreadExecutor.execute {
-                if (current != null) {
-                    callback.callback(current)
-                }
+                callback.callback(current)
             }
         }
     }
@@ -71,13 +64,11 @@ class CoreRepository(
         }
     }
 
-    override fun loadLatestNumber(callback: Callback<Int>) {
+    override fun loadLatestNumber(callback: Callback<Int?>) {
         backgroundExecutor.execute {
             val current = keyValueStore.loadCurrentNumber()
             mainThreadExecutor.execute {
-                if (current != null) {
-                    callback.callback(current)
-                }
+                callback.callback(current)
             }
         }
     }
@@ -86,13 +77,5 @@ class CoreRepository(
         backgroundExecutor.execute {
             keyValueStore.saveLatestNumber(number)
         }
-    }
-
-    override fun loadCurrentComic(callback: Callback<Comic>) {
-        TODO("Not yet implemented")
-    }
-
-    override fun saveCurrentComic(comic: Comic) {
-        TODO("Not yet implemented")
     }
 }
