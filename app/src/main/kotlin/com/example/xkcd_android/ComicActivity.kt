@@ -62,13 +62,13 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onStart() {
         super.onStart()
         presenter.setView(this)
-        presenter.start()
+        presenter.restoreState()
     }
 
     override fun onStop() {
         super.onStop()
         presenter.setView(null)
-        presenter.stop()
+        presenter.saveState()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

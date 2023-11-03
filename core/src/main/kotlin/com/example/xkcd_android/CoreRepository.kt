@@ -1,7 +1,7 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.contract.ComicLocalStorage
 import com.example.xkcd_android.contract.ComicKeyValueStore
+import com.example.xkcd_android.contract.ComicLocalStorage
 import com.example.xkcd_android.contract.ComicRemoteStorage
 import com.example.xkcd_android.contract.ComicRepository
 import com.example.xkcd_android.data.Callback
@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService
 class CoreRepository(
     private val localStorage: ComicLocalStorage,
     private val remoteStorage: ComicRemoteStorage,
-    private val preferences: ComicKeyValueStore,
+    private val keyValueStore: ComicKeyValueStore,
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
 ) : ComicRepository {
@@ -56,7 +56,7 @@ class CoreRepository(
 
     override fun current(callback: Callback<Int>) {
         backgroundExecutor.execute {
-            val current = preferences.current()
+            val current = keyValueStore.current()
             mainThreadExecutor.execute {
                 if (current != null) {
                     callback.invoke(current)
@@ -67,13 +67,13 @@ class CoreRepository(
 
     override fun current(number: Int) {
         backgroundExecutor.execute {
-            preferences.current(number)
+            keyValueStore.current(number)
         }
     }
 
     override fun latest(callback: Callback<Int>) {
         backgroundExecutor.execute {
-            val current = preferences.current()
+            val current = keyValueStore.current()
             mainThreadExecutor.execute {
                 if (current != null) {
                     callback.invoke(current)
@@ -84,7 +84,7 @@ class CoreRepository(
 
     override fun latest(number: Int) {
         backgroundExecutor.execute {
-            preferences.latest(number)
+            keyValueStore.latest(number)
         }
     }
 }
