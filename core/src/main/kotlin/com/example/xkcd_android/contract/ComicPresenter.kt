@@ -13,9 +13,9 @@ interface ComicPresenter {
     fun loadPreviousComic()
     fun loadNextComic()
 
-    fun loadCurrentComic()
+    fun refreshCurrentComic()
 
-    fun loadComicByNumber()
+    fun showSelectComicDialog()
     fun loadComicByNumber(number: Int)
 
     fun loadRandomComic()

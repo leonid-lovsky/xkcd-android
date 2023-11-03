@@ -61,11 +61,11 @@ class CorePresenter(
         TODO("Not yet implemented")
     }
 
-    override fun loadCurrentComic() {
+    override fun refreshCurrentComic() {
         TODO("Not yet implemented")
     }
 
-    override fun loadComicByNumber() {
+    override fun showSelectComicDialog() {
         TODO("Not yet implemented")
     }
 
@@ -79,7 +79,12 @@ class CorePresenter(
 
     inner class CurrentNumberCallback : Callback<Int?> {
         override fun callback(value: Int?) {
-            this@CorePresenter.current = value
+            // this@CorePresenter.current = value
+            if (value == null) {
+                loadLatestComic()
+            } else {
+                loadComicByNumber(value)
+            }
         }
     }
 

@@ -84,11 +84,11 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
                 true
             }
             R.id.select_comic -> {
-                presenter.loadComicByNumber()
+                presenter.showSelectComicDialog()
                 true
             }
             R.id.refresh_comic -> {
-                presenter.loadCurrentComic()
+                presenter.refreshCurrentComic()
                 true
             }
             R.id.random_comic -> {
