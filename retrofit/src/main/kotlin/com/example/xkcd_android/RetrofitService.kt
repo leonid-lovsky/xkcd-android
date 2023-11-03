@@ -6,8 +6,8 @@ import retrofit2.http.Path
 
 interface RetrofitService {
     @GET("info.0.json")
-    operator fun invoke(): Call<RetrofitData>
+    fun loadLatestComic(): Call<RetrofitComic>
 
     @GET("{number}/info.0.json")
-    operator fun invoke(@Path("number") number: Int): Call<RetrofitData>
+    fun loadComicByNumber(@Path("number") number: Int): Call<RetrofitComic>
 }

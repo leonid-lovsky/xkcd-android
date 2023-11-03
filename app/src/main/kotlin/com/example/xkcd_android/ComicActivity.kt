@@ -80,19 +80,19 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.latest_comic -> {
-                presenter.latest()
+                presenter.loadLatestComic()
                 true
             }
             R.id.select_comic -> {
-                presenter.select()
+                presenter.loadComicByNumber()
                 true
             }
             R.id.refresh_comic -> {
-                presenter.refresh()
+                presenter.loadCurrentComic()
                 true
             }
             R.id.random_comic -> {
-                presenter.random()
+                presenter.loadRandomComic()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -102,21 +102,21 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.first_comic_button -> presenter.first()
-            R.id.last_comic_button -> presenter.last()
-            R.id.previous_comic_button -> presenter.previous()
-            R.id.next_comic_button -> presenter.next()
+            R.id.first_comic_button -> presenter.loadFirstComic()
+            R.id.last_comic_button -> presenter.loadLastComic()
+            R.id.previous_comic_button -> presenter.loadPreviousComic()
+            R.id.next_comic_button -> presenter.loadNextComic()
         }
     }
 
-    override fun render(comic: Comic) {
+    override fun renderComic(comic: Comic) {
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicLinkTextView.text = comic.link
         comicImageUrlTextView.text = comic.img
     }
 
-    override fun render(error: Throwable) {
+    override fun renderError(error: Throwable) {
         throw error
     }
 

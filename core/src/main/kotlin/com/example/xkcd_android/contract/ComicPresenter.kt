@@ -6,15 +6,17 @@ interface ComicPresenter {
     fun restoreState()
     fun saveState()
 
-    fun latest()
+    fun loadLatestComic()
 
-    fun first()
-    fun last()
-    fun previous()
-    fun next()
+    fun loadFirstComic()
+    fun loadLastComic()
+    fun loadPreviousComic()
+    fun loadNextComic()
 
-    fun refresh()
-    fun select()
-    fun select(number: Int)
-    fun random()
+    fun loadCurrentComic()
+
+    fun loadComicByNumber()
+    fun loadComicByNumber(number: Int)
+
+    fun loadRandomComic()
 }

@@ -7,20 +7,20 @@ class RoomStorage(
     private val service: RoomService,
     private val converter: RoomConverter
 ) : ComicLocalStorage {
-    override fun comic(): Comic? {
-        val data = service.invoke()
+    override fun loadLatestComic(): Comic? {
+        val data = service.loadLatestComic()
         if (data == null) return null
-        return converter.invoke(data)
+        return converter.convert(data)
     }
 
-    override fun comic(number: Int): Comic? {
-        val data = service.invoke(number)
+    override fun loadComicByNumber(number: Int): Comic? {
+        val data = service.loadComicByNumber(number)
         if (data == null) return null
-        return converter.invoke(data)
+        return converter.convert(data)
     }
 
-    override fun comic(comic: Comic) {
-        val data = converter.invoke(comic)
-        service.invoke(data)
+    override fun saveComic(comic: Comic) {
+        val data = converter.convert(comic)
+        service.saveComic(data)
     }
 }

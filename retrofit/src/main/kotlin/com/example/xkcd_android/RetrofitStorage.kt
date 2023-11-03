@@ -7,19 +7,19 @@ class RetrofitStorage(
     private val service: RetrofitService,
     private val converter: RetrofitConverter
 ) : ComicRemoteStorage {
-    override fun comic(): Comic? {
-        val call = service.invoke()
+    override fun loadLatestComic(): Comic? {
+        val call = service.loadLatestComic()
         val response = call.execute()
         val data = response.body()
         if (data == null) return null
-        return converter.invoke(data)
+        return converter.convert(data)
     }
 
-    override fun comic(number: Int): Comic? {
-        val call = service.invoke()
+    override fun loadComicByNumber(number: Int): Comic? {
+        val call = service.loadLatestComic()
         val response = call.execute()
         val data = response.body()
         if (data == null) return null
-        return converter.invoke(data)
+        return converter.convert(data)
     }
 }

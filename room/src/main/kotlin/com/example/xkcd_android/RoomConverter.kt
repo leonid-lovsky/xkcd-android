@@ -3,9 +3,9 @@ package com.example.xkcd_android
 import com.example.xkcd_android.data.Comic
 import com.example.xkcd_android.data.Converter
 
-class RoomConverter : Converter<Comic, RoomData> {
-    override fun invoke(value: Comic): RoomData {
-        return RoomData(
+class RoomConverter : Converter<Comic, RoomComic> {
+    override fun convert(value: Comic): RoomComic {
+        return RoomComic(
             month = value.month,
             num = value.num,
             link = value.link,
@@ -20,7 +20,7 @@ class RoomConverter : Converter<Comic, RoomData> {
         )
     }
 
-    override fun invoke(value: RoomData): Comic {
+    override fun convert(value: RoomComic): Comic {
         return Comic(
             month = value.month,
             num = value.num,

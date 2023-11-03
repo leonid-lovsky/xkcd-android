@@ -18,7 +18,7 @@ class SelectComicDialogFragment(private val presenter: ComicPresenter) : DialogF
             .setView(view)
             .setPositiveButton(R.string.select_comic_dialog_positive_button) { _, _ ->
                 val comicNumber = inputView.text.toString()
-                presenter.select(comicNumber.toInt())
+                presenter.loadComicByNumber(comicNumber.toInt())
             }.setNegativeButton(R.string.select_comic_dialog_negative_button) { _, _ ->
                 dialog?.cancel()
             }
