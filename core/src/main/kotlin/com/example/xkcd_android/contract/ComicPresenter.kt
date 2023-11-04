@@ -1,22 +1,23 @@
 package com.example.xkcd_android.contract
 
 interface ComicPresenter {
-    fun setView(view: ComicView?)
+    fun setView(view: ComicView?) // TODO: finite state machine
 
-    fun restoreState()
-    fun saveState()
+    fun restoreState() // TODO: finite state machine
+    fun saveState() // TODO: finite state machine
 
-    fun loadLatestComic()
+    fun loadLatestComic() // TODO: use-case interactor
 
-    fun loadFirstComic()
-    fun loadLastComic()
-    fun loadPreviousComic()
-    fun loadNextComic()
+    fun loadFirstComic() // TODO: finite state machine
+    fun loadLastComic() // TODO: finite state machine
+    fun loadPreviousComic() // TODO: finite state machine
+    fun loadNextComic() // TODO: finite state machine
 
-    fun refreshCurrentComic()
+    fun refreshCurrentComic() // TODO: finite state machine
 
-    fun displaySelectComicDialog()
-    fun loadComicByNumber(number: Int)
+    fun displaySelectComicDialog() // TODO: ?
 
-    fun loadRandomComic()
+    fun loadComicByNumber(number: Int) // TODO: use-case interactor
+
+    fun loadRandomComic() // // TODO: finite state machine
 }
