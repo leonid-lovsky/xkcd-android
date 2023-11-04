@@ -49,7 +49,7 @@ class CoreRepository(
         }
     }
 
-    override fun loadCurrentNumber(callback: Callback<Int?>) {
+    override fun loadCurrentComicNumber(callback: Callback<Int?>) {
         backgroundExecutor.execute {
             val current = keyValueStore.loadCurrentNumber()
             mainThreadExecutor.execute {
@@ -58,13 +58,13 @@ class CoreRepository(
         }
     }
 
-    override fun saveCurrentNumber(number: Int) {
+    override fun saveCurrentComicNumber(number: Int) {
         backgroundExecutor.execute {
             keyValueStore.saveCurrentNumber(number)
         }
     }
 
-    override fun loadLatestNumber(callback: Callback<Int?>) {
+    override fun loadLatestComicNumber(callback: Callback<Int?>) {
         backgroundExecutor.execute {
             val current = keyValueStore.loadCurrentNumber()
             mainThreadExecutor.execute {
@@ -73,7 +73,7 @@ class CoreRepository(
         }
     }
 
-    override fun saveLatestNumber(number: Int) {
+    override fun saveLatestComicNumber(number: Int) {
         backgroundExecutor.execute {
             keyValueStore.saveLatestNumber(number)
         }

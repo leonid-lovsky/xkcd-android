@@ -10,11 +10,11 @@ interface ComicRepository {
 
     // fun saveComic(comic: Comic)
 
-    fun loadCurrentNumber(callback: Callback<Int?>)
-    fun saveCurrentNumber(number: Int)
+    fun loadCurrentComicNumber(callback: Callback<Int?>)
+    fun saveCurrentComicNumber(number: Int)
 
-    fun loadLatestNumber(callback: Callback<Int?>)
-    fun saveLatestNumber(number: Int)
+    fun loadLatestComicNumber(callback: Callback<Int?>)
+    fun saveLatestComicNumber(number: Int)
 
     // fun loadCurrentComic(callback: Callback<Comic?>)
     // fun saveCurrentComic(comic: Comic)
