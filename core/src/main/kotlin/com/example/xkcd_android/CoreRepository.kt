@@ -17,10 +17,11 @@ class CoreRepository(
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
 ) : ComicRepository {
-    override fun loadLatestComic(callback: Resource<Comic?>) {
+    override fun loadLatestComic(callback: Callback<Resource<Comic>>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
-                callback.loading()
+                val resource = Resource<Comic>(false)
+                callback.callback(resource)
             }
             val remoteComic = remoteStorage.loadLatestComic()
             if (remoteComic != null) {
@@ -28,15 +29,17 @@ class CoreRepository(
             }
             val localComic = localStorage.loadLatestComic()
             mainThreadExecutor.execute {
-                callback.success(localComic)
+                val resource = Resource(data = localComic)
+                callback.callback(resource)
             }
         }
     }
 
-    override fun loadComicByNumber(number: Int, callback: Resource<Comic?>) {
+    override fun loadComicByNumber(number: Int, callback: Callback<Resource<Comic>>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
-                callback.loading()
+                val resource = Resource<Comic>(false)
+                callback.callback(resource)
             }
             val remoteComic = remoteStorage.loadComicByNumber(number)
             if (remoteComic != null) {
@@ -44,7 +47,8 @@ class CoreRepository(
             }
             val localComic = localStorage.loadComicByNumber(number)
             mainThreadExecutor.execute {
-                callback.success(localComic)
+                val resource = Resource(data = localComic)
+                callback.callback(resource)
             }
         }
     }
