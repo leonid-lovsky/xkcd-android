@@ -12,7 +12,7 @@ class RetrofitStorage(
         val response = call.execute()
         val data = response.body()
         if (data == null) return null
-        return converter.convert(data)
+        return converter.convetr(data)
     }
 
     override fun loadComicByNumber(number: Int): Comic? {
@@ -20,6 +20,6 @@ class RetrofitStorage(
         val response = call.execute()
         val data = response.body()
         if (data == null) return null
-        return converter.convert(data)
+        return converter.convetr(data)
     }
 }

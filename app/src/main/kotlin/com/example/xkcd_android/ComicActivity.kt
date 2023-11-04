@@ -116,12 +116,12 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         comicImageUrlTextView.text = comic.img
     }
 
-    override fun render(message: String) {
-        print(message) // TODO
+    override fun render(error: Throwable) {
+        print(error) // TODO
     }
 
-    override fun render(error: Throwable) {
-        throw error // TODO
+    override fun render(message: String) {
+        print(message) // TODO
     }
 
     override fun displaySelectComicDialog() {

@@ -4,8 +4,8 @@ import com.example.xkcd_android.data.Comic
 
 interface ComicView {
     fun render(comic: Comic)
-    fun render(message: String)
     fun render(error: Throwable)
+    fun render(message: String)
 
     fun displaySelectComicDialog()
 

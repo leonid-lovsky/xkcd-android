@@ -10,13 +10,13 @@ class RoomStorage(
     override fun loadLatestComic(): Comic? {
         val data = service.loadLatestComic()
         if (data == null) return null
-        return converter.convert(data)
+        return converter.convetr(data)
     }
 
     override fun loadComicByNumber(number: Int): Comic? {
         val data = service.loadComicByNumber(number)
         if (data == null) return null
-        return converter.convert(data)
+        return converter.convetr(data)
     }
 
     override fun saveComic(comic: Comic) {

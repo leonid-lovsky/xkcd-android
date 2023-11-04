@@ -20,7 +20,7 @@ class RoomConverter : Converter<Comic, RoomComic> {
         )
     }
 
-    override fun convert(value: RoomComic): Comic {
+    override fun convetr(value: RoomComic): Comic {
         return Comic(
             month = value.month,
             num = value.num,

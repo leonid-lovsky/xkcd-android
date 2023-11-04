@@ -24,5 +24,5 @@ data class RetrofitComic(
     @SerializedName(value = "title")
     val title: String,
     @SerializedName(value = "day")
-    val day: String
+    val day: String,
 )

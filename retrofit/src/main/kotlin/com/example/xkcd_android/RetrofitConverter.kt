@@ -8,7 +8,7 @@ class RetrofitConverter(private val baseUrl: String) : Converter<Comic, Retrofit
         throw NotImplementedError()
     }
 
-    override fun convert(value: RetrofitComic): Comic {
+    override fun convetr(value: RetrofitComic): Comic {
         return Comic(
             month = value.month,
             num = value.num,
