@@ -15,7 +15,7 @@ interface ComicPresenter {
 
     fun refreshCurrentComic()
 
-    fun showSelectComicDialog()
+    fun displaySelectComicDialog()
     fun loadComicByNumber(number: Int)
 
     fun loadRandomComic()

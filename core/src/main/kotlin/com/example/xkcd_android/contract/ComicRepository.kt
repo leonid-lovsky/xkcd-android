@@ -5,8 +5,8 @@ import com.example.xkcd_android.data.Comic
 import com.example.xkcd_android.data.Resource
 
 interface ComicRepository {
-    fun loadLatestComic(callback: Resource<Comic?>)
-    fun loadComicByNumber(number: Int, callback: Resource<Comic?>)
+    fun loadLatestComic(callback: Callback<Resource<Comic>>)
+    fun loadComicByNumber(number: Int, callback: Callback<Resource<Comic>>)
 
     // fun saveComic(comic: Comic)
 

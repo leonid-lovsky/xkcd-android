@@ -84,7 +84,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
                 true
             }
             R.id.select_comic -> {
-                presenter.showSelectComicDialog()
+                presenter.displaySelectComicDialog()
                 true
             }
             R.id.refresh_comic -> {
@@ -109,18 +109,18 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         }
     }
 
-    override fun renderComic(comic: Comic) {
+    override fun render(comic: Comic) {
         Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
         comicLinkTextView.text = comic.link
         comicImageUrlTextView.text = comic.img
     }
 
-    override fun renderError(error: Throwable) {
+    override fun render(error: Throwable) {
         throw error // TODO
     }
 
-    override fun showSelectComicDialog() {
+    override fun displaySelectComicDialog() {
         val selectComicDialogFragment = SelectComicDialogFragment(presenter)
         selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG_FRAGMENT")
     }
