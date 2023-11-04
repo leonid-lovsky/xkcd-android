@@ -25,23 +25,66 @@
             tools:visibility="visible" />
     </FrameLayout>
 
-    <!--<ProgressBar-->
-    <!--    style="?android:attr/progressBarStyleHorizontal"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_marginTop="-8dp"-->
-    <!--    android:layout_marginBottom="-8dp"-->
-    <!--    android:indeterminate="true"-->
-    <!--    android:visibility="invisible"-->
-    <!--    tools:visibility="visible" />-->
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <include layout="@layout/comic_content" />
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/comic_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center"
+                android:minHeight="?attr/actionBarSize"
+                android:textSize="20sp"
+                tools:text="@tools:sample/lorem" />
+
+            <ImageView
+                android:id="@+id/comic_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                tools:ignore="ContentDescription"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/comic_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                tools:text="@tools:sample/lorem[1]" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/comic_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="sans-serif-smallcaps"
+                tools:text="https://xkcd.com/2841/" />
+
+            <TextView
+                android:id="@+id/comic_image_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:fontFamily="sans-serif-smallcaps"
+                tools:text="https://imgs.xkcd.com/comics/sign_combo.png" />
+        </LinearLayout>
+    </ScrollView>
 
     <include layout="@layout/comic_button_bar" />
 </LinearLayout>
