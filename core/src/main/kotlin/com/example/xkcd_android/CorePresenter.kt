@@ -14,8 +14,8 @@ class CorePresenter(
     private var current: Int? = null
     private var latest: Int? = null
 
-    private val currentComicNumberCallback = CurrentComicNumberCallback()
-    private val latestComicNumberCallback = LatestComicNumberCallback()
+    private val currentNumberCallback = CurrentNumberCallback()
+    private val latestNumberCallback = LatestNumberCallback()
 
     override fun setView(view: ComicView?) {
         this.view = view
@@ -26,18 +26,18 @@ class CorePresenter(
     }
 
     override fun restoreState() {
-        repository.loadCurrentComicNumber(currentComicNumberCallback)
-        repository.loadLatestComicNumber(latestComicNumberCallback)
+        repository.loadCurrentNumber(currentNumberCallback)
+        repository.loadLatestNumber(latestNumberCallback)
     }
 
     override fun saveState() {
         val current = this.current
         if (current != null) {
-            repository.saveCurrentComicNumber(current)
+            repository.saveCurrentNumber(current)
         }
         val latest = this.latest
         if (latest != null) {
-            repository.saveLatestComicNumber(latest)
+            repository.saveLatestNumber(latest)
         }
     }
 
@@ -77,7 +77,7 @@ class CorePresenter(
         TODO("Not yet implemented")
     }
 
-    inner class CurrentComicNumberCallback : Callback<Int?> {
+    inner class CurrentNumberCallback : Callback<Int?> {
         override fun callback(value: Int?) {
             if (value != null) {
                 repository.loadComicByNumber(value)
@@ -87,7 +87,7 @@ class CorePresenter(
         }
     }
 
-    inner class LatestComicNumberCallback : Callback<Int?> {
+    inner class LatestNumberCallback : Callback<Int?> {
         override fun callback(value: Int?) {
             this@CorePresenter.latest = value
         }
