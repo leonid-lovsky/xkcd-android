@@ -22,6 +22,7 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:visibility="invisible"
+            tools:ignore="VisualLintBounds"
             tools:visibility="visible" />
     </FrameLayout>
 
@@ -61,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                tools:text="@tools:sample/lorem[1]" />
+                tools:text="@tools:sample/lorem[400]" />
 
             <Space
                 android:layout_width="match_parent"
