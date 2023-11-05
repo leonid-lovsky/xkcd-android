@@ -1,30 +1,56 @@
 package com.example.xkcd_android
 
 import android.app.Application
+import com.example.xkcd_android.contract.ComicKeyValueStore
+import com.example.xkcd_android.contract.ComicLocalStorage
+import com.example.xkcd_android.contract.ComicPresenter
+import com.example.xkcd_android.contract.ComicRemoteStorage
+import com.example.xkcd_android.contract.ComicRepository
+import com.example.xkcd_android.module.ComicKeyValueStoreModule
+import com.example.xkcd_android.module.ComicLocalStorageModule
+import com.example.xkcd_android.module.ComicPresenterModule
+import com.example.xkcd_android.module.ComicRemoteStorageModule
+import com.example.xkcd_android.module.ComicRepositoryModule
+import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
-    private val availableProcessors = Runtime.getRuntime().availableProcessors()
-    private val backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
-    private val mainThreadExecutor = MainThreadExecutor()
+    private val availableProcessors: Int = Runtime.getRuntime().availableProcessors()
 
-    private val localStorageModule = RoomModule(this)
-    private val localStorage = localStorageModule.localStorage()
+    private lateinit var backgroundExecutor: ExecutorService
+    private lateinit var mainThreadExecutor: Executor
 
-    private val remoteStorageModule = RetrofitModule()
-    private val remoteStorage = remoteStorageModule.remoteStorage()
+    private lateinit var localStorageModule: ComicLocalStorageModule
+    private lateinit var localStorage: ComicLocalStorage
 
-    private val keyValueStoreModule = AppKeyValueStoreModule(this)
-    private val keyValueStore = keyValueStoreModule.keyValueStore()
+    private lateinit var remoteStorageModule: ComicRemoteStorageModule
+    private lateinit var remoteStorage: ComicRemoteStorage
 
-    private val repositoryModule = CoreRepositoryModule(
-        localStorage, remoteStorage, keyValueStore,
-        backgroundExecutor, mainThreadExecutor
-    )
-    private val repository = repositoryModule.repository()
+    private lateinit var keyValueStoreModule: ComicKeyValueStoreModule
+    private lateinit var keyValueStore: ComicKeyValueStore
 
-    private val presenterModule = CorePresenterModule(repository)
-    private val presenter = presenterModule.presenter()
+    private lateinit var repositoryModule: ComicRepositoryModule
+    private lateinit var repository: ComicRepository
 
-    fun presenter() = presenter // interface?
+    private lateinit var presenterModule: ComicPresenterModule
+    private lateinit var presenter: ComicPresenter
+
+    fun presenter() = presenter // module interface?
+
+    override fun onCreate() {
+        super.onCreate()
+        backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
+        mainThreadExecutor = MainThreadExecutor()
+        localStorageModule = RoomModule(this)
+        localStorage = localStorageModule.localStorage()
+        remoteStorageModule = RetrofitModule()
+        remoteStorage = remoteStorageModule.remoteStorage()
+        keyValueStoreModule = AppKeyValueStoreModule(this)
+        keyValueStore = keyValueStoreModule.keyValueStore()
+        repositoryModule = CoreRepositoryModule(localStorage, remoteStorage, keyValueStore, backgroundExecutor, mainThreadExecutor)
+        repository = repositoryModule.repository()
+        presenterModule = CorePresenterModule(repository)
+        presenter = presenterModule.presenter()
+    }
 }

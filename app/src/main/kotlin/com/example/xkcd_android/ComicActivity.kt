@@ -18,8 +18,8 @@ import com.squareup.picasso.Picasso
 class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     private lateinit var toolbar: Toolbar
 
-    private lateinit var comicImageView: ImageView
     private lateinit var comicTitleView: TextView
+    private lateinit var comicImageView: ImageView
     private lateinit var comicDescriptionTextView: TextView
     private lateinit var comicLinkTextView: TextView
     private lateinit var comicImageUrlTextView: TextView
@@ -110,8 +110,9 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     }
 
     override fun render(comic: Comic) {
-        Picasso.get().load(comic.img).into(comicImageView)
         comicTitleView.text = comic.title
+        Picasso.get().load(comic.img).into(comicImageView)
+        // comic.
         comicLinkTextView.text = comic.link
         comicImageUrlTextView.text = comic.img
     }
