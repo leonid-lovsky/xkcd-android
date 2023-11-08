@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-class RetrofitMapper(private val baseUrl: String) : Mapper<ComicData, RetrofitData> {
+class RetrofitConverter(private val baseUrl: String) : Converter<ComicData, RetrofitData> {
 
     override fun invoke1(value: ComicData): RetrofitData {
         throw NotImplementedError()

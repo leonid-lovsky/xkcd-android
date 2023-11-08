@@ -12,10 +12,10 @@ class RetrofitDependency {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    private val service = retrofit.create(RetrofitService::class.java)
-    private val mapper = RetrofitMapper(baseUrl)
+    private val retrofitService = retrofit.create(RetrofitService::class.java)
+    private val retrofitConverter = RetrofitConverter(baseUrl)
 
-    private val dataSource = RetrofitDataSource(service, mapper)
+    private val retrofitDataStorage = RetrofitDataStorage(retrofitService, retrofitConverter)
 
-    fun dataSource() = dataSource
+    fun retrofitDataStorage() = retrofitDataStorage
 }

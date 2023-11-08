@@ -5,14 +5,14 @@ import androidx.room.Room
 
 class RoomDependency(applicationContext: Context) {
 
-    private val database = Room.databaseBuilder(
+    private val mainDatabase = Room.databaseBuilder(
         applicationContext, MainDatabase::class.java, "Comic RoomDatabase"
     ).build()
 
-    private val service = database.service()
-    private val mapper = RoomMapper()
+    private val roomService = mainDatabase.service()
+    private val roomConverter = RoomConverter()
 
-    private val dataSource = RoomDataSource(service, mapper)
+    private val roomDataStorage = RoomDataStorage(roomService, roomConverter)
 
-    fun dataSource() = dataSource
+    fun roomDataStorage() = roomDataStorage
 }

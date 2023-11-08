@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-class RoomMapper : Mapper<ComicData, RoomData> {
+class RoomConverter : Converter<ComicData, RoomData> {
 
     override fun invoke1(value: ComicData): RoomData {
         return RoomData(

@@ -3,7 +3,7 @@ package com.example.xkcd_android
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 
-class AndroidStateStorage(private val sharedPreferences: SharedPreferences) : ComicStateStore {
+class AndroidStateStorage(private val sharedPreferences: SharedPreferences) : ComicStateStorage {
 
     private val currentComicNumberKey = "Current comic number"
     private val latestComicNumberKey = "Latest comic number"

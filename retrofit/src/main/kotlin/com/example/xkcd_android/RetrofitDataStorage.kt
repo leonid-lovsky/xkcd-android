@@ -1,24 +1,24 @@
 package com.example.xkcd_android
 
-class RetrofitDataSource(
-    private val service: RetrofitService,
-    private val mapper: RetrofitMapper
-) : ComicDataSource {
+class RetrofitDataStorage(
+    private val retrofitService: RetrofitService,
+    private val retrofitConverter: RetrofitConverter
+) : ComicDataStorage {
 
     override fun loadLatestComic(): ComicData? {
-        val call = service.loadLatestComic()
+        val call = retrofitService.loadLatestComic()
         val response = call.execute()
         val retrofitData = response.body()
         if (retrofitData == null) return null
-        return mapper.invoke2(retrofitData)
+        return retrofitConverter.invoke2(retrofitData)
     }
 
     override fun loadComicByNumber(number: Int): ComicData? {
-        val call = service.loadComicByNumber(number)
+        val call = retrofitService.loadComicByNumber(number)
         val response = call.execute()
         val retrofitData = response.body()
         if (retrofitData == null) return null
-        return mapper.invoke2(retrofitData)
+        return retrofitConverter.invoke2(retrofitData)
     }
 
     override fun saveComic(comicData: ComicData) {

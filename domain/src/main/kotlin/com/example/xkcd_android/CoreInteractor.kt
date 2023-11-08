@@ -4,9 +4,9 @@ import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
 class CoreInteractor(
-    private val localStorage: ComicDataSource,
+    private val localStorage: ComicDataStorage,
     private val remoteStorage: ComicRemoteStorage,
-    private val keyValueStore: ComicStateStore,
+    private val keyValueStore: ComicStateStorage,
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
 ) : ComicInteractor {

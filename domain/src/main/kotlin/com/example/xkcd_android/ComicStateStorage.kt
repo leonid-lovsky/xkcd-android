@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-interface ComicStateStore {
+interface ComicStateStorage {
     fun loadCurrentNumber(): Int?
     fun saveCurrentNumber(number: Int)
 

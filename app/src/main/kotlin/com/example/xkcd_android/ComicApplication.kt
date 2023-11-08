@@ -20,11 +20,11 @@ class ComicApplication : Application() {
         val backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
         val mainThreadExecutor = MainThreadExecutor()
         val roomDependency = RoomDependency(this)
-        val localComicDataSource = roomDependency.dataSource()
+        val roomDataStorage = roomDependency.roomDataStorage()
         val retrofitDependency = RetrofitDependency()
-        val remoteComicDataSource = retrofitDependency.dataSource()
+        val retrofitDataStorage = retrofitDependency.retrofitDataStorage()
         val androidDependency = AndroidDependency(this)
-        val comicStateStore = androidDependency.stateStore()
+        val androidStateStorage = androidDependency.androidStateStorage()
         val comicInteractor: ComicInteractor
         val comicPresenter: ComicPresenter
     }
