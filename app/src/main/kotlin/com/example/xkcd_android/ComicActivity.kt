@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import com.squareup.picasso.Picasso
 
 class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
+
     private lateinit var toolbar: Toolbar
 
     private lateinit var comicTitleView: TextView

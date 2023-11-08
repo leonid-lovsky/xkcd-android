@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
 class SelectComicDialogFragment(private val presenter: ComicPresenter) : DialogFragment() {
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
         val inflater = requireActivity().layoutInflater
@@ -19,7 +20,7 @@ class SelectComicDialogFragment(private val presenter: ComicPresenter) : DialogF
                 val comicNumber = inputView.text.toString()
                 presenter.loadComicByNumber(comicNumber.toInt())
             }.setNegativeButton(R.string.select_comic_dialog_negative_button) { _, _ ->
-                dialog?.cancel()
+                dialog?.cancel() // TODO
             }
         return builder.create()
     }
