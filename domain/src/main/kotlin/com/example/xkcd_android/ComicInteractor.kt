@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-interface ComicRepository {
+interface ComicInteractor {
     fun loadLatestComic(callback: Callback<Resource<ComicData>>)
     fun loadComicByNumber(number: Int, callback: Callback<Resource<ComicData>>)
 

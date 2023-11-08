@@ -4,7 +4,7 @@ import kotlin.math.max
 import kotlin.random.Random
 
 class CorePresenter(
-    private val repository: ComicRepository
+    private val repository: ComicInteractor
 ) : ComicPresenter {
     // TODO: finite state machine, shared view state, use-case interactor
     private var view: ComicView? = null

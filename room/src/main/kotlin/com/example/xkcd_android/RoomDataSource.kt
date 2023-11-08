@@ -1,9 +1,9 @@
 package com.example.xkcd_android
 
-class RoomStorage(
+class RoomDataSource(
     private val service: RoomService,
     private val mapper: RoomMapper
-) : ComicStorage {
+) : ComicDataSource {
 
     override fun loadLatestComic(): ComicData? {
         throw NotImplementedError()

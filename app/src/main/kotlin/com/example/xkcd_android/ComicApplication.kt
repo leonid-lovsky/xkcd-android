@@ -1,36 +1,31 @@
 package com.example.xkcd_android
 
 import android.app.Application
-import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.os.StrictMode.VmPolicy
 import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
-    private val availableProcessors: Int = Runtime.getRuntime().availableProcessors()
 
-    private lateinit var backgroundExecutor: ExecutorService
-    private lateinit var mainThreadExecutor: Executor
+    private lateinit var comicPresenter: ComicPresenter
 
-    private lateinit var localStorage: ComicStorage
-
-    private lateinit var remoteStorage: ComicRemoteStorage
-
-    private lateinit var keyValueStore: ComicKeyValueStore
-
-    private lateinit var repository: ComicRepository
-
-    private lateinit var presenter: ComicPresenter
-
-    fun presenter() = presenter // dependency injection
+    fun comicPresenter() = comicPresenter
 
     override fun onCreate() {
         super.onCreate()
-        backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
-        mainThreadExecutor = MainThreadExecutor()
-        localStorage = localStorageModule.localStorage()
-        remoteStorage = remoteStorageModule.remoteStorage()
-        keyValueStore = keyValueStoreModule.keyValueStore()
-        repository = repositoryModule.repository()
-        presenter = presenterModule.presenter()
+        StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().build())
+        StrictMode.setVmPolicy(VmPolicy.Builder().detectAll().penaltyLog().build())
+        val availableProcessors = Runtime.getRuntime().availableProcessors()
+        val backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
+        val mainThreadExecutor = MainThreadExecutor()
+        val roomDependency = RoomDependency(this)
+        val localComicDataSource = roomDependency.dataSource()
+        val retrofitDependency = RetrofitDependency()
+        val remoteComicDataSource = retrofitDependency.dataSource()
+        val androidDependency = AndroidDependency(this)
+        val comicStateStore = androidDependency.stateStore()
+        val comicInteractor: ComicInteractor
+        val comicPresenter: ComicPresenter
     }
 }

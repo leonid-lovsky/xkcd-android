@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-interface ComicStorage {
+interface ComicDataSource {
     fun loadLatestComic(): ComicData?
     fun loadComicByNumber(number: Int): ComicData?
     

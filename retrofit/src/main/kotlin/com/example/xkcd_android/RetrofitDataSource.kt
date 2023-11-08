@@ -1,9 +1,9 @@
 package com.example.xkcd_android
 
-class RetrofitStorage(
+class RetrofitDataSource(
     private val service: RetrofitService,
     private val mapper: RetrofitMapper
-) : ComicStorage {
+) : ComicDataSource {
 
     override fun loadLatestComic(): ComicData? {
         val call = service.loadLatestComic()

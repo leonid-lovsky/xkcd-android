@@ -56,7 +56,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
 
-        presenter = (application as ComicApplication).presenter()
+        presenter = (application as ComicApplication).comicPresenter()
     }
 
     override fun onStart() {

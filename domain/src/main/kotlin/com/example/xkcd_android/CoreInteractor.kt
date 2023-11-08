@@ -3,13 +3,13 @@ package com.example.xkcd_android
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-class CoreRepository(
-    private val localStorage: ComicStorage,
+class CoreInteractor(
+    private val localStorage: ComicDataSource,
     private val remoteStorage: ComicRemoteStorage,
-    private val keyValueStore: ComicKeyValueStore,
+    private val keyValueStore: ComicStateStore,
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
-) : ComicRepository {
+) : ComicInteractor {
     override fun loadLatestComic(callback: Callback<Resource<ComicData>>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
