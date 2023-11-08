@@ -11,8 +11,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.xkcd_android.contract.ComicView
-import com.example.xkcd_android.data.Comic
 import com.squareup.picasso.Picasso
 
 class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
@@ -31,7 +29,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     private lateinit var comicProgressBar: ProgressBar
 
-    private val presenter = (application as ComicApplication).presenter()
+    private lateinit var presenter: ComicPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +55,8 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
+
+        presenter = (application as ComicApplication).presenter()
     }
 
     override fun onStart() {
@@ -109,12 +109,12 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         }
     }
 
-    override fun render(comic: Comic) {
-        comicTitleView.text = comic.title
-        Picasso.get().load(comic.img).into(comicImageView)
+    override fun render(comicData: ComicData) {
+        comicTitleView.text = comicData.title
+        Picasso.get().load(comicData.img).into(comicImageView)
         // comic.
-        comicLinkTextView.text = comic.link
-        comicImageUrlTextView.text = comic.img
+        comicLinkTextView.text = comicData.link
+        comicImageUrlTextView.text = comicData.img
     }
 
     override fun render(error: Throwable) {

@@ -1,7 +1,6 @@
 package com.example.xkcd_android
 
 import android.content.SharedPreferences
-import com.example.xkcd_android.contract.ComicKeyValueStore
 
 class AppKeyValueStore(private val sharedPreferences: SharedPreferences) : ComicKeyValueStore {
     override fun loadCurrentNumber(): Int? {

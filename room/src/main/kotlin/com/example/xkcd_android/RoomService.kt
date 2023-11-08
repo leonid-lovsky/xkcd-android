@@ -7,12 +7,9 @@ import androidx.room.Query
 
 @Dao
 interface RoomService {
-    @Query("SELECT * FROM comic WHERE num = (SELECT MAX(num) FROM comic)")
-    fun loadLatestComic(): RoomComic?
-
     @Query("SELECT * FROM comic WHERE num = :number")
-    fun loadComicByNumber(number: Int): RoomComic?
+    fun loadComicByNumber(number: Int): RoomData?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveComic(value: RoomComic)
+    fun saveComic(value: RoomData)
 }

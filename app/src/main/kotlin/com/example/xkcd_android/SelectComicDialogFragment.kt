@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.xkcd_android.contract.ComicPresenter
 
 class SelectComicDialogFragment(private val presenter: ComicPresenter) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
