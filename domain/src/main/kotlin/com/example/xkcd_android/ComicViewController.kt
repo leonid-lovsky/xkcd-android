@@ -1,6 +1,7 @@
 package com.example.xkcd_android
 
-interface ComicPresenter {
+interface ComicViewController {
+
     fun setView(view: ComicView?) // TODO: finite state machine
 
     fun restoreState() // TODO: finite state machine

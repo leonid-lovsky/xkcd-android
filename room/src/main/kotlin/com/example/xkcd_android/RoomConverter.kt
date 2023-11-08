@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-class RoomConverter : Converter<ComicData, RoomData> {
+class RoomConverter : BaseConverter<ComicData, RoomData> {
 
     override fun invoke1(value: ComicData): RoomData {
         return RoomData(

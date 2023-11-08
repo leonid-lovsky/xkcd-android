@@ -7,7 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class SelectComicDialogFragment(private val presenter: ComicPresenter) : DialogFragment() {
+class SelectComicDialogFragment(private val presenter: ComicViewController) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")

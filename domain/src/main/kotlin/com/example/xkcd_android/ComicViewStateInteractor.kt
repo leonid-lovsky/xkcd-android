@@ -3,9 +3,10 @@ package com.example.xkcd_android
 import kotlin.math.max
 import kotlin.random.Random
 
-class CorePresenter(
-    private val repository: ComicInteractor
-) : ComicPresenter {
+class ComicViewStateInteractor(
+    private val repository: ComicDataInteractor
+) : ComicViewController {
+
     // TODO: finite state machine, shared view state, use-case interactor
     private var view: ComicView? = null
     private var comicData: ComicData? = null
@@ -104,7 +105,8 @@ class CorePresenter(
         }
     }
 
-    inner class CurrentNumberCallback : Callback<Int?> {
+    inner class CurrentNumberCallback : BaseCallback<Int?> {
+
         override fun invoke(value: Int?) {
             if (value != null) {
                 repository.loadComicByNumber(value, comicResourseCallback)
@@ -114,16 +116,18 @@ class CorePresenter(
         }
     }
 
-    inner class LatestNumberCallback : Callback<Int?> {
+    inner class LatestNumberCallback : BaseCallback<Int?> {
+
         // TODO: finite state machine
         override fun invoke(value: Int?) {
-            this@CorePresenter.latestNumber = value
+            this@ComicViewStateInteractor.latestNumber = value
         }
     }
 
-    inner class ComicResourseCallback : Callback<Resource<ComicData>> {
+    inner class ComicResourseCallback : BaseCallback<BaseResource<ComicData>> {
+
         // TODO: check if memory leak exists
-        override fun invoke(value: Resource<ComicData>) {
+        override fun invoke(value: BaseResource<ComicData>) {
             if (value.loading) {
                 view?.showProgress()
             } else {
@@ -132,11 +136,11 @@ class CorePresenter(
 
             if (value.data != null) {
                 currentNumber = value.data.num // TODO: finite state machine
-                val latestNumber = this@CorePresenter.latestNumber // TODO: architecture
+                val latestNumber = this@ComicViewStateInteractor.latestNumber // TODO: architecture
                 if (latestNumber != null) {
-                    this@CorePresenter.latestNumber = max(latestNumber, value.data.num)
+                    this@ComicViewStateInteractor.latestNumber = max(latestNumber, value.data.num)
                 } else {
-                    this@CorePresenter.latestNumber = value.data.num  // TODO: finite state machine
+                    this@ComicViewStateInteractor.latestNumber = value.data.num  // TODO: finite state machine
                 }
 
                 view?.render(value.data)

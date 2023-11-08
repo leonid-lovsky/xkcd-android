@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-data class Resource<T>(
+data class BaseResource<T>(
     val loading: Boolean = false,
     val data: T? = null,
     val error: Throwable? = null,

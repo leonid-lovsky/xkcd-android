@@ -30,7 +30,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     private lateinit var comicProgressBar: ProgressBar
 
-    private lateinit var presenter: ComicPresenter
+    private lateinit var presenter: ComicViewController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

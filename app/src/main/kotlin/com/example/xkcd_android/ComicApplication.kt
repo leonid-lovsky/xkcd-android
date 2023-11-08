@@ -8,9 +8,9 @@ import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
 
-    private lateinit var comicPresenter: ComicPresenter
+    private lateinit var comicViewController: ComicViewController
 
-    fun comicPresenter() = comicPresenter
+    fun comicPresenter() = comicViewController
 
     override fun onCreate() {
         super.onCreate()
@@ -25,7 +25,7 @@ class ComicApplication : Application() {
         val retrofitDataStorage = retrofitDependency.retrofitDataStorage()
         val androidDependency = AndroidDependency(this)
         val androidStateStorage = androidDependency.androidStateStorage()
-        val comicInteractor: ComicInteractor
-        val comicPresenter: ComicPresenter
+        val comicDataInteractor: ComicDataInteractor
+        val comicViewController: ComicViewController
     }
 }
