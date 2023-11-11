@@ -1,8 +1,8 @@
 package com.example.xkcd_android
 
-class RoomConverter {
+class RoomConverter : ComicConverter.Local<RoomComic> {
 
-    fun convert(from: Comic): RoomComic {
+    override fun convert(from: Comic): RoomComic {
         return RoomComic(
             month = from.month,
             num = from.num,
@@ -18,7 +18,7 @@ class RoomConverter {
         )
     }
 
-    fun convert(from: RoomComic): Comic {
+    override fun convert(from: RoomComic): Comic {
         return Comic(
             month = from.month,
             num = from.num,

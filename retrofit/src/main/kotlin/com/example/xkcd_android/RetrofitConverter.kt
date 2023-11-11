@@ -1,8 +1,8 @@
 package com.example.xkcd_android
 
-class RetrofitConverter(private val baseUrl: String) {
+class RetrofitConverter(private val baseUrl: String) : ComicConverter<RetrofitComic> {
 
-    fun convert(from: RetrofitComic): Comic {
+    override fun convert(from: RetrofitComic): Comic {
         return Comic(
             month = from.month,
             num = from.num,

@@ -1,4 +1,4 @@
 package com.example.xkcd_android
 
-class ComicViewStateInteractor {
+class ComicController {
 }
