@@ -3,7 +3,7 @@ package com.example.xkcd_android
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 
-class AndroidViewStateStorage(private val sharedPreferences: SharedPreferences) : ComicViewStateStorage {
+class AppPreferences(private val sharedPreferences: SharedPreferences) : ComicPreferences {
 
     override fun loadCurrentNumber(): Int? {
         val number = sharedPreferences.getString(CURRENT_COMIC_NUMBER, null)

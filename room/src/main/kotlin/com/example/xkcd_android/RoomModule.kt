@@ -3,16 +3,16 @@ package com.example.xkcd_android
 import android.content.Context
 import androidx.room.Room
 
-class RoomDependency(applicationContext: Context) {
+class RoomModule(applicationContext: Context) {
 
     private val mainDatabase = Room.databaseBuilder(
-        applicationContext, MainDatabase::class.java, "Comic RoomDatabase"
+        applicationContext, MainDatabase::class.java, "Comic Database"
     ).build()
 
     private val roomService = mainDatabase.service()
     private val roomConverter = RoomConverter()
 
-    private val roomDataStorage = RoomDataStorage(roomService, roomConverter)
+    private val roomStorage = RoomStorage(roomService, roomConverter)
 
-    fun roomDataStorage() = roomDataStorage
+    fun roomStorage() = roomStorage
 }

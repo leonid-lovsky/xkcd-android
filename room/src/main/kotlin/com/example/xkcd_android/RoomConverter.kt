@@ -1,38 +1,36 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.base.Converter
+class RoomConverter {
 
-class RoomConverter : Converter<ComicData, RoomData> {
-
-    override fun invoke1(value: ComicData): RoomData {
-        return RoomData(
-            month = value.month,
-            num = value.num,
-            link = value.link,
-            year = value.year,
-            news = value.news,
-            safeTitle = value.safeTitle,
-            transcript = value.transcript,
-            alt = value.alt,
-            img = value.img,
-            title = value.title,
-            day = value.day
+    fun convert(from: Comic): RoomComic {
+        return RoomComic(
+            month = from.month,
+            num = from.num,
+            link = from.link,
+            year = from.year,
+            news = from.news,
+            safeTitle = from.safeTitle,
+            transcript = from.transcript,
+            alt = from.alt,
+            img = from.img,
+            title = from.title,
+            day = from.day
         )
     }
 
-    override fun invoke2(value: RoomData): ComicData {
-        return ComicData(
-            month = value.month,
-            num = value.num,
-            link = value.link,
-            year = value.year,
-            news = value.news,
-            safeTitle = value.safeTitle,
-            transcript = value.transcript,
-            alt = value.alt,
-            img = value.img,
-            title = value.title,
-            day = value.day
+    fun convert(from: RoomComic): Comic {
+        return Comic(
+            month = from.month,
+            num = from.num,
+            link = from.link,
+            year = from.year,
+            news = from.news,
+            safeTitle = from.safeTitle,
+            transcript = from.transcript,
+            alt = from.alt,
+            img = from.img,
+            title = from.title,
+            day = from.day
         )
     }
 }

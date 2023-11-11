@@ -3,7 +3,7 @@ package com.example.xkcd_android
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitDependency {
+class RetrofitModule {
 
     private val baseUrl = "https://xkcd.com/"
 
@@ -15,7 +15,7 @@ class RetrofitDependency {
     private val retrofitService = retrofit.create(RetrofitService::class.java)
     private val retrofitConverter = RetrofitConverter(baseUrl)
 
-    private val retrofitDataStorage = RetrofitDataStorage(retrofitService, retrofitConverter)
+    private val retrofitStorage = RetrofitStorage(retrofitService, retrofitConverter)
 
-    fun retrofitDataStorage() = retrofitDataStorage
+    fun retrofitStorage() = retrofitStorage
 }

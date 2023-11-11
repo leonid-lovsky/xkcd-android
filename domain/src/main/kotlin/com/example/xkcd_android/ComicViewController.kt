@@ -1,17 +1,16 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.base.Callback
 import com.example.xkcd_android.base.Resource
 import kotlin.math.max
 import kotlin.random.Random
 
 class ComicViewController(
-    private val repository: ComicDataRepository
+    private val repository: ComicRepository
 ) : ComicViewController {
 
     // TODO: finite state machine, shared view state, use-case interactor
     private var view: ComicView? = null
-    private var comicData: ComicData? = null
+    private var comic: Comic? = null
     private var currentNumber: Int? = null
     private var latestNumber: Int? = null
 
@@ -23,7 +22,7 @@ class ComicViewController(
     override fun setView(view: ComicView?) {
         // TODO: finite state machine
         this.view = view
-        val comic = this.comicData
+        val comic = this.comic
         if (comic != null) {
             view?.render(comic)
         }
@@ -126,10 +125,10 @@ class ComicViewController(
         }
     }
 
-    inner class ComicResourseCallback : Callback<Resource<ComicData>> {
+    inner class ComicResourseCallback : Callback<Resource<Comic>> {
 
         // TODO: check if memory leak exists
-        override fun invoke(value: Resource<ComicData>) {
+        override fun invoke(value: Resource<Comic>) {
             if (value.loading) {
                 view?.showProgress()
             } else {

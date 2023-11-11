@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.squareup.picasso.Picasso
 
-class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
+class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     private lateinit var toolbar: Toolbar
 
@@ -57,7 +57,7 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
 
-        presenter = (application as ComicApplication).comicPresenter()
+        presenter = (application as MainApplication).comicPresenter()
     }
 
     override fun onStart() {
@@ -110,11 +110,11 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         }
     }
 
-    override fun render(comicData: ComicData) {
-        comicTitleView.text = comicData.title
-        Picasso.get().load(comicData.img).into(comicImageView)
-        comicLinkTextView.text = comicData.link
-        comicImageUrlTextView.text = comicData.img
+    override fun render(comic: Comic) {
+        comicTitleView.text = comic.title
+        Picasso.get().load(comic.img).into(comicImageView)
+        comicLinkTextView.text = comic.link
+        comicImageUrlTextView.text = comic.img
     }
 
     override fun render(error: Throwable) {

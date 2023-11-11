@@ -1,22 +1,21 @@
 package com.example.xkcd_android
 
-import com.example.xkcd_android.base.Callback
 import com.example.xkcd_android.base.Resource
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
-class ComicDataRepository(
-    private val localStorage: ComicDataStorage,
+class ComicRepository(
+    private val localStorage: ComicStorage,
     private val remoteStorage: ComicRemoteStorage,
-    private val keyValueStore: ComicViewStateStorage,
+    private val keyValueStore: ComicPreferences,
     private val backgroundExecutor: ExecutorService,
     private val mainThreadExecutor: Executor
-) : ComicDataRepository {
+) : ComicRepository {
 
-    override fun loadLatestComic(callback: Callback<Resource<ComicData>>) {
+    override fun loadLatestComic(callback: Callback<Resource<Comic>>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
-                val resource = Resource<ComicData>(false)
+                val resource = Resource<Comic>(false)
                 callback.invoke(resource)
             }
             val remoteComic = remoteStorage.loadLatestComic()
@@ -31,10 +30,10 @@ class ComicDataRepository(
         }
     }
 
-    override fun loadComicByNumber(number: Int, callback: Callback<Resource<ComicData>>) {
+    override fun loadComicByNumber(number: Int, callback: Callback<Resource<Comic>>) {
         backgroundExecutor.execute {
             mainThreadExecutor.execute {
-                val resource = Resource<ComicData>(false)
+                val resource = Resource<Comic>(false)
                 callback.invoke(resource)
             }
             val remoteComic = remoteStorage.loadComicByNumber(number)

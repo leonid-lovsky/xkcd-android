@@ -2,7 +2,7 @@ package com.example.xkcd_android
 
 import com.google.gson.annotations.SerializedName
 
-data class RetrofitData(
+data class RetrofitComic(
     @SerializedName(value = "month")
     val month: String,
     @SerializedName(value = "num")

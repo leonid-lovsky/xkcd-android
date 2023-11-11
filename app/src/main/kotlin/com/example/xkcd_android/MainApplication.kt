@@ -6,7 +6,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import java.util.concurrent.Executors
 
-class ComicApplication : Application() {
+class MainApplication : Application() {
 
     private lateinit var comicViewController: ComicViewController
 
@@ -19,13 +19,11 @@ class ComicApplication : Application() {
         val availableProcessors = Runtime.getRuntime().availableProcessors()
         val backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
         val mainThreadExecutor = MainThreadExecutor()
-        val roomDependency = RoomDependency(this)
-        val roomDataStorage = roomDependency.roomDataStorage()
-        val retrofitDependency = RetrofitDependency()
-        val retrofitDataStorage = retrofitDependency.retrofitDataStorage()
-        val androidDependency = AndroidDependency(this)
-        val androidStateStorage = androidDependency.androidStateStorage()
-        val comicDataRepository: ComicDataRepository
-        val comicViewController: ComicViewController
+        val roomModule = RoomModule(this)
+        val roomStorage = roomModule.roomStorage()
+        val retrofitModule = RetrofitModule()
+        val retrofitStorage = retrofitModule.retrofitStorage()
+        val appModule = AppModule(this)
+        val appPreferences = appModule.appPreferences()
     }
 }

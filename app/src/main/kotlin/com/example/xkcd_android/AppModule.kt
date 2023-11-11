@@ -2,11 +2,11 @@ package com.example.xkcd_android
 
 import android.content.Context
 
-class AndroidDependency(applicationContext: Context) {
+class AppModule(applicationContext: Context) {
 
     private val sharedPreferences = applicationContext
         .getSharedPreferences("Comic SharedPreferences", Context.MODE_PRIVATE)
-    private val androidStateStorage = AndroidViewStateStorage(sharedPreferences)
+    private val appPreferences = AppPreferences(sharedPreferences)
 
-    fun androidStateStorage() = androidStateStorage
+    fun appPreferences() = appPreferences
 }

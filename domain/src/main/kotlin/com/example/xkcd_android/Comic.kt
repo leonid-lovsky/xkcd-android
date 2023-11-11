@@ -1,6 +1,6 @@
 package com.example.xkcd_android
 
-data class ComicData(
+data class Comic(
     val month: String,
     val num: Int,
     val link: String,

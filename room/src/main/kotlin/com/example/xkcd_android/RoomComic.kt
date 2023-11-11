@@ -3,8 +3,11 @@ package com.example.xkcd_android
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-@Entity(tableName = "comic", primaryKeys = ["num"])
-data class RoomData(
+@Entity(
+    tableName = "comic",
+    primaryKeys = ["num"]
+)
+data class RoomComic(
     @ColumnInfo(name = "month")
     val month: String,
     @ColumnInfo(name = "num")
