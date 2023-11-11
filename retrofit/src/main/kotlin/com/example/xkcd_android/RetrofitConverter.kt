@@ -1,6 +1,8 @@
 package com.example.xkcd_android
 
-class RetrofitConverter(private val baseUrl: String) : BaseConverter<ComicData, RetrofitData> {
+import com.example.xkcd_android.base.Converter
+
+class RetrofitConverter(private val baseUrl: String) : Converter<ComicData, RetrofitData> {
 
     override fun invoke1(value: ComicData): RetrofitData {
         throw NotImplementedError()

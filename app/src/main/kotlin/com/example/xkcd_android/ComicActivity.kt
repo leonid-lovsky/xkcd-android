@@ -113,22 +113,21 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun render(comicData: ComicData) {
         comicTitleView.text = comicData.title
         Picasso.get().load(comicData.img).into(comicImageView)
-        // comic.
         comicLinkTextView.text = comicData.link
         comicImageUrlTextView.text = comicData.img
     }
 
     override fun render(error: Throwable) {
-        print(error) // TODO
+        print(error)
     }
 
     override fun render(message: String) {
-        print(message) // TODO
+        print(message)
     }
 
     override fun displaySelectComicDialog() {
         val selectComicDialogFragment = SelectComicDialogFragment(presenter)
-        selectComicDialogFragment.show(supportFragmentManager, "SELECT_COMIC_DIALOG_FRAGMENT")
+        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
     }
 
     override fun showProgress() {
@@ -137,5 +136,10 @@ class ComicActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
     override fun hideProgress() {
         comicProgressBar.visibility = View.INVISIBLE
+    }
+
+    companion object {
+
+        const val SELECT_COMIC_DIALOG_FRAGMENT_TAG = "SELECT_COMIC_DIALOG_FRAGMENT"
     }
 }

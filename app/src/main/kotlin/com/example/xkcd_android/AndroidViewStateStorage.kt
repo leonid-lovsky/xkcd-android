@@ -5,11 +5,8 @@ import android.content.SharedPreferences
 
 class AndroidViewStateStorage(private val sharedPreferences: SharedPreferences) : ComicViewStateStorage {
 
-    private val currentComicNumberKey = "Current comic number"
-    private val latestComicNumberKey = "Latest comic number"
-
     override fun loadCurrentNumber(): Int? {
-        val number = sharedPreferences.getString(currentComicNumberKey, null)
+        val number = sharedPreferences.getString(CURRENT_COMIC_NUMBER, null)
         if (number == null) return null
         return number.toInt()
     }
@@ -17,12 +14,12 @@ class AndroidViewStateStorage(private val sharedPreferences: SharedPreferences) 
     @SuppressLint("ApplySharedPref")
     override fun saveCurrentNumber(number: Int) {
         val editor = sharedPreferences.edit()
-        editor.putString(currentComicNumberKey, number.toString())
+        editor.putString(CURRENT_COMIC_NUMBER, number.toString())
         editor.commit()
     }
 
     override fun loadLatestNumber(): Int? {
-        val number = sharedPreferences.getString(latestComicNumberKey, null)
+        val number = sharedPreferences.getString(LATEST_COMIC_NUMBER, null)
         if (number == null) return null
         return number.toInt()
     }
@@ -30,7 +27,13 @@ class AndroidViewStateStorage(private val sharedPreferences: SharedPreferences) 
     @SuppressLint("ApplySharedPref")
     override fun saveLatestNumber(number: Int) {
         val editor = sharedPreferences.edit()
-        editor.putString(latestComicNumberKey, number.toString())
+        editor.putString(LATEST_COMIC_NUMBER, number.toString())
         editor.commit()
+    }
+
+    companion object {
+
+        const val CURRENT_COMIC_NUMBER = "CURRENT_COMIC_NUMBER"
+        const val LATEST_COMIC_NUMBER = "LATEST_COMIC_NUMBER"
     }
 }

@@ -25,7 +25,7 @@ class ComicApplication : Application() {
         val retrofitDataStorage = retrofitDependency.retrofitDataStorage()
         val androidDependency = AndroidDependency(this)
         val androidStateStorage = androidDependency.androidStateStorage()
-        val comicDataInteractor: ComicDataInteractor
+        val comicDataRepository: ComicDataRepository
         val comicViewController: ComicViewController
     }
 }
