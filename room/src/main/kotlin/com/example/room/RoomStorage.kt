@@ -1,18 +1,19 @@
 package com.example.room
 
+import com.example.data.LocalComicStorage
 import com.example.domain.Comic
 
 class RoomStorage(
-    private val roomService: RoomService,
-) {
+    private val roomService: RoomService
+) : LocalComicStorage {
 
-    fun loadComicByNumber(number: Int): Comic? {
-        val roomData = roomService.loadComicByNumber(number)
-        if (roomData == null) return null
-        return roomData
+    override fun getComicByNumber(number: Int): Comic {
+        val roomComic = roomService.getRoomComicByNumber(number)
+        return roomComic.toComic()
     }
 
-    fun saveComic(comic: Comic) {
-        roomService.saveComic(comic)
+    override fun putComic(comic: Comic) {
+        val roomComic = RoomComic(comic)
+        roomService.putRoomComic(roomComic)
     }
 }

@@ -36,5 +36,6 @@ android {
 dependencies {
     implementation project(path: ':domain')
     implementation 'androidx.room:room-runtime:2.6.0'
+    implementation project(path: ':data')
     kapt 'androidx.room:room-compiler:2.6.0'
 }

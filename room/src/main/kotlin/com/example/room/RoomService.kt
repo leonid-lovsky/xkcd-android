@@ -9,8 +9,8 @@ import androidx.room.Query
 interface RoomService {
 
     @Query("SELECT * FROM comic WHERE num = :number")
-    fun loadComicByNumber(number: Int): RoomComic?
+    fun getRoomComicByNumber(number: Int): RoomComic
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveComic(value: RoomComic)
+    fun putRoomComic(value: RoomComic)
 }

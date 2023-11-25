@@ -7,14 +7,12 @@ class RetrofitModule {
 
     private val baseUrl = "https://xkcd.com/"
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val retrofit =
+        Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+            .build()
 
     private val retrofitService = retrofit.create(RetrofitService::class.java)
-
-    private val retrofitStorage = RetrofitStorage(retrofitService)
+    private val retrofitStorage = RetrofitStorage(retrofitService, baseUrl)
 
     fun retrofitStorage() = retrofitStorage
 }
