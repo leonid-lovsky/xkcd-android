@@ -1,0 +1,14 @@
+package com.example.retrofit
+
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
+
+interface RetrofitService {
+
+    @GET("info.0.json")
+    fun loadLatestComic(): Call<RetrofitComic>
+
+    @GET("{number}/info.0.json")
+    fun loadComicByNumber(@Path("number") number: Int): Call<RetrofitComic>
+}
