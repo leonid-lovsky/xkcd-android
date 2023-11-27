@@ -11,7 +11,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.domain.Comic
+import com.example.data.Comic
 import com.example.room.R
 import com.squareup.picasso.Picasso
 
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         }
     }
 
-    override fun render(comic: Comic) {
+    override fun render(comic: com.example.data.Comic) {
         comicTitleView.text = comic.title
         Picasso.get().load(comic.img).into(comicImageView)
         comicLinkTextView.text = comic.link

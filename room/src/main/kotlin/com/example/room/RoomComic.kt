@@ -2,7 +2,7 @@ package com.example.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.example.domain.Comic
+import com.example.data.Comic
 
 @Entity(
     tableName = "comic", primaryKeys = ["num"]

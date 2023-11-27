@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.data
 
 data class Comic(
     val month: String,

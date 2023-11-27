@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface RoomAPI {
+interface RoomComicService {
     @Query("SELECT * FROM comic WHERE num = :number")
     fun getRoomComicByNumber(number: Int): RoomComic
 

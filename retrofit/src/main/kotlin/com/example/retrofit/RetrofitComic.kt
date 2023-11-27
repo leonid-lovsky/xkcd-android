@@ -1,6 +1,6 @@
 package com.example.retrofit
 
-import com.example.domain.Comic
+import com.example.data.Comic
 import com.google.gson.annotations.SerializedName
 
 data class RetrofitComic(

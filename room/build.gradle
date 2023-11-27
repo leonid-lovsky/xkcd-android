@@ -38,6 +38,7 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
     implementation 'androidx.room:room-runtime:2.6.0'
+    implementation project(path: ':core')
 //    kapt 'androidx.room:room-compiler:2.6.0'
     ksp 'androidx.room:room-compiler:2.6.0'
 }

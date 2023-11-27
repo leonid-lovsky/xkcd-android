@@ -2,11 +2,16 @@ package com.example.room
 
 import android.content.Context
 import androidx.room.Room
+import com.example.core.Logger
 
 class RoomModule(applicationContext: Context) {
-    private val mainDatabase =
-        Room.databaseBuilder(applicationContext, MainDatabase::class.java, "Comic Database").build()
-    private val api = mainDatabase.api()
-    private val source = RoomSource(api)
-    fun source() = source
+    private val roomComicDatabase =
+        Room.databaseBuilder(applicationContext, RoomComicDatabase::class.java, "Comic Database")
+            .build()
+
+    private val roomComicService = roomComicDatabase.roomComicService()
+
+    fun roomComicStorage(logger: Logger): RoomComicStorage {
+        return RoomComicStorage(roomComicService, logger)
+    }
 }
