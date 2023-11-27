@@ -6,8 +6,11 @@ import com.example.core.Logger
 import com.example.data.Comic
 import com.example.data.LocalComicStorage
 import com.example.data.RemoteComicStorage
+import java.util.concurrent.Executor
 
 class GetComicByNumber(
+    private val mainThreadExecutor: Executor,
+    private val backgroundExecutor: Executor,
     private val comicSourceLocal: LocalComicStorage,
     private val comicSourceRemote: RemoteComicStorage,
     private val logger: Logger,
@@ -31,8 +34,12 @@ class GetComicByNumber(
 
     override fun invoke(input: Int, callback: Callback<Comic?>) {
         logger.log("invoke:input:$input:callback:$callback")
-        val comic = invoke(input)
-        logger.log("invoke:comic:$comic")
-        callback(comic)
+        backgroundExecutor.execute {
+            val comic = invoke(input)
+            logger.log("invoke:comic:$comic")
+            mainThreadExecutor.execute {
+                callback(comic)
+            }
+        }
     }
 }
