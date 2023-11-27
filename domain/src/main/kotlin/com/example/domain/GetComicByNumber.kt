@@ -35,10 +35,10 @@ class GetComicByNumber(
     override fun invoke(input: Int, callback: Callback<Comic?>) {
         logger.log("invoke:input:$input:callback:$callback")
         backgroundExecutor.execute {
-            val comic = invoke(input)
-            logger.log("invoke:comic:$comic")
+            val result = invoke(input)
+            logger.log("invoke:result:$result")
             mainThreadExecutor.execute {
-                callback(comic)
+                callback(result)
             }
         }
     }
