@@ -22,7 +22,9 @@ class RetrofitComicStorage(
         logger.log("getLatestComic:body:$body")
         val copy = body?.copy(link = baseUrl + body.num)
         logger.log("getLatestComic:copy:$copy")
-        return copy?.toComic()
+        val result = copy?.toComic()
+        logger.log("getLatestComic:result:$result")
+        return result
     }
 
     override fun getLatestComic(): Comic? {
@@ -38,6 +40,8 @@ class RetrofitComicStorage(
         logger.log("getLatestComic:body:$body")
         val copy = body?.copy(link = baseUrl + body.num)
         logger.log("getLatestComic:copy:$copy")
-        return copy?.toComic()
+        val result = copy?.toComic()
+        logger.log("getLatestComic:result:$result")
+        return result
     }
 }

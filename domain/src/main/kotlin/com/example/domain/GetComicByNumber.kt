@@ -15,14 +15,18 @@ class GetComicByNumber(
     override fun invoke(input: Int): Comic? {
         logger.log("invoke:input:$input")
         val comicLocal = comicSourceLocal.getComicByNumber(input)
+        logger.log("invoke:comicLocal:$comicLocal")
         if (comicLocal != null) {
             return comicLocal
         }
         val comicRemote = comicSourceRemote.getComicByNumber(input)
+        logger.log("invoke:comicRemote:$comicRemote")
         if (comicRemote != null) {
             comicSourceLocal.putComic(comicRemote)
         }
-        return comicSourceLocal.getComicByNumber(input)
+        val result = comicSourceLocal.getComicByNumber(input)
+        logger.log("invoke:result:$result")
+        return result
     }
 
     override fun invoke(input: Int, callback: Callback<Comic?>) {

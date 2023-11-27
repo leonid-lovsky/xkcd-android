@@ -12,7 +12,9 @@ class RoomComicStorage(
         logger.log("getComicByNumber:number:$number")
         val roomComic = roomComicService.getRoomComicByNumber(number)
         logger.log("getComicByNumber:roomComic:$roomComic")
-        return roomComic?.toComic()
+        val result = roomComic?.toComic()
+        logger.log("getComicByNumber:result:$result")
+        return result
     }
 
     override fun putComic(comic: Comic) {
