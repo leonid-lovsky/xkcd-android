@@ -16,6 +16,20 @@ data class RetrofitComic(
     @SerializedName(value = "title") val title: String,
     @SerializedName(value = "day") val day: String,
 ) {
+    constructor(comic: Comic) : this(
+        month = comic.month,
+        num = comic.num,
+        link = comic.link,
+        year = comic.year,
+        news = comic.news,
+        safeTitle = comic.safeTitle,
+        transcript = comic.transcript,
+        alt = comic.alt,
+        img = comic.img,
+        title = comic.title,
+        day = comic.day
+    )
+
     fun toComic(): Comic {
         return Comic(
             month = month,
@@ -28,25 +42,7 @@ data class RetrofitComic(
             alt = alt,
             img = img,
             title = title,
-            day = day,
+            day = day
         )
-    }
-
-    companion object {
-        fun fromComic(comic: Comic): RetrofitComic {
-            return RetrofitComic(
-                month = comic.month,
-                num = comic.num,
-                link = comic.link,
-                year = comic.year,
-                news = comic.news,
-                safeTitle = comic.safeTitle,
-                transcript = comic.transcript,
-                alt = comic.alt,
-                img = comic.img,
-                title = comic.title,
-                day = comic.day,
-            )
-        }
     }
 }

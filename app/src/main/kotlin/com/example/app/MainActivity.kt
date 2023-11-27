@@ -16,7 +16,6 @@ import com.example.room.R
 import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
-
     private lateinit var toolbar: Toolbar
 
     private lateinit var comicTitleView: TextView
@@ -86,18 +85,22 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
                 presenter.loadLatestComic()
                 true
             }
+
             R.id.select_comic -> {
                 presenter.displaySelectComicDialog()
                 true
             }
+
             R.id.refresh_comic -> {
                 presenter.refreshCurrentComic()
                 true
             }
+
             R.id.random_comic -> {
                 presenter.loadRandomComic()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

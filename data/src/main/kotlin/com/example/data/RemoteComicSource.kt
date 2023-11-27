@@ -2,6 +2,6 @@ package com.example.data
 
 import com.example.domain.Comic
 
-interface WebComicStore : ComicStore {
+interface RemoteComicSource : ComicSource {
     fun getLatestComic(): Comic
 }

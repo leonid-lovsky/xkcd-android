@@ -1,12 +1,11 @@
 package com.example.room
 
-import com.example.data.DBComicStore
+import com.example.data.CacheComicSource
 import com.example.domain.Comic
 
-class RoomStore(
+class RoomSource(
     private val roomAPI: RoomAPI
-) : DBComicStore {
-
+) : CacheComicSource {
     override fun getComicByNumber(number: Int): Comic {
         val roomComic = roomAPI.getRoomComicByNumber(number)
         return roomComic.toComic()

@@ -9,14 +9,12 @@ import androidx.fragment.app.DialogFragment
 import com.example.room.R
 
 class SelectComicDialogFragment(private val presenter: ComicViewController) : DialogFragment() {
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.select_comic_dialog, null) as View
         val inputView = view.findViewById<EditText>(R.id.select_comic_dialog_input)
-        val builder = AlertDialog.Builder(activity)
-            .setView(view)
+        val builder = AlertDialog.Builder(activity).setView(view)
             .setPositiveButton(R.string.select_comic_dialog_positive_button) { _, _ ->
                 val comicNumber = inputView.text.toString()
                 presenter.loadComicByNumber(comicNumber.toInt())

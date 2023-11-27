@@ -5,6 +5,5 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [RoomComic::class], version = 1)
 abstract class MainDatabase : RoomDatabase() {
-
-    abstract fun service(): RoomAPI
+    abstract fun api(): RoomAPI
 }

@@ -1,6 +1,6 @@
 package com.example.core
 
 interface Logger {
-    fun log(message: String)
-    fun log(error: Throwable)
+    fun message(message: String)
+    fun message(error: Throwable)
 }
