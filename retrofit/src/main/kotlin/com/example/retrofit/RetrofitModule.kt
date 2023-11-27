@@ -11,8 +11,8 @@ class RetrofitModule {
         Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    private val retrofitService = retrofit.create(RetrofitService::class.java)
-    private val retrofitStorage = RetrofitStorage(retrofitService, baseUrl)
+    private val retrofitAPI = retrofit.create(RetrofitAPI::class.java)
+    private val retrofitStorage = RetrofitStore(retrofitAPI, baseUrl)
 
     fun retrofitStorage() = retrofitStorage
 }

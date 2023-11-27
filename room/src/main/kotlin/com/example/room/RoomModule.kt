@@ -10,7 +10,7 @@ class RoomModule(applicationContext: Context) {
     ).build()
 
     private val roomService = mainDatabase.service()
-    private val roomStorage = RoomStorage(roomService)
+    private val roomStorage = RoomStore(roomService)
 
     fun roomStorage() = roomStorage
 }
