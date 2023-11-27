@@ -21,22 +21,14 @@ class GetComicByNumber(
         val comicRemote = comicSourceRemote.getComicByNumber(input)
         if (comicRemote != null) {
             comicSourceLocal.putComic(comicRemote)
-            return comicSourceLocal.getComicByNumber(input)
         }
+        return comicSourceLocal.getComicByNumber(input)
     }
 
     override fun invoke(input: Int, callback: Callback<Comic?>) {
         logger.log("invoke:input:$input:callback:$callback")
-        val comicLocal = comicSourceLocal.getComicByNumber(input)
-        if (comicLocal != null) {
-            callback(comicLocal)
-        } else {
-            val comicRemote = comicSourceRemote.getComicByNumber(input)
-            if (comicRemote != null) {
-                comicSourceLocal.putComic(comicRemote)
-                val comicLocal = comicSourceLocal.getComicByNumber(input)
-                callback(comicLocal)
-            }
-        }
+        val comic = invoke(input)
+        logger.log("invoke:comic:$comic")
+        callback(comic)
     }
 }
