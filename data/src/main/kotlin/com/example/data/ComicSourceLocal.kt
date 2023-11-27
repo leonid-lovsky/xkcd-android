@@ -2,6 +2,6 @@ package com.example.data
 
 import com.example.domain.Comic
 
-interface CacheComicSource : ComicSource {
+interface ComicSourceLocal : ComicSource {
     fun putComic(comic: Comic)
 }

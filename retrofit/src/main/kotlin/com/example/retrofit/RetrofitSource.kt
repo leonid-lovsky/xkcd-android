@@ -1,12 +1,12 @@
 package com.example.retrofit
 
-import com.example.data.RemoteComicSource
+import com.example.data.ComicSourceRemote
 import com.example.domain.Comic
 
 class RetrofitSource(
     private val retrofitAPI: RetrofitAPI,
     private val baseUrl: String,
-) : RemoteComicSource {
+) : ComicSourceRemote {
     override fun getLatestComic(): Comic {
         val call = retrofitAPI.getLatestRetrofitComic()
         val response = call.execute()
