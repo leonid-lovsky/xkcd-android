@@ -4,9 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.example.data.Comic
 
-@Entity(
-    tableName = "comic", primaryKeys = ["num"]
-)
+@Entity(tableName = "comic", primaryKeys = ["num"])
 data class RoomComic(
     @ColumnInfo(name = "month") val month: String,
     @ColumnInfo(name = "num") val num: Int,
@@ -18,7 +16,7 @@ data class RoomComic(
     @ColumnInfo(name = "alt") val alt: String,
     @ColumnInfo(name = "img") val img: String,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "day") val day: String
+    @ColumnInfo(name = "day") val day: String,
 ) {
     constructor(comic: Comic) : this(
         month = comic.month,

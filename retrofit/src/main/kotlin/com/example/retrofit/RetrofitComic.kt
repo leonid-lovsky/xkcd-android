@@ -27,7 +27,7 @@ data class RetrofitComic(
         alt = comic.alt,
         img = comic.img,
         title = comic.title,
-        day = comic.day
+        day = comic.day,
     )
 
     fun toComic(): Comic {
@@ -42,7 +42,7 @@ data class RetrofitComic(
             alt = alt,
             img = img,
             title = title,
-            day = day
+            day = day,
         )
     }
 }

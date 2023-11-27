@@ -9,33 +9,35 @@ class RetrofitComicStorage(
     private val retrofitComicService: RetrofitComicService,
     private val logger: Logger,
 ) : RemoteComicStorage {
-    override fun getLatestComic(): Comic? {
-        val call = retrofitComicService.getLatestRetrofitComic()
-        logger.log("getLatestComic:call$call")
+    override fun getComicByNumber(number: Int): Comic? {
+        logger.log("getComicByNumber:number:$number")
+        val call = retrofitComicService.getRetrofitComicByNumber(number)
+        logger.log("getLatestComic:call:$call")
         val response = call.execute()
-        logger.log("getLatestComic:response$response")
-        logger.log("getLatestComic:response.isSuccessful${response.isSuccessful()}")
-        logger.log("getLatestComic:response.code${response.code()}")
-        logger.log("getLatestComic:response.message${response.message()}")
+        logger.log("getLatestComic:response:$response")
+        logger.log("getLatestComic:response:isSuccessful:${response.isSuccessful()}")
+        logger.log("getLatestComic:response:code:${response.code()}")
+        logger.log("getLatestComic:response:message:${response.message()}")
         val body = response.body()
-        logger.log("getLatestComic:body$body")
+        logger.log("getLatestComic:body:$body")
         val copy = body?.copy(link = baseUrl + body.num)
-        logger.log("getLatestComic:copy$copy")
+        logger.log("getLatestComic:copy:$copy")
         return copy?.toComic()
     }
 
-    override fun getComicByNumber(number: Int): Comic? {
-        val call = retrofitComicService.getRetrofitComicByNumber(number)
-        logger.log("getLatestComic:call$call")
+    override fun getLatestComic(): Comic? {
+        logger.log("getLatestComic::")
+        val call = retrofitComicService.getLatestRetrofitComic()
+        logger.log("getLatestComic:call:$call")
         val response = call.execute()
-        logger.log("getLatestComic:response$response")
-        logger.log("getLatestComic:response.isSuccessful${response.isSuccessful()}")
-        logger.log("getLatestComic:response.code${response.code()}")
-        logger.log("getLatestComic:response.message${response.message()}")
+        logger.log("getLatestComic:response:$response")
+        logger.log("getLatestComic:response:isSuccessful:${response.isSuccessful()}")
+        logger.log("getLatestComic:response:code:${response.code()}")
+        logger.log("getLatestComic:response:message:${response.message()}")
         val body = response.body()
-        logger.log("getLatestComic:body$body")
+        logger.log("getLatestComic:body:$body")
         val copy = body?.copy(link = baseUrl + body.num)
-        logger.log("getLatestComic:copy$copy")
+        logger.log("getLatestComic:copy:$copy")
         return copy?.toComic()
     }
 }
