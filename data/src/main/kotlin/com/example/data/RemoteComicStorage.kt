@@ -2,7 +2,6 @@ package com.example.data
 
 import com.example.domain.Comic
 
-interface RemoteComicStorage {
+interface RemoteComicStorage : ComicStorage {
     fun getLatestComic(): Comic
-    fun getComicByNumber(number: Int): Comic
 }
