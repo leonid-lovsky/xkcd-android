@@ -5,6 +5,7 @@ import java.util.concurrent.Executor
 class ComicRepository(
     private val localComicStorage: LocalComicStorage,
     private val remoteComicStorage: RemoteComicStorage,
+    private val comicPreferences: ComicPreferences,
     private val mainThreadExecutor: Executor,
     private val backgroundExecutor: Executor,
 ) {
@@ -14,6 +15,10 @@ class ComicRepository(
         if (remoteComic != null) {
             localComicStorage.putComic(remoteComic)
             return remoteComic
+        }
+        val latestComicNumber = comicPreferences.getLatestComicNumber()
+        if (latestComicNumber != null) {
+            localComicStorage.getComicByNumber(latestComicNumber)
         }
         return null
     }
