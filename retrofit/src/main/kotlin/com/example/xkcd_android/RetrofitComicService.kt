@@ -1,4 +1,4 @@
-package com.example.retrofit
+package com.example.xkcd_android
 
 import retrofit2.Call
 import retrofit2.http.GET

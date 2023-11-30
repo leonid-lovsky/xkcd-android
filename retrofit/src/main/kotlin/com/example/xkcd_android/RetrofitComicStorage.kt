@@ -1,7 +1,4 @@
-package com.example.retrofit
-
-import com.example.data.RemoteComicStorage
-import com.example.data.Comic
+package com.example.xkcd_android
 
 class RetrofitComicStorage(private val retrofitComicService: RetrofitComicService) :
     RemoteComicStorage {

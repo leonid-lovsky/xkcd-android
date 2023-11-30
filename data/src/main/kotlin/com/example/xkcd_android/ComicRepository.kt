@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.xkcd_android
 
 import java.util.concurrent.Executor
 

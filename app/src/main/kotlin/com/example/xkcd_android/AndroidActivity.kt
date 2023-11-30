@@ -1,4 +1,4 @@
-package com.example.app
+package com.example.xkcd_android
 
 import android.os.Bundle
 import android.view.Menu
@@ -11,7 +11,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.room.R
 
 class AndroidActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var toolbar: Toolbar
@@ -28,6 +27,8 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var nextComicButton: Button
 
     private lateinit var comicProgressBar: ProgressBar
+
+    private lateinit var comicRepository: ComicRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +56,6 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
         nextComicButton.setOnClickListener(this)
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.comic_main_menu, menu)
@@ -74,19 +67,15 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
             R.id.latest_comic -> {
                 true
             }
-
             R.id.select_comic -> {
                 true
             }
-
             R.id.refresh_comic -> {
                 true
             }
-
             R.id.random_comic -> {
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -94,43 +83,46 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-//            R.id.first_comic_button -> presenter.loadFirstComic()
-//            R.id.last_comic_button -> presenter.loadLastComic()
-//            R.id.previous_comic_button -> presenter.loadPreviousComic()
-//            R.id.next_comic_button -> presenter.loadNextComic()
+            R.id.first_comic_button -> {
+            }
+            R.id.last_comic_button -> {
+            }
+            R.id.previous_comic_button -> {
+            }
+            R.id.next_comic_button -> {
+            }
         }
     }
 
-//    override fun render(comic: com.example.data.Comic) {
-//        comicTitleView.text = comic.title
-//        Picasso.get().load(comic.img).into(comicImageView)
-//        comicLinkTextView.text = comic.link
-//        comicImageUrlTextView.text = comic.img
-//    }
-//
-//    override fun render(error: Throwable) {
-//        print(error)
-//    }
-//
-//    override fun render(message: String) {
-//        print(message)
-//    }
-//
-//    override fun displaySelectComicDialog() {
-//        val selectComicDialogFragment = SelectComicDialogFragment(presenter)
-//        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
-//    }
-//
-//    override fun showProgress() {
-//        comicProgressBar.visibility = View.VISIBLE
-//    }
-//
-//    override fun hideProgress() {
-//        comicProgressBar.visibility = View.INVISIBLE
-//    }
+    //    override fun render(comic: com.example.data.Comic) {
+    //        comicTitleView.text = comic.title
+    //        Picasso.get().load(comic.img).into(comicImageView)
+    //        comicLinkTextView.text = comic.link
+    //        comicImageUrlTextView.text = comic.img
+    //    }
+    //
+    //    override fun render(error: Throwable) {
+    //        print(error)
+    //    }
+    //
+    //    override fun render(message: String) {
+    //        print(message)
+    //    }
+    //
+    //    override fun displaySelectComicDialog() {
+    //        val selectComicDialogFragment = SelectComicDialogFragment(presenter)
+    //        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
+    //    }
+    //
+    //    override fun showProgress() {
+    //        comicProgressBar.visibility = View.VISIBLE
+    //    }
+    //
+    //    override fun hideProgress() {
+    //        comicProgressBar.visibility = View.INVISIBLE
+    //    }
 
     companion object {
-
         const val SELECT_COMIC_DIALOG_FRAGMENT_TAG = "SELECT_COMIC_DIALOG_FRAGMENT"
     }
 }

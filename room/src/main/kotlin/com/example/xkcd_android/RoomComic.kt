@@ -1,8 +1,7 @@
-package com.example.room
+package com.example.xkcd_android
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.example.data.Comic
 
 @Entity(tableName = "comic", primaryKeys = ["num"])
 data class RoomComic(

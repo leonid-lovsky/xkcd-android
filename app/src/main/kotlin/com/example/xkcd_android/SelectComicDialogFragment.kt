@@ -1,4 +1,4 @@
-package com.example.app
+package com.example.xkcd_android
 
 import android.app.Dialog
 import android.os.Bundle
@@ -6,9 +6,8 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.room.R
 
-class SelectComicDialogFragment(private val presenter: ComicViewController) : DialogFragment() {
+class SelectComicDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
         val inflater = requireActivity().layoutInflater
@@ -17,7 +16,6 @@ class SelectComicDialogFragment(private val presenter: ComicViewController) : Di
         val builder = AlertDialog.Builder(activity).setView(view)
             .setPositiveButton(R.string.select_comic_dialog_positive_button) { _, _ ->
                 val comicNumber = inputView.text.toString()
-                presenter.loadComicByNumber(comicNumber.toInt())
             }.setNegativeButton(R.string.select_comic_dialog_negative_button) { _, _ ->
                 dialog?.cancel()
             }

@@ -1,11 +1,9 @@
-package com.example.app
+package com.example.xkcd_android
 
 import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import com.example.retrofit.RetrofitModule
-import com.example.room.RoomModule
 import java.util.concurrent.Executors
 
 class AndroidApplication : Application() {

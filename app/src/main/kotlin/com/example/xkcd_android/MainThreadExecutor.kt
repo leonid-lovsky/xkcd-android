@@ -1,4 +1,4 @@
-package com.example.app
+package com.example.xkcd_android
 
 import android.os.Handler
 import android.os.Looper

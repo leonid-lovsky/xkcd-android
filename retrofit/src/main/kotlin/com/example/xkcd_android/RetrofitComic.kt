@@ -1,6 +1,5 @@
-package com.example.retrofit
+package com.example.xkcd_android
 
-import com.example.data.Comic
 import com.google.gson.annotations.SerializedName
 
 data class RetrofitComic(

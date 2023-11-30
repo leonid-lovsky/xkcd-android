@@ -1,8 +1,7 @@
-package com.example.room
+package com.example.xkcd_android
 
 import android.content.Context
 import androidx.room.Room
-import com.example.core.Logger
 
 class RoomModule(applicationContext: Context) {
     private val roomComicDatabase =
@@ -11,7 +10,7 @@ class RoomModule(applicationContext: Context) {
 
     private val roomComicService = roomComicDatabase.roomComicService()
 
-    fun roomComicStorage(logger: Logger): RoomComicStorage {
-        return RoomComicStorage(roomComicService, logger)
+    fun roomComicStorage(): RoomComicStorage {
+        return RoomComicStorage(roomComicService)
     }
 }

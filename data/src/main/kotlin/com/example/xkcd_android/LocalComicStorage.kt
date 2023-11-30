@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.xkcd_android
 
 interface LocalComicStorage {
     fun getComicByNumber(number: Int): Comic?

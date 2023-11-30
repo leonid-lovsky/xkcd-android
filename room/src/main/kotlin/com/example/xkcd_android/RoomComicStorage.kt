@@ -1,7 +1,4 @@
-package com.example.room
-
-import com.example.data.LocalComicStorage
-import com.example.data.Comic
+package com.example.xkcd_android
 
 class RoomComicStorage(private val roomComicService: RoomComicService) : LocalComicStorage {
     override fun getComicByNumber(number: Int): Comic? {
