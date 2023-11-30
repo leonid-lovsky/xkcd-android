@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import com.example.data.ComicPreferences
 
-class AppPreferences(private val sharedPreferences: SharedPreferences) :
+class AndroidPreferences(private val sharedPreferences: SharedPreferences) :
     com.example.data.ComicPreferences {
 
     override fun loadCurrentNumber(): Int? {

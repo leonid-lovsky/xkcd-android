@@ -8,12 +8,12 @@ import com.example.retrofit.RetrofitModule
 import com.example.room.RoomModule
 import java.util.concurrent.Executors
 
-class MainApplication : Application() {
+class AndroidApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().build())
         StrictMode.setVmPolicy(VmPolicy.Builder().detectAll().penaltyLog().build())
-        val appModule = AppModule(applicationContext = applicationContext)
+        val androidModule = AndroidModule(applicationContext = applicationContext)
         val roomModule = RoomModule(applicationContext = applicationContext)
         val retrofitModule = RetrofitModule()
         val availableProcessors = Runtime.getRuntime().availableProcessors()

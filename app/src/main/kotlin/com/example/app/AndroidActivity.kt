@@ -11,18 +11,16 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.example.data.Comic
 import com.example.room.R
-import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
+class AndroidActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var toolbar: Toolbar
 
     private lateinit var comicTitleView: TextView
     private lateinit var comicImageView: ImageView
-    private lateinit var comicDescriptionTextView: TextView
-    private lateinit var comicLinkTextView: TextView
-    private lateinit var comicImageUrlTextView: TextView
+    private lateinit var comicTextView: TextView
+    private lateinit var comicLinkView: TextView
+    private lateinit var comicImageUrlView: TextView
 
     private lateinit var firstComicButton: Button
     private lateinit var lastComicButton: Button
@@ -30,8 +28,6 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     private lateinit var nextComicButton: Button
 
     private lateinit var comicProgressBar: ProgressBar
-
-    private lateinit var presenter: ComicViewController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +38,9 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
 
         comicTitleView = findViewById(R.id.comic_title)
         comicImageView = findViewById(R.id.comic_image)
-        comicDescriptionTextView = findViewById(R.id.comic_description)
-        comicLinkTextView = findViewById(R.id.comic_link)
-        comicImageUrlTextView = findViewById(R.id.comic_image_url)
+        comicTextView = findViewById(R.id.comic_description)
+        comicLinkView = findViewById(R.id.comic_link)
+        comicImageUrlView = findViewById(R.id.comic_image_url)
 
         firstComicButton = findViewById(R.id.first_comic_button)
         lastComicButton = findViewById(R.id.last_comic_button)
@@ -57,20 +53,14 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
-
-        presenter = (application as MainApplication).comicPresenter()
     }
 
     override fun onStart() {
         super.onStart()
-        presenter.setView(this)
-        presenter.restoreState()
     }
 
     override fun onStop() {
         super.onStop()
-        presenter.setView(null)
-        presenter.saveState()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,22 +72,18 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.latest_comic -> {
-                presenter.loadLatestComic()
                 true
             }
 
             R.id.select_comic -> {
-                presenter.displaySelectComicDialog()
                 true
             }
 
             R.id.refresh_comic -> {
-                presenter.refreshCurrentComic()
                 true
             }
 
             R.id.random_comic -> {
-                presenter.loadRandomComic()
                 true
             }
 
@@ -108,40 +94,40 @@ class MainActivity : AppCompatActivity(), ComicView, View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.first_comic_button -> presenter.loadFirstComic()
-            R.id.last_comic_button -> presenter.loadLastComic()
-            R.id.previous_comic_button -> presenter.loadPreviousComic()
-            R.id.next_comic_button -> presenter.loadNextComic()
+//            R.id.first_comic_button -> presenter.loadFirstComic()
+//            R.id.last_comic_button -> presenter.loadLastComic()
+//            R.id.previous_comic_button -> presenter.loadPreviousComic()
+//            R.id.next_comic_button -> presenter.loadNextComic()
         }
     }
 
-    override fun render(comic: com.example.data.Comic) {
-        comicTitleView.text = comic.title
-        Picasso.get().load(comic.img).into(comicImageView)
-        comicLinkTextView.text = comic.link
-        comicImageUrlTextView.text = comic.img
-    }
-
-    override fun render(error: Throwable) {
-        print(error)
-    }
-
-    override fun render(message: String) {
-        print(message)
-    }
-
-    override fun displaySelectComicDialog() {
-        val selectComicDialogFragment = SelectComicDialogFragment(presenter)
-        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
-    }
-
-    override fun showProgress() {
-        comicProgressBar.visibility = View.VISIBLE
-    }
-
-    override fun hideProgress() {
-        comicProgressBar.visibility = View.INVISIBLE
-    }
+//    override fun render(comic: com.example.data.Comic) {
+//        comicTitleView.text = comic.title
+//        Picasso.get().load(comic.img).into(comicImageView)
+//        comicLinkTextView.text = comic.link
+//        comicImageUrlTextView.text = comic.img
+//    }
+//
+//    override fun render(error: Throwable) {
+//        print(error)
+//    }
+//
+//    override fun render(message: String) {
+//        print(message)
+//    }
+//
+//    override fun displaySelectComicDialog() {
+//        val selectComicDialogFragment = SelectComicDialogFragment(presenter)
+//        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
+//    }
+//
+//    override fun showProgress() {
+//        comicProgressBar.visibility = View.VISIBLE
+//    }
+//
+//    override fun hideProgress() {
+//        comicProgressBar.visibility = View.INVISIBLE
+//    }
 
     companion object {
 

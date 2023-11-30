@@ -1,5 +1,6 @@
 package com.example.data
 
-interface RemoteComicStorage : ComicStorage {
+interface RemoteComicStorage {
     fun getLatestComic(): Comic?
+    fun getComicByNumber(number: Int): Comic?
 }

@@ -1,5 +1,5 @@
 package com.example.core
 
-interface Callback<O> {
-    operator fun invoke(output: O)
+interface Callback<T> {
+    operator fun invoke(value: T)
 }
