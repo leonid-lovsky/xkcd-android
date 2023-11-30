@@ -17,6 +17,7 @@ data class RoomComic(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "day") val day: String,
 ) {
+
     constructor(comic: Comic) : this(
         month = comic.month,
         num = comic.num,

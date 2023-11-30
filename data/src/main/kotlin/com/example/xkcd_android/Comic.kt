@@ -11,5 +11,5 @@ data class Comic(
     val alt: String,
     val img: String,
     val title: String,
-    val day: String
+    val day: String,
 )

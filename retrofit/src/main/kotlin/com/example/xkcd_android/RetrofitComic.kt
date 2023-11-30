@@ -15,6 +15,7 @@ data class RetrofitComic(
     @SerializedName(value = "title") val title: String,
     @SerializedName(value = "day") val day: String,
 ) {
+
     constructor(comic: Comic) : this(
         month = comic.month,
         num = comic.num,

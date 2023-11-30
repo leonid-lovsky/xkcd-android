@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface RetrofitComicService {
+
     @GET("info.0.json")
     fun getLatestRetrofitComic(): Call<RetrofitComic>
 
