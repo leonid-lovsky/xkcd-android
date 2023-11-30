@@ -9,6 +9,15 @@ class ComicRepository(
     private val backgroundExecutor: Executor,
 ) {
 
+    fun getLatestComic(): Comic? {
+        val remoteComic = remoteComicStorage.getLatestComic()
+        if (remoteComic != null) {
+            localComicStorage.putComic(remoteComic)
+            return remoteComic
+        }
+        return null
+    }
+
     fun getComicByNumber(number: Int): Comic? {
         val localComic = localComicStorage.getComicByNumber(number)
         if (localComic != null) {
