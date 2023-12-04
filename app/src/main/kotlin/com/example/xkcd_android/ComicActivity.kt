@@ -21,7 +21,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var comicUrlView: TextView
     private lateinit var comicImageUrlView: TextView
 
-    private lateinit var comicProgressBar: ProgressBar
+    private lateinit var comicProgressView: ProgressBar
 
     private lateinit var firstComicButton: Button
     private lateinit var previousComicButton: Button
@@ -41,7 +41,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         comicUrlView = findViewById(R.id.comic_url)
         comicImageUrlView = findViewById(R.id.comic_image_url)
 
-        comicProgressBar = findViewById(R.id.comic_progress_bar)
+        comicProgressView = findViewById(R.id.comic_progress)
 
         firstComicButton = findViewById(R.id.first_comic_button)
         previousComicButton = findViewById(R.id.previous_comic_button)

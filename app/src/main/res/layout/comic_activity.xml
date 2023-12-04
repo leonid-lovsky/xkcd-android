@@ -15,7 +15,7 @@
         android:layout_height="4dp">
 
         <ProgressBar
-            android:id="@+id/comic_progress_bar"
+            android:id="@+id/comic_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="32dp"
