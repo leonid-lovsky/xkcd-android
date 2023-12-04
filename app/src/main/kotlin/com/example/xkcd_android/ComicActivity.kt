@@ -24,9 +24,9 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var comicImageUrlView: TextView
 
     private lateinit var firstComicButton: Button
-    private lateinit var lastComicButton: Button
     private lateinit var previousComicButton: Button
     private lateinit var nextComicButton: Button
+    private lateinit var lastComicButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +44,14 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         comicImageUrlView = findViewById(R.id.comic_image_url)
 
         firstComicButton = findViewById(R.id.first_comic_button)
-        lastComicButton = findViewById(R.id.last_comic_button)
         previousComicButton = findViewById(R.id.previous_comic_button)
         nextComicButton = findViewById(R.id.next_comic_button)
+        lastComicButton = findViewById(R.id.last_comic_button)
 
         firstComicButton.setOnClickListener(this)
-        lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
+        lastComicButton.setOnClickListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -85,17 +85,10 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.first_comic_button -> {
-            }
-
-            R.id.last_comic_button -> {
-            }
-
-            R.id.previous_comic_button -> {
-            }
-
-            R.id.next_comic_button -> {
-            }
+            R.id.first_comic_button -> {}
+            R.id.previous_comic_button -> {}
+            R.id.next_comic_button -> {}
+            R.id.last_comic_button -> {}
         }
     }
 
