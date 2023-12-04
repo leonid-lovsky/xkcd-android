@@ -12,13 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-class AndroidActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var toolbar: Toolbar
+class ComicActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var comicToolbar: Toolbar
+
+    private lateinit var comicProgressBar: ProgressBar
 
     private lateinit var comicTitleView: TextView
     private lateinit var comicImageView: ImageView
-    private lateinit var comicTextView: TextView
-    private lateinit var comicLinkView: TextView
+    private lateinit var comicDescriptionView: TextView
+    private lateinit var comicUrlView: TextView
     private lateinit var comicImageUrlView: TextView
 
     private lateinit var firstComicButton: Button
@@ -26,29 +28,25 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var previousComicButton: Button
     private lateinit var nextComicButton: Button
 
-    private lateinit var comicProgressBar: ProgressBar
-
-    private lateinit var comicRepository: ComicRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
 
-        toolbar = findViewById(R.id.comic_toolbar)
-        setSupportActionBar(toolbar)
+        comicToolbar = findViewById(R.id.comic_toolbar)
+        setSupportActionBar(comicToolbar)
+
+        comicProgressBar = findViewById(R.id.comic_progress_bar)
 
         comicTitleView = findViewById(R.id.comic_title)
         comicImageView = findViewById(R.id.comic_image)
-        comicTextView = findViewById(R.id.comic_description)
-        comicLinkView = findViewById(R.id.comic_link)
+        comicDescriptionView = findViewById(R.id.comic_description)
+        comicUrlView = findViewById(R.id.comic_url)
         comicImageUrlView = findViewById(R.id.comic_image_url)
 
         firstComicButton = findViewById(R.id.first_comic_button)
         lastComicButton = findViewById(R.id.last_comic_button)
         previousComicButton = findViewById(R.id.previous_comic_button)
         nextComicButton = findViewById(R.id.next_comic_button)
-
-        comicProgressBar = findViewById(R.id.comic_progress_bar)
 
         firstComicButton.setOnClickListener(this)
         lastComicButton.setOnClickListener(this)
@@ -67,15 +65,19 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
             R.id.latest_comic -> {
                 true
             }
+
             R.id.select_comic -> {
                 true
             }
+
             R.id.refresh_comic -> {
                 true
             }
+
             R.id.random_comic -> {
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -85,10 +87,13 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.first_comic_button -> {
             }
+
             R.id.last_comic_button -> {
             }
+
             R.id.previous_comic_button -> {
             }
+
             R.id.next_comic_button -> {
             }
         }
@@ -103,10 +108,6 @@ class AndroidActivity : AppCompatActivity(), View.OnClickListener {
     //
     //    override fun render(error: Throwable) {
     //        print(error)
-    //    }
-    //
-    //    override fun render(message: String) {
-    //        print(message)
     //    }
     //
     //    override fun displaySelectComicDialog() {

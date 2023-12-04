@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.example.xkcd_android.AndroidActivity">
+    tools:context="com.example.xkcd_android.ComicActivity">
 
     <include layout="@layout/comic_toolbar" />
 
@@ -70,7 +70,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/comic_link"
+                android:id="@+id/comic_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"

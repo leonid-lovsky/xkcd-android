@@ -1,13 +1,20 @@
 package com.example.xkcd_android
 
-import java.util.concurrent.Executor
-
-class GetComicByNumber(
+class ComicRepository(
     private val localComicStorage: LocalComicStorage,
     private val remoteComicStorage: RemoteComicStorage,
 ) {
 
-    operator fun invoke(number: Int): Comic? {
+    fun getLatestComic(): Comic? {
+        val remoteComic = remoteComicStorage.getLatestComic()
+        if (remoteComic != null) {
+            localComicStorage.putComic(remoteComic)
+            return remoteComic
+        }
+        return null
+    }
+
+    fun getComicByNumber(number: Int): Comic? {
         val remoteComic = remoteComicStorage.getComicByNumber(number)
         if (remoteComic != null) {
             localComicStorage.putComic(remoteComic)
