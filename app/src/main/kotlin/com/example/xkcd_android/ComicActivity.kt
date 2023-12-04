@@ -15,13 +15,13 @@ import androidx.appcompat.widget.Toolbar
 class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var comicToolbar: Toolbar
 
-    private lateinit var comicProgressBar: ProgressBar
-
     private lateinit var comicTitleView: TextView
     private lateinit var comicImageView: ImageView
     private lateinit var comicDescriptionView: TextView
     private lateinit var comicUrlView: TextView
     private lateinit var comicImageUrlView: TextView
+
+    private lateinit var comicProgressBar: ProgressBar
 
     private lateinit var firstComicButton: Button
     private lateinit var previousComicButton: Button
@@ -35,13 +35,13 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         comicToolbar = findViewById(R.id.comic_toolbar)
         setSupportActionBar(comicToolbar)
 
-        comicProgressBar = findViewById(R.id.comic_progress_bar)
-
         comicTitleView = findViewById(R.id.comic_title)
         comicImageView = findViewById(R.id.comic_image)
         comicDescriptionView = findViewById(R.id.comic_description)
         comicUrlView = findViewById(R.id.comic_url)
         comicImageUrlView = findViewById(R.id.comic_image_url)
+
+        comicProgressBar = findViewById(R.id.comic_progress_bar)
 
         firstComicButton = findViewById(R.id.first_comic_button)
         previousComicButton = findViewById(R.id.previous_comic_button)
