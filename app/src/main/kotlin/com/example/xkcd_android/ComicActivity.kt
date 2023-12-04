@@ -99,30 +99,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    //    override fun render(comic: com.example.data.Comic) {
-    //        comicTitleView.text = comic.title
-    //        Picasso.get().load(comic.img).into(comicImageView)
-    //        comicLinkTextView.text = comic.link
-    //        comicImageUrlTextView.text = comic.img
-    //    }
-    //
-    //    override fun render(error: Throwable) {
-    //        print(error)
-    //    }
-    //
-    //    override fun displaySelectComicDialog() {
-    //        val selectComicDialogFragment = SelectComicDialogFragment(presenter)
-    //        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
-    //    }
-    //
-    //    override fun showProgress() {
-    //        comicProgressBar.visibility = View.VISIBLE
-    //    }
-    //
-    //    override fun hideProgress() {
-    //        comicProgressBar.visibility = View.INVISIBLE
-    //    }
-
     companion object {
         const val SELECT_COMIC_DIALOG_FRAGMENT_TAG = "SELECT_COMIC_DIALOG_FRAGMENT"
     }
