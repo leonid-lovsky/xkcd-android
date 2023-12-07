@@ -21,12 +21,12 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var comicUrlView: TextView
     private lateinit var comicImageUrlView: TextView
 
-    private lateinit var comicProgressView: ProgressBar
+    private lateinit var comicProgressBar: ProgressBar
 
     private lateinit var firstComicButton: Button
+    private lateinit var lastComicButton: Button
     private lateinit var previousComicButton: Button
     private lateinit var nextComicButton: Button
-    private lateinit var lastComicButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,23 +35,23 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         comicToolbar = findViewById(R.id.comic_toolbar)
         setSupportActionBar(comicToolbar)
 
-        comicTitleView = findViewById(R.id.comic_title)
-        comicImageView = findViewById(R.id.comic_image)
-        comicDescriptionView = findViewById(R.id.comic_description)
-        comicUrlView = findViewById(R.id.comic_url)
-        comicImageUrlView = findViewById(R.id.comic_image_url)
+        comicTitleView = findViewById(R.id.comic_title_view)
+        comicImageView = findViewById(R.id.comic_image_view)
+        comicDescriptionView = findViewById(R.id.comic_description_view)
+        comicUrlView = findViewById(R.id.comic_url_view)
+        comicImageUrlView = findViewById(R.id.comic_image_url_view)
 
-        comicProgressView = findViewById(R.id.comic_progress)
+        comicProgressBar = findViewById(R.id.comic_progress_bar)
 
         firstComicButton = findViewById(R.id.first_comic_button)
+        lastComicButton = findViewById(R.id.last_comic_button)
         previousComicButton = findViewById(R.id.previous_comic_button)
         nextComicButton = findViewById(R.id.next_comic_button)
-        lastComicButton = findViewById(R.id.last_comic_button)
 
         firstComicButton.setOnClickListener(this)
+        lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
-        lastComicButton.setOnClickListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -86,9 +86,9 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         if (v == null) return
         when (v.id) {
             R.id.first_comic_button -> {}
+            R.id.last_comic_button -> {}
             R.id.previous_comic_button -> {}
             R.id.next_comic_button -> {}
-            R.id.last_comic_button -> {}
         }
     }
 

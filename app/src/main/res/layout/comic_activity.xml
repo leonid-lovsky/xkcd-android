@@ -15,7 +15,7 @@
         android:layout_height="4dp">
 
         <ProgressBar
-            android:id="@+id/comic_progress"
+            android:id="@+id/comic_progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="32dp"
@@ -38,7 +38,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/comic_title"
+                android:id="@+id/comic_title_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -49,7 +49,7 @@
                 tools:text="@tools:sample/lorem" />
 
             <ImageView
-                android:id="@+id/comic_image"
+                android:id="@+id/comic_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -57,7 +57,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/comic_description"
+                android:id="@+id/comic_description_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -70,7 +70,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/comic_url"
+                android:id="@+id/comic_url_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
@@ -78,7 +78,7 @@
                 tools:text="https://xkcd.com/2841/" />
 
             <TextView
-                android:id="@+id/comic_image_url"
+                android:id="@+id/comic_image_url_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"

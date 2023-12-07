@@ -9,10 +9,11 @@ import java.util.concurrent.Executors
 class ComicApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().build())
-        StrictMode.setVmPolicy(VmPolicy.Builder().detectAll().penaltyLog().build())
-        val availableProcessors = Runtime.getRuntime().availableProcessors()
-        val backgroundExecutor = Executors.newFixedThreadPool(availableProcessors)
-        val mainThreadExecutor = MainThreadExecutor()
+        StrictMode.setThreadPolicy(
+            ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build()
+        )
+        StrictMode.setVmPolicy(
+            VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build()
+        )
     }
 }
