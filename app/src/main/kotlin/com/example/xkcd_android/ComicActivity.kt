@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-class ComicActivity : AppCompatActivity(), View.OnClickListener {
+class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
     private lateinit var comicToolbar: Toolbar
 
     private lateinit var comicTitleView: TextView
@@ -107,6 +107,26 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
                 comicController.nextComic()
             }
         }
+    }
+
+    override fun displayComic(comic: Comic) {
+        TODO("Not yet implemented")
+    }
+
+    override fun displaySelectComicDialog() {
+        TODO("Not yet implemented")
+    }
+
+    override fun showProgressBar() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hideProgressBar() {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleError(e: Throwable) {
+        TODO("Not yet implemented")
     }
 
     companion object {
