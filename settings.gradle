@@ -17,7 +17,3 @@ dependencyResolutionManagement {
 rootProject.name = "xkcd-android"
 
 include ':app'
-include ':retrofit'
-include ':room'
-include ':core'
-include ':data'
