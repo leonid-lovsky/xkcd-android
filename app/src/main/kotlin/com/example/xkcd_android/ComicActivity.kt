@@ -28,6 +28,8 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var previousComicButton: Button
     private lateinit var nextComicButton: Button
 
+    private lateinit var comicController: ComicController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
@@ -63,18 +65,22 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.latest_comic -> {
+                comicController.latestComic()
                 true
             }
 
             R.id.select_comic -> {
+                comicController.selectComic()
                 true
             }
 
             R.id.refresh_comic -> {
+                comicController.refreshComic()
                 true
             }
 
             R.id.random_comic -> {
+                comicController.randomComic()
                 true
             }
 
@@ -85,10 +91,21 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.first_comic_button -> {}
-            R.id.last_comic_button -> {}
-            R.id.previous_comic_button -> {}
-            R.id.next_comic_button -> {}
+            R.id.first_comic_button -> {
+                comicController.firstComic()
+            }
+
+            R.id.last_comic_button -> {
+                comicController.lastComic()
+            }
+
+            R.id.previous_comic_button -> {
+                comicController.previousComic()
+            }
+
+            R.id.next_comic_button -> {
+                comicController.nextComic()
+            }
         }
     }
 
