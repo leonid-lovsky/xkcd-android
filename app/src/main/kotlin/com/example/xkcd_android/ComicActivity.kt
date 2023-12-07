@@ -1,18 +1,23 @@
 package com.example.xkcd_android
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
+import com.squareup.picasso.Picasso
 
 class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
+
     private lateinit var comicToolbar: Toolbar
 
     private lateinit var comicTitleView: TextView
@@ -63,29 +68,21 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.latest_comic -> {
                 comicController.latestComic()
-                true
             }
-
             R.id.select_comic -> {
-                comicController.selectComic()
-                true
+                displaySelectComicDialog()
             }
-
             R.id.refresh_comic -> {
                 comicController.refreshComic()
-                true
             }
-
             R.id.random_comic -> {
                 comicController.randomComic()
-                true
             }
-
-            else -> super.onOptionsItemSelected(item)
         }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onClick(v: View?) {
@@ -94,15 +91,12 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
             R.id.first_comic_button -> {
                 comicController.firstComic()
             }
-
             R.id.last_comic_button -> {
                 comicController.lastComic()
             }
-
             R.id.previous_comic_button -> {
                 comicController.previousComic()
             }
-
             R.id.next_comic_button -> {
                 comicController.nextComic()
             }
@@ -110,26 +104,31 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
     }
 
     override fun displayComic(comic: Comic) {
-        TODO("Not yet implemented")
+        comicTitleView.text = comic.title
+        Picasso.get().load(comic.img).into(comicImageView)
+        comicUrlView.text = comic.link
+        comicImageUrlView.text = comic.img
     }
 
     override fun displaySelectComicDialog() {
-        TODO("Not yet implemented")
+        val selectComicDialogFragment = SelectComicDialogFragment(comicController)
+        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
     }
 
     override fun showProgressBar() {
-        TODO("Not yet implemented")
+        comicProgressBar.visibility = View.VISIBLE
     }
 
     override fun hideProgressBar() {
-        TODO("Not yet implemented")
+        comicProgressBar.visibility = View.INVISIBLE
     }
 
     override fun handleError(e: Throwable) {
-        TODO("Not yet implemented")
+        Log.e(ComicActivity.toString(), e.message, e.cause)
     }
 
     companion object {
+
         const val SELECT_COMIC_DIALOG_FRAGMENT_TAG = "SELECT_COMIC_DIALOG_FRAGMENT"
     }
 }

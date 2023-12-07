@@ -7,13 +7,10 @@ import android.os.StrictMode.VmPolicy
 import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
-        StrictMode.setThreadPolicy(
-            ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build()
-        )
-        StrictMode.setVmPolicy(
-            VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build()
-        )
+        StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build())
+        StrictMode.setVmPolicy(VmPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build())
     }
 }
