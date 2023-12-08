@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 
 class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
@@ -32,6 +33,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
     private lateinit var nextComicButton: Button
 
     private lateinit var comicController: ComicController
+    private lateinit var comicViewModel: ComicViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,13 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
+
+        val comicRepository = ComicRepository()
+        val comicViewModelFactory = ComicViewModelFactory(comicRepository)
+        val viewModelProvider = ViewModelProvider(this, comicViewModelFactory)
+
+        comicController = viewModelProvider[ComicViewModel::class.java]
+        comicViewModel = viewModelProvider[ComicViewModel::class.java]
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
