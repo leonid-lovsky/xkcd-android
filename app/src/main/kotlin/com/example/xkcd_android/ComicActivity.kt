@@ -13,7 +13,11 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 
 class ComicActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -38,6 +42,13 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                comicViewModel.comicUiState.collect {
+                    // Update UI elements
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
