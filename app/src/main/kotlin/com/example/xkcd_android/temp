@@ -1,3 +1,9 @@
+The take-away here is that if:
+
+you don’t have a saveState/restoreState function on your ViewModel
+you don’t have an initialState: Bundle? constructor argument on your ViewModel (passed in from the ViewModelProvider.Factory in your Activity/Fragment as a dynamic argument)
+you don’t use SavedStateHandle.getLiveData("key") nor SavedStateHandle.get("key")/set("key")
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'

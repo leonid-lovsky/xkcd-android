@@ -38,7 +38,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
         setSupportActionBar(comicToolbar)
-
         firstComicButton.setOnClickListener(this)
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
