@@ -10,62 +10,39 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 
-class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
+class ComicActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var comicToolbar: Toolbar
+    private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
 
-    private lateinit var comicTitleView: TextView
-    private lateinit var comicImageView: ImageView
-    private lateinit var comicDescriptionView: TextView
-    private lateinit var comicUrlView: TextView
-    private lateinit var comicImageUrlView: TextView
+    private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
+    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
+    private val comicDescriptionView: TextView by lazy { findViewById(R.id.comic_description_view) }
+    private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
+    private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
 
-    private lateinit var comicProgressBar: ProgressBar
+    private val comicProgressBar: ProgressBar by lazy { findViewById(R.id.comic_progress_bar) }
 
-    private lateinit var firstComicButton: Button
-    private lateinit var lastComicButton: Button
-    private lateinit var previousComicButton: Button
-    private lateinit var nextComicButton: Button
+    private val firstComicButton: Button by lazy { findViewById(R.id.first_comic_button) }
+    private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
+    private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
+    private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
 
-    private lateinit var comicController: ComicController
-    private lateinit var comicViewModel: ComicViewModel
+    private val comicViewModel: ComicViewModel by viewModels { ComicViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
-
-        comicToolbar = findViewById(R.id.comic_toolbar)
         setSupportActionBar(comicToolbar)
-
-        comicTitleView = findViewById(R.id.comic_title_view)
-        comicImageView = findViewById(R.id.comic_image_view)
-        comicDescriptionView = findViewById(R.id.comic_description_view)
-        comicUrlView = findViewById(R.id.comic_url_view)
-        comicImageUrlView = findViewById(R.id.comic_image_url_view)
-
-        comicProgressBar = findViewById(R.id.comic_progress_bar)
-
-        firstComicButton = findViewById(R.id.first_comic_button)
-        lastComicButton = findViewById(R.id.last_comic_button)
-        previousComicButton = findViewById(R.id.previous_comic_button)
-        nextComicButton = findViewById(R.id.next_comic_button)
 
         firstComicButton.setOnClickListener(this)
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
-
-        val comicRepository = ComicRepository()
-        val comicViewModelFactory = ComicViewModelFactory(comicRepository)
-        val viewModelProvider = ViewModelProvider(this, comicViewModelFactory)
-
-        comicController = viewModelProvider[ComicViewModel::class.java]
-        comicViewModel = viewModelProvider[ComicViewModel::class.java]
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -77,16 +54,16 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.latest_comic -> {
-                comicController.latestComic()
+                comicViewModel.latestComic()
             }
             R.id.select_comic -> {
                 displaySelectComicDialog()
             }
             R.id.refresh_comic -> {
-                comicController.refreshComic()
+                comicViewModel.refreshComic()
             }
             R.id.random_comic -> {
-                comicController.randomComic()
+                comicViewModel.randomComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,42 +73,42 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, ComicScreen {
         if (v == null) return
         when (v.id) {
             R.id.first_comic_button -> {
-                comicController.firstComic()
+                comicViewModel.firstComic()
             }
             R.id.last_comic_button -> {
-                comicController.lastComic()
+                comicViewModel.lastComic()
             }
             R.id.previous_comic_button -> {
-                comicController.previousComic()
+                comicViewModel.previousComic()
             }
             R.id.next_comic_button -> {
-                comicController.nextComic()
+                comicViewModel.nextComic()
             }
         }
     }
 
-    override fun displayComic(comic: Comic) {
+    fun displayComic(comic: Comic) {
         comicTitleView.text = comic.title
         Picasso.get().load(comic.img).into(comicImageView)
         comicUrlView.text = comic.link
         comicImageUrlView.text = comic.img
     }
 
-    override fun displaySelectComicDialog() {
-        val selectComicDialogFragment = SelectComicDialogFragment(comicController)
+    fun displaySelectComicDialog() {
+        val selectComicDialogFragment = SelectComicDialogFragment(comicViewModel)
         selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
     }
 
-    override fun showProgressBar() {
+    fun showProgressBar() {
         comicProgressBar.visibility = View.VISIBLE
     }
 
-    override fun hideProgressBar() {
+    fun hideProgressBar() {
         comicProgressBar.visibility = View.INVISIBLE
     }
 
-    override fun handleError(e: Throwable) {
-        Log.e(ComicActivity.toString(), e.message, e.cause)
+    fun handleError(e: Throwable) {
+        Log.e(this::class.simpleName, e.message, e.cause)
     }
 
     companion object {

@@ -8,6 +8,8 @@ import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
 
+    val comicRepository: ComicRepository get() = ComicRepository()
+
     override fun onCreate() {
         super.onCreate()
         StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build())
