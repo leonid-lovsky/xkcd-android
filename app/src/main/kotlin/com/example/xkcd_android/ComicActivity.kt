@@ -32,7 +32,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
     private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
     private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
-    private val comicViewModel: ComicViewModel by viewModels { ComicViewModel.Factory }
+    private val comicViewModel: ComicViewModel by viewModels { ComicViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
