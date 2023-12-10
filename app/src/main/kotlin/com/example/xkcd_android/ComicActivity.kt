@@ -18,20 +18,16 @@ import com.squareup.picasso.Picasso
 class ComicActivity : AppCompatActivity(), View.OnClickListener {
 
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
-
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
     private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
     private val comicDescriptionView: TextView by lazy { findViewById(R.id.comic_description_view) }
     private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
     private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
-
     private val comicProgressBar: ProgressBar by lazy { findViewById(R.id.comic_progress_bar) }
-
     private val firstComicButton: Button by lazy { findViewById(R.id.first_comic_button) }
     private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
     private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
     private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
-
     private val comicViewModel: ComicViewModel by viewModels { ComicViewModel.Factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
