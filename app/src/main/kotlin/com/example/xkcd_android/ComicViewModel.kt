@@ -22,7 +22,7 @@ class ComicViewModel(
     //         )
     //     }
     // }
-    override fun selectComic(comicNumber: Int) {
+    override fun selectComic(number: Int) {
         TODO("Not yet implemented")
     }
 
