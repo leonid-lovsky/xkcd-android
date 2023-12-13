@@ -111,8 +111,8 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
         comicProgressBar.visibility = View.INVISIBLE
     }
 
-    override fun handleError(e: Throwable) {
-        Log.e(this::class.simpleName, e.message, e.cause)
+    override fun handleError(error: Throwable) {
+        Log.e(this::class.simpleName, error.message, error.cause)
     }
 
     companion object {

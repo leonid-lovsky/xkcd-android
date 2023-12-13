@@ -27,9 +27,9 @@ class ComicViewModel(
                 _comicUIState.update { value ->
                     value.copy(comic = comic)
                 }
-            } catch (e: Throwable) {
+            } catch (error: Throwable) {
                 _comicUIState.update { value ->
-                    value.copy(error = e)
+                    value.copy(error = error)
                 }
             } finally {
                 _comicUIState.update { value ->
@@ -40,7 +40,25 @@ class ComicViewModel(
     }
 
     override fun getLatestComic() {
-        TODO("Not yet implemented")
+        _comicUIState.update { state ->
+            state.copy(loading = true)
+        }
+        viewModelScope.launch {
+            try {
+                val comic = comicRepository.getLatestComic()
+                _comicUIState.update { state ->
+                    state.copy(comic = comic)
+                }
+            } catch (error: Throwable) {
+                _comicUIState.update { state ->
+                    state.copy(error = error)
+                }
+            } finally {
+                _comicUIState.update { state ->
+                    state.copy(loading = false)
+                }
+            }
+        }
     }
 
     override fun refreshComic() {
