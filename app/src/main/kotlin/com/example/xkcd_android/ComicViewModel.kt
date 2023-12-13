@@ -22,11 +22,11 @@ class ComicViewModel(
     //         )
     //     }
     // }
-    override fun selectComic(number: Int) {
+    override fun getComic(number: Int) {
         TODO("Not yet implemented")
     }
 
-    override fun latestComic() {
+    override fun getLatestComic() {
         TODO("Not yet implemented")
     }
 
@@ -34,23 +34,23 @@ class ComicViewModel(
         TODO("Not yet implemented")
     }
 
-    override fun randomComic() {
+    override fun getRandomComic() {
         TODO("Not yet implemented")
     }
 
-    override fun firstComic() {
+    override fun getFirstComic() {
         TODO("Not yet implemented")
     }
 
-    override fun lastComic() {
+    override fun getLastComic() {
         TODO("Not yet implemented")
     }
 
-    override fun previousComic() {
+    override fun getPreviousComic() {
         TODO("Not yet implemented")
     }
 
-    override fun nextComic() {
+    override fun getNextComic() {
         TODO("Not yet implemented")
     }
 }
