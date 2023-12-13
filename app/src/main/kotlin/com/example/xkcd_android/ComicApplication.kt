@@ -4,7 +4,6 @@ import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
-import java.util.concurrent.Executors
 
 class ComicApplication : Application() {
 

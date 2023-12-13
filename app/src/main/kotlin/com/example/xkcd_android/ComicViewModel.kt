@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class ComicViewModel(
     private val comicRepository: ComicRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), ComicContoller {
 
     private val _comicUIState = MutableStateFlow(ComicUIState())
