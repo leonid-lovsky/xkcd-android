@@ -16,15 +16,7 @@ class ComicViewModel(
 
     private val _comicUIState = MutableStateFlow(ComicUIState())
     val comicUIState: StateFlow<ComicUIState> = _comicUIState.asStateFlow()
-    // fun rollDice() {
-    //     _comicUIState.update { currentState ->
-    //         currentState.copy(
-    //             firstDieValue = Random.nextInt(from = 1, until = 7),
-    //             secondDieValue = Random.nextInt(from = 1, until = 7),
-    //             numberOfRolls = currentState.numberOfRolls + 1,
-    //         )
-    //     }
-    // }
+
     override fun getComic(number: Int) {
         _comicUIState.update { value ->
             value.copy(loading = true)
