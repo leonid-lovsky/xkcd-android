@@ -19,7 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
-class ComicActivity : AppCompatActivity(), View.OnClickListener {
+class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
 
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
@@ -44,9 +44,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         nextComicButton.setOnClickListener(this)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                comicViewModel.comicUiState.collect {
-                    // Update UI elements
-                }
+                comicViewModel.comicUIState.collect {}
             }
         }
     }
@@ -93,27 +91,27 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun displayComic(comic: Comic) {
+    override fun displayComic(comic: Comic) {
         comicTitleView.text = comic.title
         Picasso.get().load(comic.img).into(comicImageView)
         comicUrlView.text = comic.link
         comicImageUrlView.text = comic.img
     }
 
-    fun displaySelectComicDialog() {
+    override fun displaySelectComicDialog() {
         val selectComicDialogFragment = SelectComicDialogFragment(comicViewModel)
         selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
     }
 
-    fun showProgressBar() {
+    override fun showProgressBar() {
         comicProgressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
+    override fun hideProgressBar() {
         comicProgressBar.visibility = View.INVISIBLE
     }
 
-    fun handleError(e: Throwable) {
+    override fun handleError(e: Throwable) {
         Log.e(this::class.simpleName, e.message, e.cause)
     }
 
