@@ -62,7 +62,8 @@ class ComicViewModel(
     }
 
     override fun refreshComic() {
-        TODO("Not yet implemented")
+        val comic = _comicUIState.value.comic ?: return
+        getComic(comic.num)
     }
 
     override fun getRandomComic() {
