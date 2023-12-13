@@ -1,4 +1,6 @@
 package com.example.xkcd_android
 
-class ComicRepository {
+interface ComicRepository {
+
+    suspend fun getComic(number: Int): Comic?
 }

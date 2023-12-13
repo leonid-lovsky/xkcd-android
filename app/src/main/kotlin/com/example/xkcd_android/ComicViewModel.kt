@@ -2,9 +2,12 @@ package com.example.xkcd_android
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class ComicViewModel(
     private val comicRepository: ComicRepository,
@@ -23,7 +26,25 @@ class ComicViewModel(
     //     }
     // }
     override fun getComic(number: Int) {
-        TODO("Not yet implemented")
+        _comicUIState.update { value ->
+            value.copy(loading = true)
+        }
+        viewModelScope.launch {
+            try {
+                val comic = comicRepository.getComic(number)
+                _comicUIState.update { value ->
+                    value.copy(comic = comic)
+                }
+            } catch (e: Throwable) {
+                _comicUIState.update { value ->
+                    value.copy(error = e)
+                }
+            } finally {
+                _comicUIState.update { value ->
+                    value.copy(loading = false)
+                }
+            }
+        }
     }
 
     override fun getLatestComic() {
