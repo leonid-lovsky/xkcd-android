@@ -2,12 +2,12 @@ package com.example.xkcd_android
 
 interface ComicContoller {
 
-    fun getComicByNumber(number: Int)
-    fun getLatestComic()
+    fun loadComicByNumber(number: Int)
+    fun loadLatestComic()
     fun refreshComic()
-    fun getRandomComic()
-    fun getFirstComic()
-    fun getLastComic()
-    fun getPreviousComic()
-    fun getNextComic()
+    fun loadRandomComic()
+    fun loadFirstComic()
+    fun loadLastComic()
+    fun loadPreviousComic()
+    fun loadNextComic()
 }

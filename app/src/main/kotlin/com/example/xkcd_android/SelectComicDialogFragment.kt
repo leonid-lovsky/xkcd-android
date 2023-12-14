@@ -30,7 +30,7 @@ class SelectComicDialogFragment(
             BUTTON_POSITIVE -> {
                 val selectComicInput = activity?.findViewById<EditText>(R.id.select_comic_input)
                 val comicNumber = selectComicInput?.text.toString().toIntOrNull() ?: return
-                comicViewModel.getComicByNumber(comicNumber)
+                comicViewModel.loadComicByNumber(comicNumber)
             }
             BUTTON_NEGATIVE -> {
                 dialog?.cancel()

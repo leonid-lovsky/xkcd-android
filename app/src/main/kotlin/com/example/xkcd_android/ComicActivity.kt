@@ -56,7 +56,7 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.latest_comic -> {
-                comicViewModel.getLatestComic()
+                comicViewModel.loadLatestComic()
             }
             R.id.select_comic -> {
                 displaySelectComicDialog()
@@ -65,7 +65,7 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
                 comicViewModel.refreshComic()
             }
             R.id.random_comic -> {
-                comicViewModel.getRandomComic()
+                comicViewModel.loadRandomComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -75,16 +75,16 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
         if (v == null) return
         when (v.id) {
             R.id.first_comic_button -> {
-                comicViewModel.getFirstComic()
+                comicViewModel.loadFirstComic()
             }
             R.id.last_comic_button -> {
-                comicViewModel.getLastComic()
+                comicViewModel.loadLastComic()
             }
             R.id.previous_comic_button -> {
-                comicViewModel.getPreviousComic()
+                comicViewModel.loadPreviousComic()
             }
             R.id.next_comic_button -> {
-                comicViewModel.getNextComic()
+                comicViewModel.loadNextComic()
             }
         }
     }
