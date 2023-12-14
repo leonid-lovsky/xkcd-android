@@ -44,8 +44,9 @@ class ComicViewModel(
     }
 
     override fun refreshComic() {
-        // val currentComic = _currentComic.value ?: return
-        // getComic(currentComic.num)
+        // TODO: force refresh
+        val currentComic = _currentComic.value ?: return
+        getComic(currentComic.num)
     }
 
     override fun getRandomComic() {
@@ -58,14 +59,17 @@ class ComicViewModel(
     }
 
     override fun getLastComic() {
-        // getComic()
+        val latestComic = _latestComic.value ?: return
+        getComic(latestComic.num)
     }
 
     override fun getPreviousComic() {
-        TODO("Not yet implemented")
+        val currentComic = _currentComic.value ?: return
+        getComic(currentComic.num - 1)
     }
 
     override fun getNextComic() {
-        TODO("Not yet implemented")
+        val currentComic = _currentComic.value ?: return
+        getComic(currentComic.num + 1)
     }
 }
