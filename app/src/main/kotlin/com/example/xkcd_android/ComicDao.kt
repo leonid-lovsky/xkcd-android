@@ -1,5 +1,6 @@
 package com.example.xkcd_android
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,6 +12,9 @@ interface ComicDao {
 
     @Query("SELECT * FROM comics WHERE num = :number")
     suspend fun getComic(number: Int): Comic
+
+    @Query("SELECT * FROM comics WHERE num = :number")
+    fun getComicLiveData(number: Int): LiveData<Comic> // distinctUntilChanged
 
     @Query("SELECT * FROM comics WHERE num = :number")
     fun getComicFlow(number: Int): Flow<Comic> // distinctUntilChanged

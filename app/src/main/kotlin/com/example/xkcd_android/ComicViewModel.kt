@@ -11,8 +11,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicDao: ComicDao,
     private val comicService: ComicService,
+    private val comicDao: ComicDao,
 ) : ViewModel() {
 
     private val _currentComic = MutableStateFlow<Comic?>(null)
