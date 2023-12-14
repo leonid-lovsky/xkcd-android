@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 interface ComicDao {
 
     @Query("SELECT * FROM comics WHERE num = :number")
-    suspend fun getComicByNumber(number: Int): Comic
+    suspend fun getComic(number: Int): Comic
 
     @Query("SELECT * FROM comics WHERE num = :number")
-    fun getComicByNumberFlow(number: Int): Flow<Comic> // distinctUntilChanged
+    fun getComicFlow(number: Int): Flow<Comic> // distinctUntilChanged
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun putComic(vararg comic: Comic)

@@ -20,11 +20,11 @@ class ComicViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     private val _exception = MutableStateFlow<Throwable?>(null)
 
-    override fun loadComicByNumber(number: Int) {
+    override fun getComic(number: Int) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                _currentComic.value = comicRepository.loadComicByNumber(number)
+                _currentComic.value = comicRepository.getComic(number)
             } catch (exception: Throwable) {
                 _exception.value = exception
             } finally {
@@ -33,11 +33,11 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    override fun loadLatestComic() {
+    override fun getLatestComic() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                _latestComic.value = comicRepository.loadLatestComic()
+                _latestComic.value = comicRepository.getLatestComic()
             } catch (exception: Throwable) {
                 _exception.value = exception
             } finally {
@@ -48,30 +48,30 @@ class ComicViewModel @Inject constructor(
 
     override fun refreshComic() {
         val currentComic = _currentComic.value ?: return
-        loadComicByNumber(currentComic.num)
+        getComic(currentComic.num)
     }
 
-    override fun loadRandomComic() {
+    override fun getRandomComic() {
         val latestComic = _latestComic.value ?: return
-        loadComicByNumber(Random.nextInt(1, latestComic.num))
+        getComic(Random.nextInt(1, latestComic.num))
     }
 
-    override fun loadFirstComic() {
-        loadComicByNumber(1)
+    override fun getFirstComic() {
+        getComic(1)
     }
 
-    override fun loadLastComic() {
+    override fun getLastComic() {
         val latestComic = _latestComic.value ?: return
-        loadComicByNumber(latestComic.num)
+        getComic(latestComic.num)
     }
 
-    override fun loadPreviousComic() {
+    override fun getPreviousComic() {
         val currentComic = _currentComic.value ?: return
-        loadComicByNumber(currentComic.num - 1)
+        getComic(currentComic.num - 1)
     }
 
-    override fun loadNextComic() {
+    override fun getNextComic() {
         val currentComic = _currentComic.value ?: return
-        loadComicByNumber(currentComic.num + 1)
+        getComic(currentComic.num + 1)
     }
 }
