@@ -1,5 +1,6 @@
 package com.example.xkcd_android
 
+import android.content.SharedPreferences
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val comicService: ComicService,
     private val comicDao: ComicDao,
+    private val comicSharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
     private val _currentComic = MutableStateFlow<Comic?>(null)
