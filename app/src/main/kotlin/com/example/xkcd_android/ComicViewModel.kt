@@ -4,78 +4,61 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class ComicViewModel(
     private val comicRepository: ComicRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel(), ComicContoller {
 
-    private val _comicUIState = MutableStateFlow(ComicUIState())
-    val comicUIState: StateFlow<ComicUIState> = _comicUIState.asStateFlow()
+    private val _currentComic = MutableStateFlow<Comic?>(null)
+    private val _latestComic = MutableStateFlow<Comic?>(null)
+    private val _isLoading = MutableStateFlow(false)
+    private val _error = MutableStateFlow<Throwable?>(null)
 
     override fun getComic(number: Int) {
-        _comicUIState.update { value ->
-            value.copy(loading = true)
-        }
+        _isLoading.value = true
         viewModelScope.launch {
             try {
-                val comic = comicRepository.getComic(number)
-                _comicUIState.update { value ->
-                    value.copy(comic = comic)
-                }
+                _currentComic.value = comicRepository.getComic(number)
             } catch (error: Throwable) {
-                _comicUIState.update { value ->
-                    value.copy(error = error)
-                }
+                _error.value = error
             } finally {
-                _comicUIState.update { value ->
-                    value.copy(loading = false)
-                }
+                _isLoading.value = false
             }
         }
     }
 
     override fun getLatestComic() {
-        _comicUIState.update { state ->
-            state.copy(loading = true)
-        }
+        _isLoading.value = true
         viewModelScope.launch {
             try {
-                val comic = comicRepository.getLatestComic()
-                _comicUIState.update { state ->
-                    state.copy(comic = comic)
-                }
+                _latestComic.value = comicRepository.getLatestComic()
             } catch (error: Throwable) {
-                _comicUIState.update { state ->
-                    state.copy(error = error)
-                }
+                _error.value = error
             } finally {
-                _comicUIState.update { state ->
-                    state.copy(loading = false)
-                }
+                _isLoading.value = false
             }
         }
     }
 
     override fun refreshComic() {
-        val comic = _comicUIState.value.comic ?: return
-        getComic(comic.num)
+        // val currentComic = _currentComic.value ?: return
+        // getComic(currentComic.num)
     }
 
     override fun getRandomComic() {
-        TODO("Not yet implemented")
+        val latestComic = _latestComic.value ?: return
+        getComic(Random.nextInt(1, latestComic.num))
     }
 
     override fun getFirstComic() {
-        TODO("Not yet implemented")
+        getComic(1)
     }
 
     override fun getLastComic() {
-        TODO("Not yet implemented")
+        // getComic()
     }
 
     override fun getPreviousComic() {
@@ -86,4 +69,3 @@ class ComicViewModel(
         TODO("Not yet implemented")
     }
 }
-

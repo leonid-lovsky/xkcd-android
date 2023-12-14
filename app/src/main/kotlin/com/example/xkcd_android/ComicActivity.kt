@@ -43,9 +43,7 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                comicViewModel.comicUIState.collect {}
-            }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {}
         }
     }
 
