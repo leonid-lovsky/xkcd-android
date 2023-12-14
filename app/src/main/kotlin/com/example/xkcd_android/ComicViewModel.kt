@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
@@ -24,7 +23,8 @@ class ComicViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                _currentComic.value = comicService.getComic(number)
+                val comic = comicService.getComic(number)
+                _currentComic.value = comic
             } catch (exception: Throwable) {
                 _exception.value = exception
             } finally {
@@ -37,7 +37,8 @@ class ComicViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                _latestComic.value = comicService.getLatestComic()
+                val comic = comicService.getLatestComic()
+                _currentComic.value = comic
             } catch (exception: Throwable) {
                 _exception.value = exception
             } finally {
@@ -46,32 +47,15 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun refreshComic() {
-        val currentComic = _currentComic.value ?: return
-        getComic(currentComic.num)
-    }
+    fun refreshComic() {}
 
-    fun getRandomComic() {
-        val latestComic = _latestComic.value ?: return
-        getComic(Random.nextInt(1, latestComic.num))
-    }
+    fun getRandomComic() {}
 
-    fun getFirstComic() {
-        getComic(1)
-    }
+    fun getFirstComic() {}
 
-    fun getLastComic() {
-        val latestComic = _latestComic.value ?: return
-        getComic(latestComic.num)
-    }
+    fun getLastComic() {}
 
-    fun getPreviousComic() {
-        val currentComic = _currentComic.value ?: return
-        getComic(currentComic.num - 1)
-    }
+    fun getPreviousComic() {}
 
-    fun getNextComic() {
-        val currentComic = _currentComic.value ?: return
-        getComic(currentComic.num + 1)
-    }
+    fun getNextComic() {}
 }
