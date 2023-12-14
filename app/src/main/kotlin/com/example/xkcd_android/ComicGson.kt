@@ -2,7 +2,7 @@ package com.example.xkcd_android
 
 import com.google.gson.annotations.SerializedName
 
-data class ComicData(
+data class ComicGson(
     val month: String,
     val num: Int,
     val link: String,

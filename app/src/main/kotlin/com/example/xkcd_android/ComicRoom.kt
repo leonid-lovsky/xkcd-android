@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "comics")
-data class ComicEntity(
+data class ComicRoom(
     val month: String,
     @PrimaryKey
     val num: Int,
