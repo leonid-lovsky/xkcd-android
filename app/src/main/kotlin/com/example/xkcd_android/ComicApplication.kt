@@ -9,7 +9,7 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class ComicApplication : Application() {
 
-    lateinit var comicRepository: ComicRepository
+    lateinit var comicService: ComicService
 
     override fun onCreate() {
         super.onCreate()

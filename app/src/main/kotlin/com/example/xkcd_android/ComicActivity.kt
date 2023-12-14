@@ -1,7 +1,6 @@
 package com.example.xkcd_android
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -16,12 +15,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
+class ComicActivity : AppCompatActivity(), View.OnClickListener {
 
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
@@ -61,7 +59,8 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
                 comicViewModel.getLatestComic()
             }
             R.id.select_comic -> {
-                displaySelectComicDialog()
+                val selectComicDialogFragment = SelectComicDialogFragment(comicViewModel)
+                selectComicDialogFragment.show(supportFragmentManager, SelectComicDialogFragment::class.qualifiedName)
             }
             R.id.refresh_comic -> {
                 comicViewModel.refreshComic()
@@ -89,29 +88,5 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
                 comicViewModel.getNextComic()
             }
         }
-    }
-
-    override fun displayComic(comic: Comic) {
-        comicTitleView.text = comic.title
-        Picasso.get().load(comic.img).into(comicImageView)
-        comicUrlView.text = comic.link
-        comicImageUrlView.text = comic.img
-    }
-
-    override fun displaySelectComicDialog() {
-        val selectComicDialogFragment = SelectComicDialogFragment(comicViewModel)
-        selectComicDialogFragment.show(supportFragmentManager, SelectComicDialogFragment::class.qualifiedName)
-    }
-
-    override fun showProgressBar() {
-        comicProgressBar.visibility = View.VISIBLE
-    }
-
-    override fun hideProgressBar() {
-        comicProgressBar.visibility = View.INVISIBLE
-    }
-
-    override fun handleException(exception: Throwable) {
-        Log.e(this::class.qualifiedName, exception.message, exception.cause)
     }
 }

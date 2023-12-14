@@ -12,19 +12,19 @@ import kotlin.random.Random
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicRepository: ComicRepository,
-) : ViewModel(), ComicContoller {
+    private val comicService: ComicService,
+) : ViewModel() {
 
     private val _currentComic = MutableStateFlow<Comic?>(null)
     private val _latestComic = MutableStateFlow<Comic?>(null)
     private val _isLoading = MutableStateFlow(false)
     private val _exception = MutableStateFlow<Throwable?>(null)
 
-    override fun getComic(number: Int) {
+    fun getComic(number: Int) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                _currentComic.value = comicRepository.getComic(number)
+                _currentComic.value = comicService.getComic(number)
             } catch (exception: Throwable) {
                 _exception.value = exception
             } finally {
@@ -33,11 +33,11 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    override fun getLatestComic() {
+    fun getLatestComic() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                _latestComic.value = comicRepository.getLatestComic()
+                _latestComic.value = comicService.getLatestComic()
             } catch (exception: Throwable) {
                 _exception.value = exception
             } finally {
@@ -46,31 +46,31 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    override fun refreshComic() {
+    fun refreshComic() {
         val currentComic = _currentComic.value ?: return
         getComic(currentComic.num)
     }
 
-    override fun getRandomComic() {
+    fun getRandomComic() {
         val latestComic = _latestComic.value ?: return
         getComic(Random.nextInt(1, latestComic.num))
     }
 
-    override fun getFirstComic() {
+    fun getFirstComic() {
         getComic(1)
     }
 
-    override fun getLastComic() {
+    fun getLastComic() {
         val latestComic = _latestComic.value ?: return
         getComic(latestComic.num)
     }
 
-    override fun getPreviousComic() {
+    fun getPreviousComic() {
         val currentComic = _currentComic.value ?: return
         getComic(currentComic.num - 1)
     }
 
-    override fun getNextComic() {
+    fun getNextComic() {
         val currentComic = _currentComic.value ?: return
         getComic(currentComic.num + 1)
     }
