@@ -6,5 +6,5 @@ interface ComicScreen {
     fun displaySelectComicDialog()
     fun showProgressBar()
     fun hideProgressBar()
-    fun handleError(error: Throwable)
+    fun handleException(exception: Throwable)
 }

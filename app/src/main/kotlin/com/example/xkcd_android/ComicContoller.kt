@@ -2,7 +2,7 @@ package com.example.xkcd_android
 
 interface ComicContoller {
 
-    fun getComic(number: Int)
+    fun getComicByNumber(number: Int)
     fun getLatestComic()
     fun refreshComic()
     fun getRandomComic()
