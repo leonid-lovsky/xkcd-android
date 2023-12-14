@@ -3,13 +3,16 @@ package com.example.xkcd_android
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.random.Random
 
-class ComicViewModel(
-    private val comicRepository: ComicRepository,
+@HiltViewModel
+class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
+    private val comicRepository: ComicRepository,
 ) : ViewModel(), ComicContoller {
 
     private val _currentComic = MutableStateFlow<Comic?>(null)

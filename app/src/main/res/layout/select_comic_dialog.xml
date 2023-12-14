@@ -10,4 +10,4 @@
     android:hint="@string/select_comic_dialog_input_hint"
     android:importantForAutofill="no"
     android:inputType="number"
-    android:minHeight="?attr/minTouchTargetSize" />
+    android:minHeight="48dp" />

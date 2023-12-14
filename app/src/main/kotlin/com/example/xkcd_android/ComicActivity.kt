@@ -17,8 +17,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
 
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
@@ -32,7 +34,7 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
     private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
     private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
     private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
-    private val comicViewModel: ComicViewModel by viewModels { ComicViewModelFactory() }
+    private val comicViewModel: ComicViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
