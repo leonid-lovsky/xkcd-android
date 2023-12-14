@@ -99,8 +99,8 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
     }
 
     override fun displaySelectComicDialog() {
-        val selectComicDialogFragment = SelectComicDialogFragment(comicViewModel)
-        selectComicDialogFragment.show(supportFragmentManager, SELECT_COMIC_DIALOG_FRAGMENT_TAG)
+        val comicDialogFragment = ComicDialogFragment(comicViewModel)
+        comicDialogFragment.show(supportFragmentManager, ComicDialogFragment::class.qualifiedName)
     }
 
     override fun showProgressBar() {
@@ -112,11 +112,6 @@ class ComicActivity : AppCompatActivity(), ComicScreen, View.OnClickListener {
     }
 
     override fun handleException(exception: Throwable) {
-        Log.e(this::class.simpleName, exception.message, exception.cause)
-    }
-
-    companion object {
-
-        const val SELECT_COMIC_DIALOG_FRAGMENT_TAG = "SELECT_COMIC_DIALOG_FRAGMENT"
+        Log.e(this::class.qualifiedName, exception.message, exception.cause)
     }
 }
