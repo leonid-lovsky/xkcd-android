@@ -11,7 +11,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-class ComicDialogFragment(
+class SelectComicDialogFragment(
     private val comicViewModel: ComicViewModel,
 ) : DialogFragment(), OnClickListener {
 
