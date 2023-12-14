@@ -44,7 +44,6 @@ class ComicViewModel(
     }
 
     override fun refreshComic() {
-        // TODO: force refresh
         val currentComic = _currentComic.value ?: return
         getComic(currentComic.num)
     }
