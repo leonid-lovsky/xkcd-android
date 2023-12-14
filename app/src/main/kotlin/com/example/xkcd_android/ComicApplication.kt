@@ -9,8 +9,6 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class ComicApplication : Application() {
 
-    lateinit var comicService: ComicService
-
     override fun onCreate() {
         super.onCreate()
         StrictMode.setThreadPolicy(ThreadPolicy.Builder().detectAll().penaltyLog().penaltyDeath().build())
