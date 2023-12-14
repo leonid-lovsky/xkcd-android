@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ComicDao {
 
+    @Query("SELECT * FROM comics WHERE num = :number")
+    suspend fun getComicByNumber(number: Int): Comic
+
+    @Query("SELECT * FROM comics WHERE num = :number")
+    fun getComicByNumberFlow(number: Int): Flow<Comic> // distinctUntilChanged
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertComics(vararg comics: Comic)
-
-    @Query("SELECT * FROM comics WHERE num = :number")
-    suspend fun loadComicByNumber(number: Int): Comic
-
-    @Query("SELECT * FROM comics WHERE num = :number")
-    fun loadComicByNumberFlow(number: Int): Flow<Comic> // distinctUntilChanged
+    suspend fun putComic(vararg comic: Comic)
 }
