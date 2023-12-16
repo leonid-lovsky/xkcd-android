@@ -55,21 +55,13 @@
                 tools:ignore="ContentDescription"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/comic_description_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                tools:text="@tools:sample/lorem[400]" />
-
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/comic_url_view"
+                android:id="@+id/comic_link_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"

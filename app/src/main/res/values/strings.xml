@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">xkcd</string>
+    <string name="comic_activity_title">xkcd #%1$d</string>
     <string name="latest_comic_menu_item">Latest</string>
     <string name="random_comic_menu_item">Random</string>
     <string name="select_comic_menu_item">Select</string>
@@ -12,9 +13,9 @@
     <string name="last_comic_button"><![CDATA[>|]]></string>
     <string name="previous_comic_button"><![CDATA[<]]></string>
     <string name="next_comic_button"><![CDATA[>]]></string>
-    <string name="select_comic_dialog_title">Select comic</string>
-    <string name="select_comic_dialog_text">Comic number</string>
-    <string name="select_comic_dialog_input_hint">Comic number</string>
+    <string name="select_comic_dialog_title">Select comic number</string>
+    <string name="select_comic_dialog_message">Select comic number</string>
+    <string name="select_comic_dialog_hint">Select comic number</string>
     <string name="select_comic_dialog_positive_button">Select</string>
     <string name="select_comic_dialog_negative_button">Cancel</string>
 </resources>

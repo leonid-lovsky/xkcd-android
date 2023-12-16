@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,8 +25,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
     private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
-    private val comicDescriptionView: TextView by lazy { findViewById(R.id.comic_description_view) }
-    private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
+    private val comicLinkView: TextView by lazy { findViewById(R.id.comic_link_view) }
     private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
     private val comicProgressBar: ProgressBar by lazy { findViewById(R.id.comic_progress_bar) }
     private val firstComicButton: Button by lazy { findViewById(R.id.first_comic_button) }
@@ -43,7 +43,21 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {}
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                comicViewModel.currentComic.collect { comic ->
+                    if (comic == null) return@collect
+                    comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
+                    comicTitleView.text = comic.title
+                    Picasso.get().load(comic.img).into(comicImageView)
+                    comicLinkView.text = comic.link
+                    comicImageUrlView.text = comic.img
+                }
+            }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                comicViewModel.isLoading.collect { value ->
+                    comicProgressBar.visibility = if (value) View.VISIBLE else View.GONE
+                }
+            }
         }
     }
 
@@ -59,8 +73,8 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
                 comicViewModel.getLatestComic()
             }
             R.id.select_comic -> {
-                val selectComicDialogFragment = SelectComicDialogFragment(comicViewModel)
-                selectComicDialogFragment.show(supportFragmentManager, SelectComicDialogFragment::class.qualifiedName)
+                val comicNumberDialogFragment = ComicNumberDialogFragment(comicViewModel)
+                comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
             R.id.refresh_comic -> {
                 comicViewModel.refreshComic()
