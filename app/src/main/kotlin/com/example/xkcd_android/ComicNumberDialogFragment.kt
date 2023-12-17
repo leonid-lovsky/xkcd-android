@@ -6,7 +6,6 @@ import android.content.DialogInterface.BUTTON_NEGATIVE
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.DialogInterface.OnClickListener
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -30,7 +29,6 @@ class ComicNumberDialogFragment(
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
-        Log.i(ComicNumberDialogFragment::class.simpleName, "onClick(${dialog}, ${which})")
         when (which) {
             BUTTON_POSITIVE -> {
                 val comicNumber = comicNumberInput.text.toString().toInt()

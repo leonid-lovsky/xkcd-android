@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +31,7 @@ class ComicViewModel @Inject constructor(
             try {
                 _comic.value = comicInteractor.getLatestComic()
             } catch (exception: Throwable) {
-                Log.e(ComicViewModel::class.simpleName, exception.message, exception.cause)
+                Timber.e(exception.cause, exception.message)
             } finally {
                 _loading.value = false
             }
@@ -43,7 +44,7 @@ class ComicViewModel @Inject constructor(
             try {
                 _comic.value = comicInteractor.getComic(number)
             } catch (exception: Throwable) {
-                Log.e(ComicViewModel::class.simpleName, exception.message, exception.cause)
+                Timber.e(exception.cause, exception.message)
             } finally {
                 _loading.value = false
             }

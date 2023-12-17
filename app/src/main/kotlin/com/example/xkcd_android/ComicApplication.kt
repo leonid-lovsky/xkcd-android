@@ -6,6 +6,8 @@ import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.os.StrictMode.VmPolicy
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -15,11 +17,14 @@ class ComicApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        StrictMode.setThreadPolicy(ThreadPolicy.Builder()
-            .detectAll().penaltyLog().build()
-        )
-        StrictMode.setVmPolicy(VmPolicy.Builder()
-            .detectAll().penaltyLog().build()
-        )
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(ThreadPolicy.Builder()
+                .detectAll().penaltyLog().build()
+            )
+            StrictMode.setVmPolicy(VmPolicy.Builder()
+                .detectAll().penaltyLog().build()
+            )
+            Timber.plant(DebugTree())
+        }
     }
 }
