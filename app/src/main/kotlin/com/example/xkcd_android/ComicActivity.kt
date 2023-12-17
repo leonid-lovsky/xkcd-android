@@ -44,7 +44,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         nextComicButton.setOnClickListener(this)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                comicViewModel.currentComic.collect { comic ->
+                comicViewModel.comic.collect { comic ->
                     if (comic == null) return@collect
                     comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
                     comicTitleView.text = comic.title
@@ -54,7 +54,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                comicViewModel.isLoading.collect { value ->
+                comicViewModel.loading.collect { value ->
                     comicProgressBar.visibility = if (value) View.VISIBLE else View.GONE
                 }
             }

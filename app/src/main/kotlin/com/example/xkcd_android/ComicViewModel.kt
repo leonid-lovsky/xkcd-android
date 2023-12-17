@@ -1,6 +1,5 @@
 package com.example.xkcd_android
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -14,46 +13,39 @@ import javax.inject.Inject
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicService: ComicService,
-    private val comicDao: ComicDao,
-    private val comicSharedPreferences: SharedPreferences,
+    private val comicInteractor: ComicInteractor,
 ) : ViewModel() {
 
-    private val _currentComic = MutableStateFlow<Comic?>(null)
-    private val _latestComic = MutableStateFlow<Comic?>(null)
-    private val _isLoading = MutableStateFlow(false)
+    private val _comic = MutableStateFlow<Comic?>(null)
+    private val _loading = MutableStateFlow(false)
     private val _message = MutableStateFlow("")
-    val currentComic = _currentComic.asStateFlow()
-    val latestComic = _latestComic.asStateFlow()
-    val isLoading = _isLoading.asStateFlow()
+
+    val comic = _comic.asStateFlow()
+    val loading = _loading.asStateFlow()
     val message = _message.asStateFlow()
 
     fun getLatestComic() {
-        Log.i(ComicViewModel::class.simpleName, "getLatestComic()")
-        _isLoading.value = true
+        _loading.value = true
         viewModelScope.launch {
             try {
-                val comic = comicService.getLatestComic()
-                _currentComic.value = comic
+                _comic.value = comicInteractor.getLatestComic()
             } catch (exception: Throwable) {
                 Log.e(ComicViewModel::class.simpleName, exception.message, exception.cause)
             } finally {
-                _isLoading.value = false
+                _loading.value = false
             }
         }
     }
 
     fun getComic(number: Int) {
-        Log.i(ComicViewModel::class.simpleName, "getComic(${number})")
-        _isLoading.value = true
+        _loading.value = true
         viewModelScope.launch {
             try {
-                val comic = comicService.getComic(number)
-                _currentComic.value = comic
+                _comic.value = comicInteractor.getComic(number)
             } catch (exception: Throwable) {
                 Log.e(ComicViewModel::class.simpleName, exception.message, exception.cause)
             } finally {
-                _isLoading.value = false
+                _loading.value = false
             }
         }
     }
