@@ -52,7 +52,16 @@ class ComicViewModel @Inject constructor(
 
     fun refreshComic() {
         val comic = comic.value ?: return
-        getComic(comic.num)
+        _loading.value = true
+        viewModelScope.launch {
+            try {
+                _comic.value = comicInteractor.getComic(comic.num, offlineFirst = false)
+            } catch (t: Throwable) {
+                Timber.e(t)
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
     fun getRandomComic() {}
