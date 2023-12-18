@@ -1,6 +1,5 @@
 package com.example.xkcd_android
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,8 +29,8 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _comic.value = comicInteractor.getLatestComic()
-            } catch (exception: Throwable) {
-                Timber.e(exception.cause, exception.message)
+            } catch (e: Throwable) {
+                Timber.e(e.cause, e.message)
             } finally {
                 _loading.value = false
             }
@@ -43,8 +42,8 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _comic.value = comicInteractor.getComic(number)
-            } catch (exception: Throwable) {
-                Timber.e(exception.cause, exception.message)
+            } catch (e: Throwable) {
+                Timber.e(e.cause, e.message)
             } finally {
                 _loading.value = false
             }

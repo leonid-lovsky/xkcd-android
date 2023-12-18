@@ -1,22 +1,29 @@
 package com.example.xkcd_android
 
-import android.content.SharedPreferences
-import android.util.Log
 import javax.inject.Inject
 
 class ComicInteractor @Inject constructor(
     private val comicService: ComicService,
     private val comicDao: ComicDao,
-    private val comicSharedPreferences: SharedPreferences,
 ) {
 
-    fun getLatestComic(): Comic? {
-        Log.i(ComicViewModel::class.simpleName, "getLatestComic()")
-        return null
+    suspend fun getLatestComic(): Comic {
+        return try {
+            val comic = comicService.getLatestComic()
+            val ids = comicDao.putComic(comic)
+            comicDao.getLatestComic()
+        } catch (e: Throwable) {
+            comicDao.getLatestComic()
+        }
     }
 
-    fun getComic(number: Int): Comic? {
-        Log.i(ComicViewModel::class.simpleName, "getLatestComic()")
-        return null
+    suspend fun getComic(number: Int): Comic {
+        return try {
+            comicDao.getComic(number)
+        } catch (e: Throwable) {
+            val comic = comicService.getComic(number)
+            val ids = comicDao.putComic(comic)
+            comicDao.getComic(comic.num)
+        }
     }
 }
