@@ -13,6 +13,7 @@ class ComicInteractor @Inject constructor(
             val ids = comicDao.putComic(comic)
             comicDao.getLatestComic()
         } catch (e: Throwable) {
+            throw e
             comicDao.getLatestComic()
         }
     }
@@ -21,6 +22,7 @@ class ComicInteractor @Inject constructor(
         return try {
             comicDao.getComic(number)
         } catch (e: Throwable) {
+            throw e
             val comic = comicService.getComic(number)
             val ids = comicDao.putComic(comic)
             comicDao.getComic(comic.num)
