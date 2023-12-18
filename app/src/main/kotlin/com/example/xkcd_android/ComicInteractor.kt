@@ -1,7 +1,6 @@
 package com.example.xkcd_android
 
 import timber.log.Timber
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 class ComicInteractor @Inject constructor(
@@ -18,18 +17,14 @@ class ComicInteractor @Inject constructor(
                 return cache
             }
         }
-        try {
-            val response = comicService.getLatestComic()
-            Timber.i("response: $response")
-            val body = response.body()
-            Timber.i("body: $body")
-            if (body != null) {
-                val ids = comicDao.putComic(body)
-                Timber.i("ids: $ids")
-                return body
-            }
-        } catch (t: UnknownHostException) {
-            Timber.i(t)
+        val response = comicService.getLatestComic()
+        Timber.i("response: $response")
+        val body = response.body()
+        Timber.i("body: $body")
+        if (body != null) {
+            val ids = comicDao.putComic(body)
+            Timber.i("ids: $ids")
+            return body
         }
         val result = comicDao.getLatestComic()
         Timber.i("result: $result")
@@ -45,18 +40,14 @@ class ComicInteractor @Inject constructor(
                 return cache
             }
         }
-        try {
-            val response = comicService.getComic(number)
-            Timber.i("response: $response")
-            val body = response.body()
-            Timber.i("body: $body")
-            if (body != null) {
-                val ids = comicDao.putComic(body)
-                Timber.i("ids: $ids")
-                return body
-            }
-        } catch (t: UnknownHostException) {
-            Timber.i(t)
+        val response = comicService.getComic(number)
+        Timber.i("response: $response")
+        val body = response.body()
+        Timber.i("body: $body")
+        if (body != null) {
+            val ids = comicDao.putComic(body)
+            Timber.i("ids: $ids")
+            return body
         }
         val result = comicDao.getComic(number)
         Timber.i("result: $result")
