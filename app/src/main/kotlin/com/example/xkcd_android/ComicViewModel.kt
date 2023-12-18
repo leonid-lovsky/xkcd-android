@@ -1,11 +1,11 @@
 package com.example.xkcd_android
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -16,13 +16,13 @@ class ComicViewModel @Inject constructor(
     private val comicInteractor: ComicInteractor,
 ) : ViewModel() {
 
-    private val _comic = MutableStateFlow<Comic?>(null)
-    private val _loading = MutableStateFlow(false)
-    private val _message = MutableStateFlow("")
+    private val _comic = MutableLiveData<Comic?>(null)
+    private val _loading = MutableLiveData(false)
+    private val _message = MutableLiveData("")
 
-    val comic = _comic.asStateFlow()
-    val loading = _loading.asStateFlow()
-    val message = _message.asStateFlow()
+    val comic: LiveData<Comic?> get() = _comic
+    val loading: LiveData<Boolean> get() = _loading
+    val message: LiveData<String> get() = _message
 
     fun getLatestComic() {
         _loading.value = true

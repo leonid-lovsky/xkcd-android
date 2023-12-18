@@ -12,12 +12,8 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ComicActivity : AppCompatActivity(), View.OnClickListener {
@@ -42,22 +38,17 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                comicViewModel.comic.collect { comic ->
-                    if (comic == null) return@collect
-                    comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
-                    comicTitleView.text = comic.title
-                    Picasso.get().load(comic.img).into(comicImageView)
-                    comicLinkView.text = comic.link
-                    comicImageUrlView.text = comic.img
-                }
-            }
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                comicViewModel.loading.collect { value ->
-                    comicProgressBar.visibility = if (value) View.VISIBLE else View.GONE
-                }
-            }
+        comicViewModel.comic.observe(this) { comic ->
+            if (comic == null) return@observe
+            comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
+            comicTitleView.text = comic.title
+            Picasso.get().load(comic.img).into(comicImageView)
+            comicLinkView.text = comic.link
+            comicImageUrlView.text = comic.img
+        }
+
+        comicViewModel.loading.observe(this) { loading ->
+            comicProgressBar.visibility = if (loading) View.VISIBLE else View.GONE
         }
     }
 
