@@ -1,6 +1,7 @@
 package com.example.xkcd_android
 
 import timber.log.Timber
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 class ComicInteractor @Inject constructor(
@@ -8,35 +9,54 @@ class ComicInteractor @Inject constructor(
     private val comicDao: ComicDao,
 ) {
 
-    suspend fun getLatestComic(): Comic? {
-        Timber.i("")
-        val response = comicService.getLatestComic()
-        Timber.i("response: $response")
-        val body = response.body()
-        Timber.i("body: $body")
-        if (body != null) {
-            val ids = comicDao.putComic(body)
-            Timber.i("ids: $ids")
+    suspend fun getLatestComic(offlineFirst: Boolean = false): Comic? {
+        Timber.i("refresh: $offlineFirst")
+        if (offlineFirst) {
+            val cache = comicDao.getLatestComic()
+            Timber.i("cache: $cache")
+            if (cache != null) {
+                return cache
+            }
+        }
+        try {
+            val response = comicService.getLatestComic()
+            Timber.i("response: $response")
+            val body = response.body()
+            Timber.i("body: $body")
+            if (body != null) {
+                val ids = comicDao.putComic(body)
+                Timber.i("ids: $ids")
+                return body
+            }
+        } catch (t: UnknownHostException) {
+            Timber.i(t)
         }
         val result = comicDao.getLatestComic()
         Timber.i("result: $result")
         return result
     }
 
-    suspend fun getComic(number: Int): Comic? {
-        Timber.i("number: $number")
-        val cache = comicDao.getComic(number)
-        Timber.i("cache: $cache")
-        if (cache != null) {
-            return cache
+    suspend fun getComic(number: Int, offlineFirst: Boolean = true): Comic? {
+        Timber.i("number: $number, refresh: $offlineFirst")
+        if (offlineFirst) {
+            val cache = comicDao.getComic(number)
+            Timber.i("cache: $cache")
+            if (cache != null) {
+                return cache
+            }
         }
-        val response = comicService.getComic(number)
-        Timber.i("response: $response")
-        val body = response.body()
-        Timber.i("body: $body")
-        if (body != null) {
-            val ids = comicDao.putComic(body)
-            Timber.i("ids: $ids")
+        try {
+            val response = comicService.getComic(number)
+            Timber.i("response: $response")
+            val body = response.body()
+            Timber.i("body: $body")
+            if (body != null) {
+                val ids = comicDao.putComic(body)
+                Timber.i("ids: $ids")
+                return body
+            }
+        } catch (t: UnknownHostException) {
+            Timber.i(t)
         }
         val result = comicDao.getComic(number)
         Timber.i("result: $result")
