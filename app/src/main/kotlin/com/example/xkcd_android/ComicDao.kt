@@ -14,10 +14,10 @@ interface ComicDao {
     suspend fun getLatestComic(): Comic
 
     @Query("SELECT * FROM comics ORDER BY num DESC LIMIT 1")
-    suspend fun getLatestComicLiveData(): LiveData<Comic> // distinctUntilChanged
+    fun getLatestComicLiveData(): LiveData<Comic> // distinctUntilChanged
 
     @Query("SELECT * FROM comics ORDER BY num DESC LIMIT 1")
-    suspend fun getLatestComicFlow(): Flow<Comic> // distinctUntilChanged
+    fun getLatestComicFlow(): Flow<Comic> // distinctUntilChanged
 
     @Query("SELECT * FROM comics WHERE num = :number")
     suspend fun getComic(number: Int): Comic

@@ -50,7 +50,10 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun refreshComic() {}
+    fun refreshComic() {
+        val comic = comic.value ?: return
+        getComic(comic.num)
+    }
 
     fun getRandomComic() {}
 

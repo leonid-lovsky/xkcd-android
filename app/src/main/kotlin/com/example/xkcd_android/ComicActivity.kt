@@ -39,7 +39,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     private val comicViewModel: ComicViewModel by viewModels()
 
-    private val preferences: SharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE)
+    private val preferences: SharedPreferences by lazy { getSharedPreferences("preferences", Context.MODE_PRIVATE) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,12 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         }
 
         comicViewModel.loading.observe(this) { loading ->
-            comicProgressBar.visibility = if (loading) View.VISIBLE else View.GONE
+            if (loading) {
+                comicProgressBar.visibility = View.VISIBLE
+            } else {
+                comicProgressBar.visibility = View.GONE
+            }
+            swipeRefreshLayout.isRefreshing = loading
         }
 
         swipeRefreshLayout.setOnRefreshListener(this)
