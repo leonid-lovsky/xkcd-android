@@ -30,7 +30,7 @@ class ComicViewModel @Inject constructor(
             try {
                 _comic.value = comicInteractor.getLatestComic()
             } catch (e: Throwable) {
-                Timber.e(e.cause, e.message)
+                Timber.e(e)
             } finally {
                 _loading.value = false
             }
@@ -43,7 +43,7 @@ class ComicViewModel @Inject constructor(
             try {
                 _comic.value = comicInteractor.getComic(number)
             } catch (e: Throwable) {
-                Timber.e(e.cause, e.message)
+                Timber.e(e)
             } finally {
                 _loading.value = false
             }

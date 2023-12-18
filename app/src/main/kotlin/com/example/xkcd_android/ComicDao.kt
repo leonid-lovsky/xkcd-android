@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface ComicDao {
 
     @Query("SELECT * FROM comics ORDER BY num DESC LIMIT 1")
-    suspend fun getLatestComic(): Comic
+    suspend fun getLatestComic(): Comic?
 
     @Query("SELECT * FROM comics ORDER BY num DESC LIMIT 1")
     fun getLatestComicLiveData(): LiveData<Comic> // distinctUntilChanged
@@ -20,7 +20,7 @@ interface ComicDao {
     fun getLatestComicFlow(): Flow<Comic> // distinctUntilChanged
 
     @Query("SELECT * FROM comics WHERE num = :number")
-    suspend fun getComic(number: Int): Comic
+    suspend fun getComic(number: Int): Comic?
 
     @Query("SELECT * FROM comics WHERE num = :number")
     fun getComicLiveData(number: Int): LiveData<Comic> // distinctUntilChanged

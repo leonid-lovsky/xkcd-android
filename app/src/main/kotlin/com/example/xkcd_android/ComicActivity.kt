@@ -60,6 +60,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         }
 
         comicViewModel.comic.observe(this) { comic ->
+            if (comic == null) return@observe
             preferences.edit().putInt("current_comic_number", comic.num).apply()
             comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
             comicTitleView.text = comic.title
