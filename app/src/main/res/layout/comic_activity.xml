@@ -66,7 +66,7 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/comic_link_view"
+                    android:id="@+id/comic_url_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="web"

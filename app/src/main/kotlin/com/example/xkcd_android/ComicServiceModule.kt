@@ -15,7 +15,7 @@ class ComicServiceModule {
     fun provideComicService(
     ): ComicService {
         return Retrofit.Builder()
-            .baseUrl("https://xkcd.com")
+            .baseUrl(ComicConstants.baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ComicService::class.java)

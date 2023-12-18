@@ -24,7 +24,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
 
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
-    private val comicLinkView: TextView by lazy { findViewById(R.id.comic_link_view) }
+    private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
     private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
     private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
 
@@ -64,7 +64,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             preferences.edit().putInt("current_comic_number", comic.num).apply()
             comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
             comicTitleView.text = comic.title
-            comicLinkView.text = comic.link
+            comicUrlView.text = comic.url
             comicImageUrlView.text = comic.img
             Picasso.get().load(comic.img).into(comicImageView)
         }
