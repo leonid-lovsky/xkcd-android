@@ -14,11 +14,12 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ComicActivity : AppCompatActivity(), View.OnClickListener {
+class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
 
@@ -33,6 +34,8 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
     private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
     private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
     private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
+
+    private val swipeRefreshLayout: SwipeRefreshLayout by lazy { findViewById(R.id.comic_refresh_layout) }
 
     private val comicViewModel: ComicViewModel by viewModels()
 
@@ -68,6 +71,8 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         comicViewModel.loading.observe(this) { loading ->
             comicProgressBar.visibility = if (loading) View.VISIBLE else View.GONE
         }
+
+        swipeRefreshLayout.setOnRefreshListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -111,5 +116,9 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
                 comicViewModel.getNextComic()
             }
         }
+    }
+
+    override fun onRefresh() {
+        comicViewModel.refreshComic()
     }
 }
