@@ -1,5 +1,7 @@
 package com.example.xkcd_android
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,16 +21,22 @@ import dagger.hilt.android.AndroidEntryPoint
 class ComicActivity : AppCompatActivity(), View.OnClickListener {
 
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
+
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
-    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
     private val comicLinkView: TextView by lazy { findViewById(R.id.comic_link_view) }
     private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
+    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
+
     private val comicProgressBar: ProgressBar by lazy { findViewById(R.id.comic_progress_bar) }
+
     private val firstComicButton: Button by lazy { findViewById(R.id.first_comic_button) }
     private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
     private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
     private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
+
     private val comicViewModel: ComicViewModel by viewModels()
+
+    private val preferences: SharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +46,23 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener {
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
         nextComicButton.setOnClickListener(this)
+
+        if (savedInstanceState == null) {
+            val comicNumber = preferences.getInt("current_comic_number", -1)
+            if (comicNumber != -1) {
+                comicViewModel.getComic(comicNumber)
+            } else {
+                comicViewModel.getLatestComic()
+            }
+        }
+
         comicViewModel.comic.observe(this) { comic ->
-            if (comic == null) return@observe
+            preferences.edit().putInt("current_comic_number", comic.num).apply()
             comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
             comicTitleView.text = comic.title
-            Picasso.get().load(comic.img).into(comicImageView)
             comicLinkView.text = comic.link
             comicImageUrlView.text = comic.img
+            Picasso.get().load(comic.img).into(comicImageView)
         }
 
         comicViewModel.loading.observe(this) { loading ->

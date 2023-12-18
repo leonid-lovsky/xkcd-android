@@ -16,11 +16,11 @@ class ComicViewModel @Inject constructor(
     private val comicInteractor: ComicInteractor,
 ) : ViewModel() {
 
-    private val _comic = MutableLiveData<Comic?>(null)
-    private val _loading = MutableLiveData(false)
-    private val _message = MutableLiveData("")
+    private val _comic = MutableLiveData<Comic>()
+    private val _loading = MutableLiveData<Boolean>()
+    private val _message = MutableLiveData<String>()
 
-    val comic: LiveData<Comic?> get() = _comic
+    val comic: LiveData<Comic> get() = _comic
     val loading: LiveData<Boolean> get() = _loading
     val message: LiveData<String> get() = _message
 
