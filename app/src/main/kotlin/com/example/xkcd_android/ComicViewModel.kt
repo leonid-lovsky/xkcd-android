@@ -1,6 +1,7 @@
 package com.example.xkcd_android
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
@@ -16,11 +18,21 @@ class ComicViewModel @Inject constructor(
     private val comicInteractor: ComicInteractor,
 ) : ViewModel() {
 
-    private val _comic = MutableLiveData<Comic>()
+    private val _currentComic = MutableLiveData<Comic>()
+    private val _latestComic = MutableLiveData<Comic>()
     private val _loading = MutableLiveData<Boolean>()
     private val _message = MutableLiveData<String>()
 
-    val comic: LiveData<Comic> get() = _comic
+    val comic: LiveData<Comic>
+        get() = MediatorLiveData<Comic>().apply {
+            addSource(_currentComic) { x ->
+                value = x
+            }
+            addSource(_latestComic) { x ->
+                value = x
+            }
+        }
+
     val loading: LiveData<Boolean> get() = _loading
     val message: LiveData<String> get() = _message
 
@@ -28,7 +40,7 @@ class ComicViewModel @Inject constructor(
         _loading.value = true
         viewModelScope.launch {
             try {
-                _comic.value = comicInteractor.getLatestComic()
+                _latestComic.value = comicInteractor.getLatestComic()
             } catch (t: Throwable) {
                 Timber.e(t)
             } finally {
@@ -41,7 +53,7 @@ class ComicViewModel @Inject constructor(
         _loading.value = true
         viewModelScope.launch {
             try {
-                _comic.value = comicInteractor.getComic(number)
+                _currentComic.value = comicInteractor.getComic(number)
             } catch (t: Throwable) {
                 Timber.e(t)
             } finally {
@@ -55,7 +67,7 @@ class ComicViewModel @Inject constructor(
         _loading.value = true
         viewModelScope.launch {
             try {
-                _comic.value = comicInteractor.getComic(comic.num, offlineFirst = false)
+                _currentComic.value = comicInteractor.getComic(comic.num, offlineFirst = false)
             } catch (t: Throwable) {
                 Timber.e(t)
             } finally {
@@ -64,13 +76,27 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun getRandomComic() {}
+    fun getRandomComic() {
+        val latestComic = _latestComic.value ?: return
+        getComic(Random.nextInt(1, latestComic.num))
+    }
 
-    fun getFirstComic() {}
+    fun getFirstComic() {
+        getComic(1)
+    }
 
-    fun getLastComic() {}
+    fun getLastComic() {
+        val latestComic = _latestComic.value ?: return
+        getComic(latestComic.num)
+    }
 
-    fun getPreviousComic() {}
+    fun getPreviousComic() {
+        val currentComic = _currentComic.value ?: return
+        getComic(currentComic.num - 1)
+    }
 
-    fun getNextComic() {}
+    fun getNextComic() {
+        val currentComic = _currentComic.value ?: return
+        getComic(currentComic.num + 1)
+    }
 }
