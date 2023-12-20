@@ -13,26 +13,29 @@ import javax.inject.Inject
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicInteractor: ComicInteractor,
+    private val getComic: (number: Int) -> Comic,
+    private val getLatestComic: () -> Comic,
 ) : ViewModel() {
 
     private val _state = MutableLiveData<ComicState>()
     val state get() = _state as LiveData<ComicState>
 
-    operator fun invoke(comicAction: ComicAction) {
-        Timber.i(comicAction.toString())
-        val state = _state.value ?: return
+    operator fun invoke(action: ComicAction) {
+        Timber.i(action.toString())
+        _state.value = _state.value?.copy(loading = true)
         viewModelScope.launch {
-            _state.value = when (comicAction) {
-                is ComicAction.GetComic -> comicInteractor.getComic(state, comicAction.number)
-                ComicAction.GetLatestComic -> comicInteractor.getLatestComic(state)
-                ComicAction.RefreshComic -> comicInteractor.refreshComic(state)
+            _state.value?.copy(comic = when (action) {
+                is ComicAction.GetComic -> getComic(action.number)
+                ComicAction.GetLatestComic -> getLatestComic()
+                ComicAction.RefreshComic -> {
+                    getComic(refresh = True)
+                }
                 ComicAction.GetRandomComic -> comicInteractor.getRandomComic(state)
                 ComicAction.GetFirstComic -> comicInteractor.getFirstComic(state)
                 ComicAction.GetPreviousComic -> comicInteractor.getPreviousComic(state)
                 ComicAction.GetNextComic -> comicInteractor.getNextComic(state)
                 ComicAction.GetLastComic -> comicInteractor.getLastComic(state)
-            }
+            })
         }
     }
 }

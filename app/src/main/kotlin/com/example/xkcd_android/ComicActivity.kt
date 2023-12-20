@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -63,18 +64,18 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         }
 
         comicViewModel.state.observe(this) { state ->
+            Timber.i(state.toString())
             comicProgressBar.visibility = if (state.loading) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = state.loading
+            comicToolbar.title = resources.getString(R.string.comic_activity_title, state.currentPage)
             val comic = state.comic
             if (comic != null) {
                 preferences.edit().putInt("current_comic_number", comic.num).apply()
-                comicToolbar.title = resources.getString(R.string.comic_activity_title, comic.num)
                 comicTitleView.text = comic.title
                 comicUrlView.text = comic.url
                 comicImageUrlView.text = comic.img
                 Picasso.get().load(comic.img).into(comicImageView)
             } else {
-                comicToolbar.title = resources.getString(R.string.app_name)
                 comicTitleView.text = ""
                 comicUrlView.text = ""
                 comicImageUrlView.text = ""
