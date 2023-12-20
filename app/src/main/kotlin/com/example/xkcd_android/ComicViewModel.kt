@@ -18,12 +18,12 @@ class ComicViewModel @Inject constructor(
     private val comicInteractor: ComicInteractor,
 ) : ViewModel() {
 
-    private val _currentComic = MutableLiveData<Comic>()
-    private val _latestComic = MutableLiveData<Comic>()
+    private val _currentComic = MutableLiveData<Comic?>()
+    private val _latestComic = MutableLiveData<Comic?>()
     private val _loading = MutableLiveData<Boolean>()
     private val _message = MutableLiveData<String>()
 
-    val comic: LiveData<Comic>
+    val comic: LiveData<Comic?>
         get() = MediatorLiveData<Comic>().apply {
             addSource(_currentComic) { x ->
                 value = x
@@ -36,7 +36,21 @@ class ComicViewModel @Inject constructor(
     val loading: LiveData<Boolean> get() = _loading
     val message: LiveData<String> get() = _message
 
-    fun getLatestComic() {
+    operator fun invoke(comicAction: ComicAction) {
+        Timber.i(comicAction.toString())
+        when (comicAction) {
+            is ComicAction.GetComic -> getComic(comicAction.number)
+            ComicAction.GetLatestComic -> getLatestComic()
+            ComicAction.RefreshComic -> refreshComic()
+            ComicAction.GetRandomComic -> getRandomComic()
+            ComicAction.GetFirstComic -> getFirstComic()
+            ComicAction.GetPreviousComic -> getPreviousComic()
+            ComicAction.GetNextComic -> getNextComic()
+            ComicAction.GetLastComic -> getLastComic()
+        }
+    }
+
+    private fun getLatestComic() {
         _loading.value = true
         viewModelScope.launch {
             try {
@@ -49,7 +63,7 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun getComic(number: Int) {
+    private fun getComic(number: Int) {
         _loading.value = true
         viewModelScope.launch {
             try {
@@ -62,7 +76,7 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun refreshComic() {
+    private fun refreshComic() {
         val comic = comic.value ?: return
         _loading.value = true
         viewModelScope.launch {
@@ -76,26 +90,26 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun getRandomComic() {
+    private fun getRandomComic() {
         val latestComic = _latestComic.value ?: return
         getComic(Random.nextInt(1, latestComic.num))
     }
 
-    fun getFirstComic() {
+    private fun getFirstComic() {
         getComic(1)
     }
 
-    fun getLastComic() {
+    private fun getLastComic() {
         val latestComic = _latestComic.value ?: return
         getComic(latestComic.num)
     }
 
-    fun getPreviousComic() {
+    private fun getPreviousComic() {
         val currentComic = _currentComic.value ?: return
         getComic(currentComic.num - 1)
     }
 
-    fun getNextComic() {
+    private fun getNextComic() {
         val currentComic = _currentComic.value ?: return
         getComic(currentComic.num + 1)
     }

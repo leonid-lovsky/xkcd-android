@@ -31,8 +31,8 @@ class ComicNumberDialogFragment(
     override fun onClick(dialog: DialogInterface?, which: Int) {
         when (which) {
             BUTTON_POSITIVE -> {
-                val comicNumber = comicNumberInput.text.toString().toInt()
-                comicViewModel.getComic(comicNumber)
+                val comicNumber = comicNumberInput.text.toString().toIntOrNull() ?: return
+                comicViewModel.invoke(ComicAction.GetComic(comicNumber))
             }
             BUTTON_NEGATIVE -> {
                 dialog?.cancel()
