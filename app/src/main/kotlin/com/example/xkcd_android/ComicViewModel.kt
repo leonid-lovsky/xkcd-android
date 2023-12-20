@@ -1,7 +1,6 @@
 package com.example.xkcd_android
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
@@ -18,99 +16,23 @@ class ComicViewModel @Inject constructor(
     private val comicInteractor: ComicInteractor,
 ) : ViewModel() {
 
-    private val _currentComic = MutableLiveData<Comic?>()
-    private val _latestComic = MutableLiveData<Comic?>()
-    private val _loading = MutableLiveData<Boolean>()
-    private val _message = MutableLiveData<String>()
-
-    val comic: LiveData<Comic?>
-        get() = MediatorLiveData<Comic>().apply {
-            addSource(_currentComic) { x ->
-                value = x
-            }
-            addSource(_latestComic) { x ->
-                value = x
-            }
-        }
-
-    val loading: LiveData<Boolean> get() = _loading
-    val message: LiveData<String> get() = _message
+    private val _state = MutableLiveData<ComicState>()
+    val state get() = _state as LiveData<ComicState>
 
     operator fun invoke(comicAction: ComicAction) {
         Timber.i(comicAction.toString())
-        when (comicAction) {
-            is ComicAction.GetComic -> getComic(comicAction.number)
-            ComicAction.GetLatestComic -> getLatestComic()
-            ComicAction.RefreshComic -> refreshComic()
-            ComicAction.GetRandomComic -> getRandomComic()
-            ComicAction.GetFirstComic -> getFirstComic()
-            ComicAction.GetPreviousComic -> getPreviousComic()
-            ComicAction.GetNextComic -> getNextComic()
-            ComicAction.GetLastComic -> getLastComic()
-        }
-    }
-
-    private fun getLatestComic() {
-        _loading.value = true
+        val state = _state.value ?: return
         viewModelScope.launch {
-            try {
-                _latestComic.value = comicInteractor.getLatestComic()
-            } catch (t: Throwable) {
-                Timber.e(t)
-            } finally {
-                _loading.value = false
+            _state.value = when (comicAction) {
+                is ComicAction.GetComic -> comicInteractor.getComic(state, comicAction.number)
+                ComicAction.GetLatestComic -> comicInteractor.getLatestComic(state)
+                ComicAction.RefreshComic -> comicInteractor.refreshComic(state)
+                ComicAction.GetRandomComic -> comicInteractor.getRandomComic(state)
+                ComicAction.GetFirstComic -> comicInteractor.getFirstComic(state)
+                ComicAction.GetPreviousComic -> comicInteractor.getPreviousComic(state)
+                ComicAction.GetNextComic -> comicInteractor.getNextComic(state)
+                ComicAction.GetLastComic -> comicInteractor.getLastComic(state)
             }
         }
-    }
-
-    private fun getComic(number: Int) {
-        _loading.value = true
-        viewModelScope.launch {
-            try {
-                _currentComic.value = comicInteractor.getComic(number)
-            } catch (t: Throwable) {
-                Timber.e(t)
-            } finally {
-                _loading.value = false
-            }
-        }
-    }
-
-    private fun refreshComic() {
-        val comic = comic.value ?: return
-        _loading.value = true
-        viewModelScope.launch {
-            try {
-                _currentComic.value = comicInteractor.getComic(comic.num, offlineFirst = false)
-            } catch (t: Throwable) {
-                Timber.e(t)
-            } finally {
-                _loading.value = false
-            }
-        }
-    }
-
-    private fun getRandomComic() {
-        val latestComic = _latestComic.value ?: return
-        getComic(Random.nextInt(1, latestComic.num))
-    }
-
-    private fun getFirstComic() {
-        getComic(1)
-    }
-
-    private fun getLastComic() {
-        val latestComic = _latestComic.value ?: return
-        getComic(latestComic.num)
-    }
-
-    private fun getPreviousComic() {
-        val currentComic = _currentComic.value ?: return
-        getComic(currentComic.num - 1)
-    }
-
-    private fun getNextComic() {
-        val currentComic = _currentComic.value ?: return
-        getComic(currentComic.num + 1)
     }
 }

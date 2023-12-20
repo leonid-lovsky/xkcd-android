@@ -61,4 +61,36 @@ class ComicInteractor @Inject constructor(
         Timber.i("result: $result")
         return result
     }
+
+    fun getComic(state: ComicState, number: Int): ComicState? {
+        TODO()
+    }
+
+    fun getLatestComic(state: ComicState): ComicState? {
+        TODO()
+    }
+
+    fun refreshComic(state: ComicState): ComicState? {
+        TODO()
+    }
+
+    fun getRandomComic(state: ComicState): ComicState? {
+        TODO()
+    }
+
+    fun getFirstComic(state: ComicState): ComicState? {
+        TODO()
+    }
+
+    fun getPreviousComic(state: ComicState): ComicState? {
+        TODO()
+    }
+
+    fun getNextComic(state: ComicState): ComicState? {
+        TODO()
+    }
+
+    fun getLastComic(state: ComicState): ComicState? {
+        TODO()
+    }
 }
