@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "comics")
 data class Comic(
-    val month: String,
+    val month: String = "",
     @PrimaryKey
     val num: Int,
     val link: String,

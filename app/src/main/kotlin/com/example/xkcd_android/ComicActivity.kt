@@ -67,7 +67,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             Timber.i(state.toString())
             comicProgressBar.visibility = if (state.loading) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = state.loading
-            comicToolbar.title = resources.getString(R.string.comic_activity_title, state.page)
+            comicToolbar.title = resources.getString(R.string.comic_activity_title, state.currentPage)
             val comic = state.comic
             if (comic != null) {
                 preferences.edit().putInt("current_comic_number", comic.num).apply()
