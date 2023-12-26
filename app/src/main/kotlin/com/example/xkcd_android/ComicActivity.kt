@@ -38,8 +38,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     private val comicViewModel: ComicViewModel by viewModels()
 
-    // private val preferences: SharedPreferences by lazy { getSharedPreferences("preferences", Context.MODE_PRIVATE) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
@@ -51,15 +49,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         nextComicButton.setOnClickListener(this)
 
         swipeRefreshLayout.setOnRefreshListener(this)
-
-        // if (savedInstanceState == null) {
-        //     val currentComicNumber = preferences.getInt("current_comic_number", -1)
-        //     if (currentComicNumber == -1) {
-        //         comicViewModel.getLatestComic()
-        //     } else {
-        //         comicViewModel.getComic(currentComicNumber)
-        //     }
-        // }
 
         comicViewModel.loading.observe(this) { value ->
             Timber.i(value.toString())
@@ -74,7 +63,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 Picasso.get().load(value.img).into(comicImageView)
                 comicUrlView.text = value.url
                 comicImageUrlView.text = value.img
-                // preferences.edit().putInt("current_comic_number", value.num).apply()
             }
         }
     }

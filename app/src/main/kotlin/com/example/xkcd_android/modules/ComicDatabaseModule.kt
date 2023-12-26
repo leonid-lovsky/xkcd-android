@@ -1,7 +1,9 @@
-package com.example.xkcd_android
+package com.example.xkcd_android.modules
 
 import android.content.Context
 import androidx.room.Room
+import com.example.xkcd_android.ComicDao
+import com.example.xkcd_android.ComicDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

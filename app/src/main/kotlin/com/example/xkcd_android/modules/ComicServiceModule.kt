@@ -1,5 +1,7 @@
-package com.example.xkcd_android
+package com.example.xkcd_android.modules
 
+import com.example.xkcd_android.ComicConstants
+import com.example.xkcd_android.ComicService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
