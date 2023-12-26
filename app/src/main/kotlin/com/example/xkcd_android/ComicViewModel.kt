@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
@@ -20,25 +21,25 @@ class ComicViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
-    private val _comic = MutableLiveData<Comic>()
+    private val _currentComic = MutableLiveData<Comic>()
     private val _message = MutableLiveData<String>()
-    private val _currentPage = MutableLiveData<Int>()
     private val _latestPage = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _comic as LiveData<Comic>
+    val comic = _currentComic as LiveData<Comic>
     val message = _message as LiveData<String>
 
     init {
-        val currentPage_ = comicPreferences.getInt("current_page", -1)
-        if (currentPage_ == -1) {
-            getLatestComic()
-        } else {
-            getComic(currentPage_)
-        }
+        // val currentPage_ = comicPreferences.getInt("current_page", -1)
+        // if (currentPage_ == -1) {
+        //     getLatestComic()
+        // } else {
+        //     getComic(currentPage_)
+        // }
     }
 
     fun getLatestComic() {
+        Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
                 _loading.value = true
@@ -51,6 +52,20 @@ class ComicViewModel @Inject constructor(
     }
 
     fun getComic(number: Int) {
+        Timber.i("${this::class.simpleName}")
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+            } catch (e: Throwable) {
+                Timber.e(e)
+            } finally {
+                _loading.value = false
+            }
+        }
+    }
+
+    fun refreshComic(number: Int) {
+        Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
                 _loading.value = true
@@ -63,26 +78,37 @@ class ComicViewModel @Inject constructor(
     }
 
     fun refreshComic() {
-        TODO("Not yet implemented")
+        Timber.i("${this::class.simpleName}")
+        val currentComic_ = _currentComic.value ?: return
+        refreshComic(currentComic_.num)
     }
 
     fun getRandomComic() {
-        TODO("Not yet implemented")
+        Timber.i("${this::class.simpleName}")
+        val latestPage_ = _latestPage.value ?: return
+        getComic(Random.nextInt(1, latestPage_))
     }
 
     fun getFirstComic() {
-        TODO("Not yet implemented")
+        Timber.i("${this::class.simpleName}")
+        getComic(1)
     }
 
     fun getLastComic() {
-        TODO("Not yet implemented")
+        Timber.i("${this::class.simpleName}")
+        val latestPage_ = _latestPage.value ?: return
+        getComic(latestPage_)
     }
 
     fun getPreviousComic() {
-        TODO("Not yet implemented")
+        Timber.i("${this::class.simpleName}")
+        val currentComic_ = _currentComic.value ?: return
+        getComic(currentComic_.num - 1)
     }
 
     fun getNextComic() {
-        TODO("Not yet implemented")
+        Timber.i("${this::class.simpleName}")
+        val currentComic_ = _currentComic.value ?: return
+        getComic(currentComic_.num + 1)
     }
 }
