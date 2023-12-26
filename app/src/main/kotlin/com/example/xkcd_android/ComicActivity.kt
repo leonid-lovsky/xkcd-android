@@ -11,7 +11,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -47,6 +46,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
         setSupportActionBar(comicToolbar)
+
         firstComicButton.setOnClickListener(this)
         lastComicButton.setOnClickListener(this)
         previousComicButton.setOnClickListener(this)
@@ -55,34 +55,28 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         swipeRefreshLayout.setOnRefreshListener(this)
 
         if (savedInstanceState == null) {
-            val comicNumber = preferences.getInt("current_comic_number", -1)
-            if (comicNumber != -1) {
-                comicViewModel.invoke(ComicAction.GetComic(comicNumber))
+            val currentComicNumber = preferences.getInt("current_comic_number", -1)
+            if (currentComicNumber == -1) {
+                comicViewModel.getLatestComic()
             } else {
-                comicViewModel.invoke(ComicAction.GetLatestComic)
+                comicViewModel.getComic(currentComicNumber)
             }
         }
 
-        comicViewModel.state.observe(this) { state ->
-            Timber.i(state.toString())
-            comicProgressBar.visibility = if (state.loading) View.VISIBLE else View.VISIBLE
-            swipeRefreshLayout.isRefreshing = state.loading
-            comicToolbar.title = resources.getString(R.string.comic_activity_title, state.currentPage)
-            val comic = state.comic
-            if (comic != null) {
-                preferences.edit().putInt("current_comic_number", comic.num).apply()
-                comicTitleView.text = comic.title
-                comicUrlView.text = comic.url
-                comicImageUrlView.text = comic.img
-                Picasso.get().load(comic.img).into(comicImageView)
-            } else {
-                comicTitleView.text = ""
-                comicUrlView.text = ""
-                comicImageUrlView.text = ""
-                comicImageView.setImageDrawable(null)
-            }
-            if (state.message.isNotEmpty()) {
-                Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+        comicViewModel.loading.observe(this) { value ->
+            Timber.i(value.toString())
+            comicProgressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
+            swipeRefreshLayout.isRefreshing = value
+        }
+
+        comicViewModel.comic.observe(this) { value ->
+            Timber.i(value.toString())
+            if (value != null) {
+                preferences.edit().putInt("current_comic_number", value.num).apply()
+                comicTitleView.text = value.title
+                comicUrlView.text = value.url
+                comicImageUrlView.text = value.img
+                Picasso.get().load(value.img).into(comicImageView)
             }
         }
     }
@@ -96,17 +90,17 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.latest_comic -> {
-                comicViewModel.invoke(ComicAction.GetLatestComic)
+                comicViewModel.getLatestComic()
             }
             R.id.select_comic -> {
                 val comicNumberDialogFragment = ComicNumberDialogFragment(comicViewModel)
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
             R.id.refresh_comic -> {
-                comicViewModel.invoke(ComicAction.RefreshComic)
+                comicViewModel.refreshComic()
             }
             R.id.random_comic -> {
-                comicViewModel.invoke(ComicAction.GetRandomComic)
+                comicViewModel.getRandomComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -116,21 +110,21 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         if (v == null) return
         when (v.id) {
             R.id.first_comic_button -> {
-                comicViewModel.invoke(ComicAction.GetFirstComic)
+                comicViewModel.getFirstComic()
             }
             R.id.last_comic_button -> {
-                comicViewModel.invoke(ComicAction.GetLastComic)
+                comicViewModel.getLastComic()
             }
             R.id.previous_comic_button -> {
-                comicViewModel.invoke(ComicAction.GetPreviousComic)
+                comicViewModel.getPreviousComic()
             }
             R.id.next_comic_button -> {
-                comicViewModel.invoke(ComicAction.GetNextComic)
+                comicViewModel.getNextComic()
             }
         }
     }
 
     override fun onRefresh() {
-        comicViewModel.invoke(ComicAction.RefreshComic)
+        comicViewModel.refreshComic()
     }
 }

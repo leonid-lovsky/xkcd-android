@@ -7,59 +7,54 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.lang.Integer.min
 import javax.inject.Inject
-import kotlin.math.max
-import kotlin.random.Random
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicInteractor: ComicInteractor,
+    private val comicService: ComicService,
+    private val comicDao: ComicDao,
 ) : ViewModel() {
 
-    private val _state = MutableLiveData(ComicState())
-    val state get() = _state as LiveData<ComicState>
+    private val _loading = MutableLiveData<Boolean>()
+    private val _comic = MutableLiveData<Comic>()
+    private val _message = MutableLiveData<String>()
+    private val _currentPage = MutableLiveData<Int>()
+    private val _latestPage = MutableLiveData<Int>()
 
-    operator fun invoke(action: ComicAction) {
-        Timber.i(action.toString())
-        viewModelScope.launch {
-            try {
-                _state.value = _state.value?.copy(loading = true)
-                val comic = when (action) {
-                    ComicAction.GetLatestComic -> {
-                        _state.value = state.value?.copy(currentPage = 1)
-                        null
-                    }
-                    is ComicAction.GetComic -> {
-                        _state.value = state.value?.copy(currentPage = action.number)
-                        null
-                    }
-                    ComicAction.RefreshComic -> {
-                        null
-                    }
-                    else -> {
-                        val currentPage = _state.value?.currentPage ?: 1
-                        val latestPage = _state.value?.latestPage ?: currentPage
-                        val desiredPage = when (action) {
-                            ComicAction.GetFirstComic -> 1
-                            ComicAction.GetPreviousComic -> min(currentPage - 1, 1)
-                            ComicAction.GetNextComic -> max(currentPage + 1, latestPage)
-                            ComicAction.GetLastComic -> latestPage
-                            ComicAction.GetRandomComic -> Random.nextInt(1, latestPage)
-                            else -> currentPage
-                        }
-                        _state.value = state.value?.copy(currentPage = desiredPage)
-                        null
-                    }
-                }
-                _state.value = _state.value?.copy(comic = comic)
-            } catch (t: Throwable) {
-                Timber.e(t)
-            } finally {
-                _state.value = _state.value?.copy(loading = false)
-            }
-        }
+    val loading = _loading as LiveData<Boolean>
+    val comic = _comic as LiveData<Comic>
+    val message = _message as LiveData<String>
+
+    fun getLatestComic() {
+        viewModelScope.launch { }
+    }
+
+    fun getComic(number: Int) {
+        viewModelScope.launch { }
+    }
+
+    fun refreshComic() {
+        TODO("Not yet implemented")
+    }
+
+    fun getRandomComic() {
+        TODO("Not yet implemented")
+    }
+
+    fun getFirstComic() {
+        TODO("Not yet implemented")
+    }
+
+    fun getLastComic() {
+        TODO("Not yet implemented")
+    }
+
+    fun getPreviousComic() {
+        TODO("Not yet implemented")
+    }
+
+    fun getNextComic() {
+        TODO("Not yet implemented")
     }
 }

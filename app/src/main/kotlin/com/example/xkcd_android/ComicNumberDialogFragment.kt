@@ -32,7 +32,7 @@ class ComicNumberDialogFragment(
         when (which) {
             BUTTON_POSITIVE -> {
                 val comicNumber = comicNumberInput.text.toString().toIntOrNull() ?: return
-                comicViewModel.invoke(ComicAction.GetComic(comicNumber))
+                comicViewModel.getComic(comicNumber)
             }
             BUTTON_NEGATIVE -> {
                 dialog?.cancel()
