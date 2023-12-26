@@ -25,9 +25,9 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
 
     private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
+    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
     private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
     private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
-    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
 
     private val comicProgressBar: ProgressBar by lazy { findViewById(R.id.comic_progress_bar) }
 
@@ -72,11 +72,11 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         comicViewModel.comic.observe(this) { value ->
             Timber.i(value.toString())
             if (value != null) {
-                preferences.edit().putInt("current_comic_number", value.num).apply()
                 comicTitleView.text = value.title
+                Picasso.get().load(value.img).into(comicImageView)
                 comicUrlView.text = value.url
                 comicImageUrlView.text = value.img
-                Picasso.get().load(value.img).into(comicImageView)
+                preferences.edit().putInt("current_comic_number", value.num).apply()
             }
         }
     }
