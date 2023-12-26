@@ -1,5 +1,6 @@
 package com.example.xkcd_android
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,6 +16,7 @@ class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val comicService: ComicService,
     private val comicDao: ComicDao,
+    private val comicPreferences: SharedPreferences,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -26,12 +29,37 @@ class ComicViewModel @Inject constructor(
     val comic = _comic as LiveData<Comic>
     val message = _message as LiveData<String>
 
+    init {
+        val currentPage_ = comicPreferences.getInt("current_page", -1)
+        if (currentPage_ == -1) {
+            getLatestComic()
+        } else {
+            getComic(currentPage_)
+        }
+    }
+
     fun getLatestComic() {
-        viewModelScope.launch { }
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+            } catch (e: Throwable) {
+                Timber.e(e)
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
     fun getComic(number: Int) {
-        viewModelScope.launch { }
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+            } catch (e: Throwable) {
+                Timber.e(e)
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
     fun refreshComic() {
