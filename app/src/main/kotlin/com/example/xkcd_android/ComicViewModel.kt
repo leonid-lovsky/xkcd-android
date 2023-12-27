@@ -23,10 +23,10 @@ class ComicViewModel @Inject constructor(
     private val _loading = MutableLiveData<Boolean>()
     private val _currentComic = MutableLiveData<Comic>()
     private val _message = MutableLiveData<String>()
-    private val _latestPage = MutableLiveData<Int>()
+    private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _currentComic as LiveData<Comic>
+    val currentComic = _currentComic as LiveData<Comic>
     val message = _message as LiveData<String>
 
     init {
@@ -69,6 +69,16 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _loading.value = true
+                val response = comicService.getComic(number)
+                Timber.d("response = ${response}")
+                val body = response.body()
+                Timber.d("body = ${body}")
+                if (body != null) {
+                    comicDao.putComic(body)
+                }
+                val comic = comicDao.getComic(number)
+                Timber.d("comic = ${comic}")
+                _currentComic.value = comic
             } catch (e: Throwable) {
                 Timber.e(e)
             } finally {
@@ -85,7 +95,7 @@ class ComicViewModel @Inject constructor(
 
     fun getRandomComic() {
         Timber.i("${this::class.simpleName}")
-        val latestPage_ = _latestPage.value ?: return
+        val latestPage_ = _latestComicNumber.value ?: return
         getComic(Random.nextInt(1, latestPage_))
     }
 
@@ -96,7 +106,7 @@ class ComicViewModel @Inject constructor(
 
     fun getLastComic() {
         Timber.i("${this::class.simpleName}")
-        val latestPage_ = _latestPage.value ?: return
+        val latestPage_ = _latestComicNumber.value ?: return
         getComic(latestPage_)
     }
 
