@@ -50,7 +50,7 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun refreshLatestComic() {
+    fun fetchLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
