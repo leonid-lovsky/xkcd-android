@@ -23,7 +23,6 @@ class ComicViewModel @Inject constructor(
 
     private val _currentComicNumber = MutableLiveData<Int>()
     private val _loading = MutableLiveData<Boolean>()
-    private val _comic = MutableLiveData<Comic>()
     private val _message = MutableLiveData<String>()
     private val _latestComicNumber = MutableLiveData<Int>()
 
