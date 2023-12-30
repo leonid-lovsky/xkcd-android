@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,25 +29,22 @@ class ComicViewModel @Inject constructor(
     private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _comic as LiveData<Comic>
+    val comic = _currentComicNumber.switchMap { comicDao.getComicLiveData(it).distinctUntilChanged() }
     val message = _message as LiveData<String>
 
-    init {
-        // val currentPage_ = comicPreferences.getInt("current_page", -1)
-        // if (currentPage_ == -1) {
-        //     getLatestComic()
-        // } else {
-        //     getComic(currentPage_)
-        // }
+    fun getLatestComic() {
+        Timber.i("${this::class.simpleName}")
     }
 
-    fun getLatestComic() {
+    fun fetchLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
                 _loading.value = true
                 val response = comicService.getLatestComic()
+                Timber.d(response.toString())
                 val body = response.body()
+                Timber.d(body.toString())
                 if (body != null) {
                     comicDao.putComic(body)
                 }
@@ -57,13 +56,15 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun refreshComic(number: Int) {
+    fun fetchComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
                 _loading.value = true
                 val response = comicService.getComic(number)
+                Timber.d(response.toString())
                 val body = response.body()
+                Timber.d(body.toString())
                 if (body != null) {
                     comicDao.putComic(body)
                 }
@@ -97,7 +98,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            refreshComic(currentComicNumber)
+            fetchComic(currentComicNumber)
         }
     }
 
