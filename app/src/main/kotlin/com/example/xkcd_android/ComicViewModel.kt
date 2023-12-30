@@ -17,7 +17,7 @@ class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val comicService: ComicService,
     private val comicDao: ComicDao,
-    private val comicPreferences: SharedPreferences,
+    private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
     private val _currentComicNumber = MutableLiveData<Int>()

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import timber.log.Timber
 
 class ComicNumberDialogFragment(
     private val comicViewModel: ComicViewModel,
@@ -31,8 +32,12 @@ class ComicNumberDialogFragment(
     override fun onClick(dialog: DialogInterface?, which: Int) {
         when (which) {
             BUTTON_POSITIVE -> {
-                val comicNumber = comicNumberInput.text.toString().toIntOrNull() ?: return
-                comicViewModel.getComic(comicNumber)
+                try {
+                    val comicNumber = comicNumberInput.text.toString().toInt()
+                    comicViewModel.getComic(comicNumber)
+                } catch (e: Throwable) {
+                    Timber.e(e)
+                }
             }
             BUTTON_NEGATIVE -> {
                 dialog?.cancel()
