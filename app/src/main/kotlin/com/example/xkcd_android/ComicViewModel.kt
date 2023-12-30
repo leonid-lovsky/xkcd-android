@@ -30,7 +30,7 @@ class ComicViewModel @Inject constructor(
     val comic = _currentComicNumber.switchMap { comicDao.getComicLiveData(it) }
     val message = _message as LiveData<String>
 
-    fun refreshComic(number: Int) {
+    fun fetchComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
@@ -92,7 +92,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            refreshComic(currentComicNumber)
+            fetchComic(currentComicNumber)
         }
     }
 
