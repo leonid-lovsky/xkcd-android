@@ -76,7 +76,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.latest_comic -> {
-                comicViewModel.getLatestComic()
+                comicViewModel.fetchLatestComic()
             }
             R.id.select_comic -> {
                 val comicNumberDialogFragment = ComicNumberDialogFragment(comicViewModel)

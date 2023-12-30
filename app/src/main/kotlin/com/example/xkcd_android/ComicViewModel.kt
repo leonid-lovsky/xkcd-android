@@ -32,16 +32,12 @@ class ComicViewModel @Inject constructor(
     val comic = _currentComicNumber.switchMap { comicDao.getComicLiveData(it).distinctUntilChanged() }
     val message = _message as LiveData<String>
 
-    fun getLatestComic() {
-        Timber.i("${this::class.simpleName}")
-    }
-
-    fun fetchLatestComic() {
+    fun fetchComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
                 _loading.value = true
-                val response = comicService.getLatestComic()
+                val response = comicService.getComic(number)
                 Timber.d(response.toString())
                 val body = response.body()
                 Timber.d(body.toString())
@@ -56,12 +52,12 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun fetchComic(number: Int) {
+    fun fetchLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
                 _loading.value = true
-                val response = comicService.getComic(number)
+                val response = comicService.getLatestComic()
                 Timber.d(response.toString())
                 val body = response.body()
                 Timber.d(body.toString())
