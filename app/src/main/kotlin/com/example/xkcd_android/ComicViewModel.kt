@@ -57,12 +57,25 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun getComic(number: Int) {
+    fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
-        _currentComicNumber.value = number
+        viewModelScope.launch {
+            try {
+                _loading.value = true
+                val response = comicService.getComic(number)
+                val body = response.body()
+                if (body != null) {
+                    comicDao.putComic(body)
+                }
+            } catch (e: Throwable) {
+                Timber.e(e)
+            } finally {
+                _loading.value = false
+            }
+        }
     }
 
-    fun refreshComic(number: Int) {
+    fun getComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         _currentComicNumber.value = number
     }
