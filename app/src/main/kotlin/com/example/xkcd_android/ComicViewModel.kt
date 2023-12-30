@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,10 +28,10 @@ class ComicViewModel @Inject constructor(
     private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _currentComicNumber.switchMap { comicDao.getComicLiveData(it).distinctUntilChanged() }
+    val comic = _currentComicNumber.switchMap { comicDao.getComicLiveData(it) }
     val message = _message as LiveData<String>
 
-    fun fetchComic(number: Int) {
+    fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
@@ -52,7 +51,7 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun fetchLatestComic() {
+    fun refreshLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             try {
@@ -94,7 +93,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            fetchComic(currentComicNumber)
+            refreshComic(currentComicNumber)
         }
     }
 
