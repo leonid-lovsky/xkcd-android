@@ -101,7 +101,7 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
-        // side effects
+        // observable
     }
 
     @SuppressLint("ApplySharedPref")
@@ -122,7 +122,7 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
-        // side effects
+        // observable
     }
 
     fun toComic(number: Int) {
