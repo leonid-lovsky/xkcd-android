@@ -56,7 +56,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             swipeRefreshLayout.isRefreshing = value
         }
 
-        viewModel.comic.observe(this) { value ->
+        viewModel.currentComic.observe(this) { value ->
             Timber.i(value.toString())
             if (value != null) {
                 titleView.text = value.title

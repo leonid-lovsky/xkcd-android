@@ -27,7 +27,7 @@ class ComicViewModel @Inject constructor(
     private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
+    val currentComic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
     val message = _message as LiveData<String>
 
     suspend fun refreshComic(number: Int) {
