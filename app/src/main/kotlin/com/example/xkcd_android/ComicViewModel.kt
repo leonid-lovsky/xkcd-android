@@ -31,47 +31,62 @@ class ComicViewModel @Inject constructor(
     val currentComic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
     val message = _message as LiveData<String>
 
-    fun setCurrentComicNumberLiveData(number: Int) {
-        if (number >= 1) {
-            _currentComicNumber.value = number
-            // out of range
+    init {
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
+        if (currentComicNumber > 0) {
+            toComic(currentComicNumber)
+        } else {
+            toLatestComic()
         }
     }
 
-    fun setLatestComicNumberLiveData(number: Int) {
-        val latestComicNumber = _latestComicNumber.value ?: 1
+    private fun setCurrentComicNumberLiveData(number: Int) {
+        Timber.d("${this::class.simpleName}")
+        if (number > 0) {
+            _currentComicNumber.value = number
+            // latest number
+        }
+    }
+
+    private fun setLatestComicNumberLiveData(number: Int) {
+        Timber.d("${this::class.simpleName}")
+        val latestComicNumber = _latestComicNumber.value ?: 0
         if (number > latestComicNumber) {
             _latestComicNumber.value = number
         }
     }
 
     @SuppressLint("ApplySharedPref")
-    fun setCurrentComicNumberPreferences(number: Int) {
-        if (number >= 1) {
+    private fun setCurrentComicNumberPreferences(number: Int) {
+        Timber.d("${this::class.simpleName}")
+        if (number > 0) {
             sharedPreferences.edit().putInt("current_comic_number", number).commit()
-            // out of range
+            // latest number
         }
     }
 
     @SuppressLint("ApplySharedPref")
-    fun setLatestComicNumberPreferences(number: Int) {
-        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
+    private fun setLatestComicNumberPreferences(number: Int) {
+        Timber.i("${this::class.simpleName}")
+        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
         if (number > latestComicNumber) {
             sharedPreferences.edit().putInt("latest_comic_number", latestComicNumber).commit()
         }
     }
 
-    fun setCurrentComicNumber(number: Int) {
+    private fun setCurrentComicNumber(number: Int) {
+        Timber.i("${this::class.simpleName}")
         setCurrentComicNumberLiveData(number)
         setCurrentComicNumberPreferences(number)
     }
 
-    fun setLatestComicNumber(number: Int) {
+    private fun setLatestComicNumber(number: Int) {
+        Timber.i("${this::class.simpleName}")
         setLatestComicNumberLiveData(number)
         setLatestComicNumberPreferences(number)
     }
 
-    fun getComicLiveData(number: Int): LiveData<Comic> {
+    private fun getComicLiveData(number: Int): LiveData<Comic> {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             val comic = dao.getComic(number)
@@ -84,8 +99,9 @@ class ComicViewModel @Inject constructor(
     }
 
     @SuppressLint("ApplySharedPref")
-    suspend fun refreshComic(number: Int) {
+    private suspend fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
+        // observable
         try {
             _loading.value = true
             val response = service.getComic(number)
@@ -101,12 +117,12 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
-        // observable
     }
 
     @SuppressLint("ApplySharedPref")
-    suspend fun fetchLatestComic() {
+    private suspend fun fetchLatestComic() {
         Timber.i("${this::class.simpleName}")
+        // observable
         try {
             _loading.value = true
             val response = service.getLatestComic()
@@ -122,7 +138,6 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
-        // observable
     }
 
     fun toComic(number: Int) {
