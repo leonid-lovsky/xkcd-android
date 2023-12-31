@@ -27,19 +27,22 @@ class ComicViewModel @Inject constructor(
     private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _currentComicNumber.switchMap { number ->
+    val comic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
+    val message = _message as LiveData<String>
+
+    fun getComicLiveData(number: Int): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             val comic = dao.getComic(number)
             Timber.d(comic.toString())
             if (comic == null) {
-                fetchComic(number)
+                refreshComic(number)
             }
         }
-        dao.getComicLiveData(number)
+        return dao.getComicLiveData(number)
     }
-    val message = _message as LiveData<String>
 
-    suspend fun fetchComic(number: Int) {
+    suspend fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         try {
             _loading.value = true
@@ -57,23 +60,21 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun fetchLatestComic() {
+    suspend fun fetchLatestComic() {
         Timber.i("${this::class.simpleName}")
-        viewModelScope.launch {
-            try {
-                _loading.value = true
-                val response = service.getLatestComic()
-                Timber.d(response.toString())
-                val body = response.body()
-                Timber.d(body.toString())
-                if (body != null) {
-                    dao.putComic(body)
-                }
-            } catch (e: Throwable) {
-                Timber.e(e)
-            } finally {
-                _loading.value = false
+        try {
+            _loading.value = true
+            val response = service.getLatestComic()
+            Timber.d(response.toString())
+            val body = response.body()
+            Timber.d(body.toString())
+            if (body != null) {
+                dao.putComic(body)
             }
+        } catch (e: Throwable) {
+            Timber.e(e)
+        } finally {
+            _loading.value = false
         }
     }
 
@@ -99,7 +100,9 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            fetchComic(currentComicNumber)
+            viewModelScope.launch {
+                refreshComic(currentComicNumber)
+            }
         }
     }
 
