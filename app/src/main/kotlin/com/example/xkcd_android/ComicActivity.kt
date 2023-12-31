@@ -22,10 +22,10 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
 
-    private val titleView: TextView by lazy { findViewById(R.id.title_view) }
-    private val imageView: ImageView by lazy { findViewById(R.id.image_view) }
-    private val urlView: TextView by lazy { findViewById(R.id.url_view) }
-    private val imageUrlView: TextView by lazy { findViewById(R.id.image_url_view) }
+    private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
+    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
+    private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
+    private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
 
     private val progressBar: ProgressBar by lazy { findViewById(R.id.progress_bar) }
 
@@ -59,10 +59,10 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         viewModel.currentComic.observe(this) { value ->
             Timber.i(value.toString())
             if (value != null) {
-                titleView.text = value.title
-                Picasso.get().load(value.img).into(imageView)
-                urlView.text = value.url
-                imageUrlView.text = value.img
+                comicTitleView.text = value.title
+                Picasso.get().load(value.img).into(comicImageView)
+                comicUrlView.text = value.url
+                comicImageUrlView.text = value.img
             }
         }
     }
@@ -75,9 +75,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.to_latest_comic -> {
-                viewModel.toLatestComic()
-            }
             R.id.to_comic -> {
                 val comicNumberDialogFragment = ComicNumberDialogFragment(viewModel)
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
@@ -87,6 +84,9 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             }
             R.id.to_random_comic -> {
                 viewModel.toRandomComic()
+            }
+            R.id.to_latest_comic -> {
+                viewModel.toLatestComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -98,14 +98,14 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             R.id.to_first_comic -> {
                 viewModel.toFirstComic()
             }
-            R.id.to_last_comic -> {
-                viewModel.toLastComic()
-            }
             R.id.to_previous_comic -> {
                 viewModel.toPreviousComic()
             }
             R.id.to_next_comic -> {
                 viewModel.toNextComic()
+            }
+            R.id.to_last_comic -> {
+                viewModel.toLastComic()
             }
         }
     }
