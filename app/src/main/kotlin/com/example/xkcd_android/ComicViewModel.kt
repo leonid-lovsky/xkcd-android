@@ -30,27 +30,6 @@ class ComicViewModel @Inject constructor(
     val comic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
     val message = _message as LiveData<String>
 
-    fun getComicLiveData(number: Int): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
-        viewModelScope.launch {
-            val comic = dao.getComic(number)
-            Timber.d(comic.toString())
-            if (comic == null) {
-                refreshComic(number)
-            }
-        }
-        return dao.getComicLiveData(number)
-    }
-
-    fun getLatestComicLiveData(): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
-        val number = sharedPreferences.getInt("latest_comic_number", 1)
-        viewModelScope.launch {
-            refreshLatestComic()
-        }
-        return dao.getComicLiveData(number)
-    }
-
     suspend fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         try {
@@ -87,6 +66,27 @@ class ComicViewModel @Inject constructor(
         }
     }
 
+    fun getComicLiveData(number: Int): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        viewModelScope.launch {
+            val comic = dao.getComic(number)
+            Timber.d(comic.toString())
+            if (comic == null) {
+                refreshComic(number)
+            }
+        }
+        return dao.getComicLiveData(number)
+    }
+
+    fun getLatestComicLiveData(): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        val number = sharedPreferences.getInt("latest_comic_number", 1)
+        viewModelScope.launch {
+            refreshLatestComic()
+        }
+        return dao.getComicLiveData(number)
+    }
+
     fun toComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         _currentComicNumber.value = number
@@ -105,7 +105,7 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun refreshComic() {
+    fun refreshCurrentComic() {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {

@@ -20,73 +20,73 @@ import timber.log.Timber
 @AndroidEntryPoint
 class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-    private val comicToolbar: Toolbar by lazy { findViewById(R.id.comic_toolbar) }
+    private val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
 
-    private val comicTitleView: TextView by lazy { findViewById(R.id.comic_title_view) }
-    private val comicImageView: ImageView by lazy { findViewById(R.id.comic_image_view) }
-    private val comicUrlView: TextView by lazy { findViewById(R.id.comic_url_view) }
-    private val comicImageUrlView: TextView by lazy { findViewById(R.id.comic_image_url_view) }
+    private val titleView: TextView by lazy { findViewById(R.id.title_view) }
+    private val imageView: ImageView by lazy { findViewById(R.id.image_view) }
+    private val urlView: TextView by lazy { findViewById(R.id.url_view) }
+    private val imageUrlView: TextView by lazy { findViewById(R.id.image_url_view) }
 
-    private val comicProgressBar: ProgressBar by lazy { findViewById(R.id.comic_progress_bar) }
+    private val progressBar: ProgressBar by lazy { findViewById(R.id.progress_bar) }
 
-    private val firstComicButton: Button by lazy { findViewById(R.id.first_comic_button) }
-    private val lastComicButton: Button by lazy { findViewById(R.id.last_comic_button) }
-    private val previousComicButton: Button by lazy { findViewById(R.id.previous_comic_button) }
-    private val nextComicButton: Button by lazy { findViewById(R.id.next_comic_button) }
+    private val toFirstComicButton: Button by lazy { findViewById(R.id.to_first_comic) }
+    private val toPreviousComicButton: Button by lazy { findViewById(R.id.to_previous_comic) }
+    private val toNextButton: Button by lazy { findViewById(R.id.to_next_comic) }
+    private val toLastComicButton: Button by lazy { findViewById(R.id.to_last_comic) }
 
-    private val swipeRefreshLayout: SwipeRefreshLayout by lazy { findViewById(R.id.comic_refresh_layout) }
+    private val swipeRefreshLayout: SwipeRefreshLayout by lazy { findViewById(R.id.swipe_refresh_layout) }
 
-    private val comicViewModel: ComicViewModel by viewModels()
+    private val viewModel: ComicViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
-        setSupportActionBar(comicToolbar)
+        setSupportActionBar(toolbar)
 
-        firstComicButton.setOnClickListener(this)
-        lastComicButton.setOnClickListener(this)
-        previousComicButton.setOnClickListener(this)
-        nextComicButton.setOnClickListener(this)
+        toFirstComicButton.setOnClickListener(this)
+        toPreviousComicButton.setOnClickListener(this)
+        toNextButton.setOnClickListener(this)
+        toLastComicButton.setOnClickListener(this)
 
         swipeRefreshLayout.setOnRefreshListener(this)
 
-        comicViewModel.loading.observe(this) { value ->
+        viewModel.loading.observe(this) { value ->
             Timber.i(value.toString())
-            comicProgressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
+            progressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = value
         }
 
-        comicViewModel.comic.observe(this) { value ->
+        viewModel.comic.observe(this) { value ->
             Timber.i(value.toString())
             if (value != null) {
-                comicTitleView.text = value.title
-                Picasso.get().load(value.img).into(comicImageView)
-                comicUrlView.text = value.url
-                comicImageUrlView.text = value.img
+                titleView.text = value.title
+                Picasso.get().load(value.img).into(imageView)
+                urlView.text = value.url
+                imageUrlView.text = value.img
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.comic_main_menu, menu)
+        inflater.inflate(R.menu.comic_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.latest_comic -> {
-                comicViewModel.refreshLatestComicNumber()
+            R.id.to_latest_comic -> {
+                viewModel.toLatestComic()
             }
-            R.id.select_comic -> {
-                val comicNumberDialogFragment = ComicNumberDialogFragment(comicViewModel)
+            R.id.to_comic -> {
+                val comicNumberDialogFragment = ComicNumberDialogFragment(viewModel)
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
-            R.id.refresh_comic -> {
-                comicViewModel.refreshComic()
+            R.id.refresh_current_comic -> {
+                viewModel.refreshCurrentComic()
             }
-            R.id.random_comic -> {
-                comicViewModel.toRandomComic()
+            R.id.to_random_comic -> {
+                viewModel.toRandomComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -95,22 +95,22 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.first_comic_button -> {
-                comicViewModel.toFirstComic()
+            R.id.to_first_comic -> {
+                viewModel.toFirstComic()
             }
-            R.id.last_comic_button -> {
-                comicViewModel.toLastComic()
+            R.id.to_last_comic -> {
+                viewModel.toLastComic()
             }
-            R.id.previous_comic_button -> {
-                comicViewModel.toPreviousComic()
+            R.id.to_previous_comic -> {
+                viewModel.toPreviousComic()
             }
-            R.id.next_comic_button -> {
-                comicViewModel.toNextComic()
+            R.id.to_next_comic -> {
+                viewModel.toNextComic()
             }
         }
     }
 
     override fun onRefresh() {
-        comicViewModel.refreshComic()
+        viewModel.refreshCurrentComic()
     }
 }
