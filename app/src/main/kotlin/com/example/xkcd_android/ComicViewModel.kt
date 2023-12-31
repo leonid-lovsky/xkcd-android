@@ -44,7 +44,7 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         if (number > 0) {
             _currentComicNumber.value = number
-            // if out of range?
+            // if index out of range?
         }
     }
 
@@ -53,7 +53,7 @@ class ComicViewModel @Inject constructor(
         val latestComicNumber = _latestComicNumber.value ?: 0
         if (number > latestComicNumber) {
             _latestComicNumber.value = number
-            // if out of range?
+            // if index out of range?
         }
     }
 
@@ -62,7 +62,7 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         if (number > 0) {
             sharedPreferences.edit().putInt("current_comic_number", number).apply()
-            // if out of range?
+            // if index out of range?
         }
     }
 
@@ -72,7 +72,7 @@ class ComicViewModel @Inject constructor(
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
         if (number > latestComicNumber) {
             sharedPreferences.edit().putInt("latest_comic_number", latestComicNumber).apply()
-            // if out of range?
+            // if index out of range?
         }
     }
 
