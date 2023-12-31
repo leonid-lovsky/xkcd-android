@@ -30,6 +30,14 @@ class ComicViewModel @Inject constructor(
     val currentComic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
     val message = _message as LiveData<String>
 
+    fun setCurrentComicNumber(number: Int) {
+        _currentComicNumber.value = number
+    }
+
+    fun setLatestComicNumber(number: Int) {
+        _latestComicNumber.value = number
+    }
+
     fun getComicLiveData(number: Int): LiveData<Comic> {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
@@ -89,19 +97,19 @@ class ComicViewModel @Inject constructor(
 
     fun toComic(number: Int) {
         Timber.i("${this::class.simpleName}")
-        _currentComicNumber.value = number
+        setCurrentComicNumber(number)
     }
 
     fun toFirstComic() {
         Timber.i("${this::class.simpleName}")
-        toComic(1)
+        setCurrentComicNumber(1)
     }
 
     fun toPreviousComic() {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            toComic(currentComicNumber - 1)
+            setCurrentComicNumber(currentComicNumber - 1)
         }
     }
 
@@ -119,7 +127,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            toComic(currentComicNumber + 1)
+            setCurrentComicNumber(currentComicNumber + 1)
         }
     }
 
@@ -127,7 +135,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value
         if (latestComicNumber != null) {
-            toComic(latestComicNumber)
+            setCurrentComicNumber(latestComicNumber)
         }
     }
 
@@ -135,7 +143,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value
         if (latestComicNumber != null) {
-            toComic(Random.nextInt(1, latestComicNumber))
+            setCurrentComicNumber(Random.nextInt(1, latestComicNumber))
         }
     }
 
