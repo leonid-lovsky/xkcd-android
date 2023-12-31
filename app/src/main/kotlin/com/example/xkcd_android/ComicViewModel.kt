@@ -30,6 +30,18 @@ class ComicViewModel @Inject constructor(
     val currentComic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
     val message = _message as LiveData<String>
 
+    fun getComicLiveData(number: Int): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        viewModelScope.launch {
+            val comic = dao.getComic(number)
+            Timber.d(comic.toString())
+            if (comic == null) {
+                refreshComic(number)
+            }
+        }
+        return dao.getComicLiveData(number)
+    }
+
     suspend fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         try {
@@ -48,6 +60,15 @@ class ComicViewModel @Inject constructor(
         }
     }
 
+    fun getLatestComicLiveData(): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        val number = sharedPreferences.getInt("latest_comic_number", 1)
+        viewModelScope.launch {
+            refreshLatestComic()
+        }
+        return dao.getComicLiveData(number)
+    }
+
     suspend fun refreshLatestComic() {
         Timber.i("${this::class.simpleName}")
         try {
@@ -64,27 +85,6 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
-    }
-
-    fun getComicLiveData(number: Int): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
-        viewModelScope.launch {
-            val comic = dao.getComic(number)
-            Timber.d(comic.toString())
-            if (comic == null) {
-                refreshComic(number)
-            }
-        }
-        return dao.getComicLiveData(number)
-    }
-
-    fun getLatestComicLiveData(): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
-        val number = sharedPreferences.getInt("latest_comic_number", 1)
-        viewModelScope.launch {
-            refreshLatestComic()
-        }
-        return dao.getComicLiveData(number)
     }
 
     fun toComic(number: Int) {
