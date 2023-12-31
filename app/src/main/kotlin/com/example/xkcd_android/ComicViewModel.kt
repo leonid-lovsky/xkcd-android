@@ -82,7 +82,6 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         setCurrentComicNumberLiveData(number)
         setCurrentComicNumberPreferences(number)
-        // To do: switch to selected comic
     }
 
     private fun setLatestComicNumber(number: Int) {
@@ -148,6 +147,7 @@ class ComicViewModel @Inject constructor(
     fun toComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         setCurrentComicNumber(number)
+        // To do: switch to selected comic
     }
 
     fun toFirstComic() {
