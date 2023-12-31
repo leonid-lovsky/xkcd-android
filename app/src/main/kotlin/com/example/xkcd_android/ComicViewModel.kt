@@ -196,6 +196,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             fetchLatestComic()
+            // cache
         }
     }
 }
