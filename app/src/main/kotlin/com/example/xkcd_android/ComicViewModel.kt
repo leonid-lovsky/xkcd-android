@@ -105,7 +105,7 @@ class ComicViewModel @Inject constructor(
     @SuppressLint("ApplySharedPref")
     private suspend fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
-        // is observable?
+        // To do: observable
         try {
             _loading.value = true
             val response = service.getComic(number)
@@ -126,7 +126,7 @@ class ComicViewModel @Inject constructor(
     @SuppressLint("ApplySharedPref")
     private suspend fun fetchLatestComic() {
         Timber.i("${this::class.simpleName}")
-        // is observable?
+        // To do: observable
         try {
             _loading.value = true
             val response = service.getLatestComic()
