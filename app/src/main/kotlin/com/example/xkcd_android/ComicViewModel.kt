@@ -3,10 +3,10 @@ package com.example.xkcd_android
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,14 +24,16 @@ class ComicViewModel @Inject constructor(
 
     private val _currentComicNumber = MutableLiveData<Int>()
     private val _loading = MutableLiveData<Boolean>()
+    private val _currentComic = MediatorLiveData<Comic>()
     private val _message = MutableLiveData<String>()
     private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val currentComic = _currentComicNumber.switchMap { number -> getComicLiveData(number) }
+    val currentComic = _currentComic as LiveData<Comic>
     val message = _message as LiveData<String>
 
     init {
+        Timber.d("${this::class.simpleName}")
         val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
         if (currentComicNumber > 0) {
             toComic(currentComicNumber)
@@ -80,6 +82,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         setCurrentComicNumberLiveData(number)
         setCurrentComicNumberPreferences(number)
+        // To do: switch to selected comic
     }
 
     private fun setLatestComicNumber(number: Int) {
@@ -149,14 +152,14 @@ class ComicViewModel @Inject constructor(
 
     fun toFirstComic() {
         Timber.i("${this::class.simpleName}")
-        setCurrentComicNumber(1)
+        toComic(1)
     }
 
     fun toPreviousComic() {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            setCurrentComicNumber(currentComicNumber - 1)
+            toComic(currentComicNumber - 1)
         }
     }
 
@@ -174,7 +177,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            setCurrentComicNumber(currentComicNumber + 1)
+            toComic(currentComicNumber + 1)
         }
     }
 
@@ -182,7 +185,7 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value
         if (latestComicNumber != null) {
-            setCurrentComicNumber(latestComicNumber)
+            toComic(latestComicNumber)
         }
     }
 
@@ -190,16 +193,16 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value
         if (latestComicNumber != null) {
-            setCurrentComicNumber(Random.nextInt(1, latestComicNumber))
+            toComic(Random.nextInt(1, latestComicNumber))
         }
     }
 
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
-            // if no internet connection?
             fetchLatestComic()
-            // To do: switch to latest comic
+            // if no internet connection?
+            // To do: switch to selected comic
         }
     }
 }
