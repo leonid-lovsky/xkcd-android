@@ -197,9 +197,9 @@ class ComicViewModel @Inject constructor(
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
-            fetchLatestComic()
             // if no internet connection?
-            // To do: to comic
+            fetchLatestComic()
+            // To do: switch to latest comic
         }
     }
 }
