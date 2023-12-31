@@ -34,7 +34,7 @@ class ComicViewModel @Inject constructor(
     fun setCurrentComicNumberLiveData(number: Int) {
         if (number >= 1) {
             _currentComicNumber.value = number
-            // out of range problem
+            // out of range
         }
     }
 
@@ -42,7 +42,6 @@ class ComicViewModel @Inject constructor(
         val latestComicNumber = _latestComicNumber.value ?: 1
         if (number > latestComicNumber) {
             _latestComicNumber.value = number
-            // out of range problem
         }
     }
 
@@ -50,7 +49,7 @@ class ComicViewModel @Inject constructor(
     fun setCurrentComicNumberPreferences(number: Int) {
         if (number >= 1) {
             sharedPreferences.edit().putInt("current_comic_number", number).commit()
-            // out of range problem
+            // out of range
         }
     }
 
@@ -59,7 +58,6 @@ class ComicViewModel @Inject constructor(
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
         if (number > latestComicNumber) {
             sharedPreferences.edit().putInt("latest_comic_number", latestComicNumber).commit()
-            // out of range problem
         }
     }
 
@@ -103,6 +101,7 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
+        // side effects
     }
 
     @SuppressLint("ApplySharedPref")
@@ -123,6 +122,7 @@ class ComicViewModel @Inject constructor(
         } finally {
             _loading.value = false
         }
+        // side effects
     }
 
     fun toComic(number: Int) {
@@ -179,5 +179,8 @@ class ComicViewModel @Inject constructor(
 
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
+        viewModelScope.launch {
+            fetchLatestComic()
+        }
     }
 }
