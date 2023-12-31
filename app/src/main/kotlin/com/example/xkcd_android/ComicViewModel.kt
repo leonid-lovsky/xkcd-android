@@ -198,6 +198,8 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             fetchLatestComic()
+            // Todo: get latest comic number
+            // Todo: set current comic number
             // if no internet connection?
         }
     }
