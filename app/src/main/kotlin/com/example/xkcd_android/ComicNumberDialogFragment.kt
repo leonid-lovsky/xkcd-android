@@ -34,7 +34,7 @@ class ComicNumberDialogFragment(
             BUTTON_POSITIVE -> {
                 try {
                     val number = input.text.toString().toInt()
-                    viewModel.getComic(number)
+                    viewModel.toComic(number)
                 } catch (e: Throwable) {
                     Timber.e(e)
                 }

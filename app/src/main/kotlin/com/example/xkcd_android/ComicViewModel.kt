@@ -42,6 +42,15 @@ class ComicViewModel @Inject constructor(
         return dao.getComicLiveData(number)
     }
 
+    fun getLatestComicLiveData(): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        val number = sharedPreferences.getInt("latest_comic_number", 1)
+        viewModelScope.launch {
+            refreshLatestComic()
+        }
+        return dao.getComicLiveData(number)
+    }
+
     suspend fun refreshComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         try {
@@ -60,7 +69,7 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    suspend fun fetchLatestComic() {
+    suspend fun refreshLatestComic() {
         Timber.i("${this::class.simpleName}")
         try {
             _loading.value = true
@@ -78,21 +87,21 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun getComic(number: Int) {
+    fun toComic(number: Int) {
         Timber.i("${this::class.simpleName}")
         _currentComicNumber.value = number
     }
 
-    fun getFirstComic() {
+    fun toFirstComic() {
         Timber.i("${this::class.simpleName}")
-        _currentComicNumber.value = 1
+        toComic(1)
     }
 
-    fun getPreviousComic() {
+    fun toPreviousComic() {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            _currentComicNumber.value = currentComicNumber - 1
+            toComic(currentComicNumber - 1)
         }
     }
 
@@ -106,27 +115,31 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun getNextComic() {
+    fun toNextComic() {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value
         if (currentComicNumber != null) {
-            _currentComicNumber.value = currentComicNumber + 1
+            toComic(currentComicNumber + 1)
         }
     }
 
-    fun getLastComic() {
+    fun toLastComic() {
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value
         if (latestComicNumber != null) {
-            _currentComicNumber.value = latestComicNumber
+            toComic(latestComicNumber)
         }
     }
 
-    fun getRandomComic() {
+    fun toRandomComic() {
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value
         if (latestComicNumber != null) {
-            _currentComicNumber.value = Random.nextInt(1, latestComicNumber)
+            toComic(Random.nextInt(1, latestComicNumber))
         }
+    }
+
+    fun toLatestComic() {
+        Timber.i("${this::class.simpleName}")
     }
 }

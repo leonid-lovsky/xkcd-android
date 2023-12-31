@@ -76,7 +76,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.latest_comic -> {
-                comicViewModel.fetchLatestComic()
+                comicViewModel.refreshLatestComicNumber()
             }
             R.id.select_comic -> {
                 val comicNumberDialogFragment = ComicNumberDialogFragment(comicViewModel)
@@ -86,7 +86,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 comicViewModel.refreshComic()
             }
             R.id.random_comic -> {
-                comicViewModel.getRandomComic()
+                comicViewModel.toRandomComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,16 +96,16 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         if (v == null) return
         when (v.id) {
             R.id.first_comic_button -> {
-                comicViewModel.getFirstComic()
+                comicViewModel.toFirstComic()
             }
             R.id.last_comic_button -> {
-                comicViewModel.getLastComic()
+                comicViewModel.toLastComic()
             }
             R.id.previous_comic_button -> {
-                comicViewModel.getPreviousComic()
+                comicViewModel.toPreviousComic()
             }
             R.id.next_comic_button -> {
-                comicViewModel.getNextComic()
+                comicViewModel.toNextComic()
             }
         }
     }
