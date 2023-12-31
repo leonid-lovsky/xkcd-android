@@ -202,7 +202,7 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             fetchLatestComic()
             // if no internet connection?
-            // To do: switch to selected comic
+            // To do: switch to latest comic
         }
     }
 }
