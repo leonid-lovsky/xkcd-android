@@ -12,10 +12,10 @@ import androidx.fragment.app.DialogFragment
 import timber.log.Timber
 
 class ComicNumberDialogFragment(
-    private val comicViewModel: ComicViewModel,
+    private val viewModel: ComicViewModel,
 ) : DialogFragment(), OnClickListener {
 
-    private val comicNumberInput: TextView by lazy { requireDialog().findViewById(R.id.comicNumberInput) }
+    private val input: TextView by lazy { requireDialog().findViewById(R.id.input) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
@@ -33,8 +33,8 @@ class ComicNumberDialogFragment(
         when (which) {
             BUTTON_POSITIVE -> {
                 try {
-                    val comicNumber = comicNumberInput.text.toString().toInt()
-                    comicViewModel.getComic(comicNumber)
+                    val number = input.text.toString().toInt()
+                    viewModel.getComic(number)
                 } catch (e: Throwable) {
                     Timber.e(e)
                 }

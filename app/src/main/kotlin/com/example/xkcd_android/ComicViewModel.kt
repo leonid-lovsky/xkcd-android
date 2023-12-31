@@ -16,8 +16,8 @@ import kotlin.random.Random
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicService: ComicService,
-    private val comicDao: ComicDao,
+    private val service: ComicService,
+    private val dao: ComicDao,
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
@@ -27,26 +27,33 @@ class ComicViewModel @Inject constructor(
     private val _latestComicNumber = MutableLiveData<Int>()
 
     val loading = _loading as LiveData<Boolean>
-    val comic = _currentComicNumber.switchMap { comicDao.getComicLiveData(it) }
+    val comic = _currentComicNumber.switchMap { number ->
+        viewModelScope.launch {
+            val comic = dao.getComic(number)
+            Timber.d(comic.toString())
+            if (comic == null) {
+                fetchComic(number)
+            }
+        }
+        dao.getComicLiveData(number)
+    }
     val message = _message as LiveData<String>
 
-    fun fetchComic(number: Int) {
+    suspend fun fetchComic(number: Int) {
         Timber.i("${this::class.simpleName}")
-        viewModelScope.launch {
-            try {
-                _loading.value = true
-                val response = comicService.getComic(number)
-                Timber.d(response.toString())
-                val body = response.body()
-                Timber.d(body.toString())
-                if (body != null) {
-                    comicDao.putComic(body)
-                }
-            } catch (e: Throwable) {
-                Timber.e(e)
-            } finally {
-                _loading.value = false
+        try {
+            _loading.value = true
+            val response = service.getComic(number)
+            Timber.d(response.toString())
+            val body = response.body()
+            Timber.d(body.toString())
+            if (body != null) {
+                dao.putComic(body)
             }
+        } catch (e: Throwable) {
+            Timber.e(e)
+        } finally {
+            _loading.value = false
         }
     }
 
@@ -55,12 +62,12 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _loading.value = true
-                val response = comicService.getLatestComic()
+                val response = service.getLatestComic()
                 Timber.d(response.toString())
                 val body = response.body()
                 Timber.d(body.toString())
                 if (body != null) {
-                    comicDao.putComic(body)
+                    dao.putComic(body)
                 }
             } catch (e: Throwable) {
                 Timber.e(e)
