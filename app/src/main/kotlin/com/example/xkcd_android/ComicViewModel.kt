@@ -23,15 +23,13 @@ class ComicViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _currentComicNumber = MutableLiveData<Int>()
-    private val _latestComicNumber = MutableLiveData<Int>()
-
-    private val _loading = MutableLiveData<Boolean>()
-    private val _message = MutableLiveData<String>()
-
     val currentComic = _currentComicNumber.switchMap { comicNumber -> getComicLiveData(comicNumber) }
+    private val _latestComicNumber = MutableLiveData<Int>()
     val latestComic = _latestComicNumber.switchMap { comicNumber -> getComicLiveData(comicNumber) }
 
+    private val _loading = MutableLiveData<Boolean>()
     val loading = _loading as LiveData<Boolean>
+    private val _message = MutableLiveData<String>()
     val message = _message as LiveData<String>
 
     init {
