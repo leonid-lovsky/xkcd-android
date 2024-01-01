@@ -106,8 +106,8 @@ class ComicViewModel @Inject constructor(
             val body = response.body()
             Timber.d(body.toString())
             if (body != null) {
-                dao.putComic(body)
                 setLatestComicNumber(body.num)
+                dao.putComic(body)
             }
         } catch (e: Throwable) {
             Timber.e(e)
@@ -127,8 +127,8 @@ class ComicViewModel @Inject constructor(
             val body = response.body()
             Timber.d(body.toString())
             if (body != null) {
-                dao.putComic(body)
                 setLatestComicNumber(body.num)
+                dao.putComic(body)
             }
         } catch (e: Throwable) {
             Timber.e(e)
@@ -147,6 +147,9 @@ class ComicViewModel @Inject constructor(
                 refreshComic(number)
             }
         }
+        // To do: if no internet connection?
+        // Fix: set current comic number
+        // Fix: set current comic
     }
 
     fun toFirstComic() {
@@ -164,11 +167,11 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         viewModelScope.launch {
-            // To do: if no internet connection?
             refreshComic(currentComicNumber)
-            // Fix: set current comic number
-            // Fix: set current comic
         }
+        // To do: if no internet connection?
+        // Fix: set current comic number
+        // Fix: set current comic
     }
 
     fun toNextComic() {
@@ -192,10 +195,10 @@ class ComicViewModel @Inject constructor(
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
-            // To do: if no internet connection?
             refreshLatestComic()
-            // Fix: set current comic number
-            // Fix: set current comic
         }
+        // To do: if no internet connection?
+        // Fix: set current comic number
+        // Fix: set current comic
     }
 }
