@@ -101,9 +101,9 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             fetchLatestComic()
         }
+        // To do: set current comic number
+        // To do: set current comic
         // To do: if no internet connection?
-        // Fix: set current comic number
-        // Fix: set current comic
     }
 
     private suspend fun fetchComic(comicNumber: Int) {
