@@ -23,13 +23,18 @@ class ComicViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _currentComicNumber = MutableLiveData<Int>()
-    val currentComic = _currentComicNumber.switchMap { comicNumber -> getComicLiveData(comicNumber) }
     private val _latestComicNumber = MutableLiveData<Int>()
-    val latestComic = _latestComicNumber.switchMap { comicNumber -> getComicLiveData(comicNumber) }
-
     private val _loading = MutableLiveData<Boolean>()
-    val loading = _loading as LiveData<Boolean>
     private val _message = MutableLiveData<String>()
+
+    val currentComic = _currentComicNumber.switchMap { comicNumber ->
+        getComicLiveData(comicNumber)
+    }
+    val latestComic = _latestComicNumber.switchMap { comicNumber ->
+        getComicLiveData(comicNumber)
+    }
+
+    val loading = _loading as LiveData<Boolean>
     val message = _message as LiveData<String>
 
     init {
@@ -42,114 +47,16 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    private fun setCurrentComicNumberLiveData(number: Int) {
-        Timber.d("${this::class.simpleName}")
-        if (number > 0) {
-            // To do: if index out of range?
-            _currentComicNumber.value = number
-        }
-    }
-
-    private fun setLatestComicNumberLiveData(number: Int) {
-        Timber.d("${this::class.simpleName}")
-        val latestComicNumber = _latestComicNumber.value ?: 0
-        if (number > latestComicNumber) {
-            // To do: if index out of range?
-            _latestComicNumber.value = number
-        }
-    }
-
-    @SuppressLint("ApplySharedPref")
-    private fun setCurrentComicNumberPreferences(number: Int) {
-        Timber.d("${this::class.simpleName}")
-        if (number > 0) {
-            // To do: if index out of range?
-            sharedPreferences.edit().putInt("current_comic_number", number).apply()
-        }
-    }
-
-    @SuppressLint("ApplySharedPref")
-    private fun setLatestComicNumberPreferences(number: Int) {
+    fun toComic(comicNumber: Int) {
         Timber.i("${this::class.simpleName}")
-        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
-        if (number > latestComicNumber) {
-            // To do: if index out of range?
-            sharedPreferences.edit().putInt("latest_comic_number", latestComicNumber).apply()
-        }
-    }
-
-    private fun setCurrentComicNumber(number: Int) {
-        Timber.i("${this::class.simpleName}")
-        setCurrentComicNumberLiveData(number)
-        setCurrentComicNumberPreferences(number)
-    }
-
-    private fun setLatestComicNumber(number: Int) {
-        Timber.i("${this::class.simpleName}")
-        setLatestComicNumberLiveData(number)
-        setLatestComicNumberPreferences(number)
-    }
-
-    private fun getComicLiveData(number: Int): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
-        return dao.getComicLiveData(number)
-    }
-
-    @SuppressLint("ApplySharedPref")
-    private suspend fun refreshComic(number: Int) {
-        Timber.i("${this::class.simpleName}")
-        // To do: make it observable?
-        try {
-            _loading.value = true
-            val response = service.getComic(number)
-            Timber.d(response.toString())
-            val body = response.body()
-            Timber.d(body.toString())
-            if (body != null) {
-                setLatestComicNumber(body.num)
-                dao.putComic(body)
-            }
-        } catch (e: Throwable) {
-            Timber.e(e)
-        } finally {
-            _loading.value = false
-        }
-    }
-
-    @SuppressLint("ApplySharedPref")
-    private suspend fun refreshLatestComic() {
-        Timber.i("${this::class.simpleName}")
-        // To do: make it observable?
-        try {
-            _loading.value = true
-            val response = service.getLatestComic()
-            Timber.d(response.toString())
-            val body = response.body()
-            Timber.d(body.toString())
-            if (body != null) {
-                setLatestComicNumber(body.num)
-                dao.putComic(body)
-            }
-        } catch (e: Throwable) {
-            Timber.e(e)
-        } finally {
-            _loading.value = false
-        }
-    }
-
-    fun toComic(number: Int) {
-        Timber.i("${this::class.simpleName}")
-        setCurrentComicNumber(number)
+        setCurrentComicNumber(comicNumber)
         viewModelScope.launch {
-            val comic = dao.getComic(number)
+            val comic = dao.getComic(comicNumber)
             Timber.d(comic.toString())
             if (comic == null) {
-                refreshComic(number)
+                fetchComic(comicNumber)
             }
         }
-        // To do: if no internet connection?
-        // Fix: set current comic number
-        // Fix: set current comic
     }
 
     fun toFirstComic() {
@@ -163,15 +70,12 @@ class ComicViewModel @Inject constructor(
         toComic(currentComicNumber - 1)
     }
 
-    fun refreshCurrentComic() {
+    fun refreshComic() {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         viewModelScope.launch {
-            refreshComic(currentComicNumber)
+            fetchComic(currentComicNumber)
         }
-        // To do: if no internet connection?
-        // Fix: set current comic number
-        // Fix: set current comic
     }
 
     fun toNextComic() {
@@ -195,10 +99,103 @@ class ComicViewModel @Inject constructor(
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
-            refreshLatestComic()
+            fetchLatestComic()
         }
         // To do: if no internet connection?
         // Fix: set current comic number
         // Fix: set current comic
+    }
+
+    private suspend fun fetchComic(comicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        // To do: make it observable?
+        try {
+            _loading.value = true
+            val response = service.getComic(comicNumber)
+            Timber.d(response.toString())
+            val body = response.body()
+            Timber.d(body.toString())
+            if (body != null) {
+                setLatestComicNumber(body.num)
+                dao.putComic(body)
+            }
+        } catch (e: Throwable) {
+            Timber.e(e)
+        } finally {
+            _loading.value = false
+        }
+    }
+
+    private suspend fun fetchLatestComic() {
+        Timber.i("${this::class.simpleName}")
+        // To do: make it observable?
+        try {
+            _loading.value = true
+            val response = service.getLatestComic()
+            Timber.d(response.toString())
+            val body = response.body()
+            Timber.d(body.toString())
+            if (body != null) {
+                setLatestComicNumber(body.num)
+                dao.putComic(body)
+            }
+        } catch (e: Throwable) {
+            Timber.e(e)
+        } finally {
+            _loading.value = false
+        }
+    }
+
+    private fun getComicLiveData(number: Int): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        return dao.getComicLiveData(number)
+    }
+
+    private fun setCurrentComicNumber(comicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        setCurrentComicNumberLiveData(comicNumber)
+        setCurrentComicNumberPreferences(comicNumber)
+    }
+
+    private fun setLatestComicNumber(comicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        setLatestComicNumberLiveData(comicNumber)
+        setLatestComicNumberPreferences(comicNumber)
+    }
+
+    private fun setCurrentComicNumberLiveData(comicNumber: Int) {
+        Timber.d("${this::class.simpleName}")
+        if (comicNumber > 0) {
+            // To do: if index out of range?
+            _currentComicNumber.value = comicNumber
+        }
+    }
+
+    private fun setLatestComicNumberLiveData(comicNumber: Int) {
+        Timber.d("${this::class.simpleName}")
+        val latestComicNumber = _latestComicNumber.value ?: 0
+        if (comicNumber > latestComicNumber) {
+            // To do: if index out of range?
+            _latestComicNumber.value = comicNumber
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private fun setCurrentComicNumberPreferences(comicNumber: Int) {
+        Timber.d("${this::class.simpleName}")
+        if (comicNumber > 0) {
+            // To do: if index out of range?
+            sharedPreferences.edit().putInt("current_comic_number", comicNumber).apply()
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private fun setLatestComicNumberPreferences(comicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
+        if (comicNumber > latestComicNumber) {
+            // To do: if index out of range?
+            sharedPreferences.edit().putInt("latest_comic_number", latestComicNumber).apply()
+        }
     }
 }

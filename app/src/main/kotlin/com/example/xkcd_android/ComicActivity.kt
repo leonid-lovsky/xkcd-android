@@ -80,7 +80,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
             R.id.refresh_current_comic -> {
-                viewModel.refreshCurrentComic()
+                viewModel.refreshComic()
             }
             R.id.to_random_comic -> {
                 viewModel.toRandomComic()
@@ -111,6 +111,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     }
 
     override fun onRefresh() {
-        viewModel.refreshCurrentComic()
+        viewModel.refreshComic()
     }
 }
