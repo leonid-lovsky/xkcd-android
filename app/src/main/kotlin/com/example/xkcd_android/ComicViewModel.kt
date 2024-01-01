@@ -61,6 +61,20 @@ class ComicViewModel @Inject constructor(
         _currentComicNumber.removeSource(_latestComicNumber)
     }
 
+    fun toLatestComic() {
+        Timber.i("${this::class.simpleName}")
+        viewModelScope.launch {
+            fetchLatestComic()
+        }
+        // To do: if no internet connection?
+        _currentComicNumber.addSource(_latestComicNumber) { comicNumber ->
+            toComic(comicNumber)
+        }
+        // _latestComicNumber.observeForever { comicNumber ->
+        //     _currentComicNumber.value = comicNumber
+        // }
+    }
+
     fun toFirstComic() {
         Timber.i("${this::class.simpleName}")
         toComic(1)
@@ -96,20 +110,6 @@ class ComicViewModel @Inject constructor(
         Timber.i("${this::class.simpleName}")
         val latestComicNumber = _latestComicNumber.value ?: return
         toComic(Random.nextInt(1, latestComicNumber))
-    }
-
-    fun toLatestComic() {
-        Timber.i("${this::class.simpleName}")
-        // To do: if no internet connection?
-        viewModelScope.launch {
-            fetchLatestComic()
-        }
-        _currentComicNumber.addSource(_latestComicNumber) { comicNumber ->
-            _currentComicNumber.value = comicNumber
-        }
-        // _latestComicNumber.observeForever { comicNumber ->
-        //     _currentComicNumber.value = comicNumber
-        // }
     }
 
     private suspend fun fetchComic(comicNumber: Int) {
