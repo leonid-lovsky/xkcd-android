@@ -22,17 +22,17 @@ class ComicViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private val _loading = MutableLiveData<Boolean>()
-    private val _message = MutableLiveData<String>()
-
     private val _currentComicNumber = MutableLiveData<Int>()
     private val _latestComicNumber = MutableLiveData<Int>()
 
-    val loading = _loading as LiveData<Boolean>
-    val message = _message as LiveData<String>
+    private val _loading = MutableLiveData<Boolean>()
+    private val _message = MutableLiveData<String>()
 
     val currentComic = _currentComicNumber.switchMap { comicNumber -> getComicLiveData(comicNumber) }
     val latestComic = _latestComicNumber.switchMap { comicNumber -> getComicLiveData(comicNumber) }
+
+    val loading = _loading as LiveData<Boolean>
+    val message = _message as LiveData<String>
 
     init {
         Timber.d("${this::class.simpleName}")
