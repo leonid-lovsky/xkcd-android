@@ -63,19 +63,16 @@ class ComicViewModel @Inject constructor(
         _currentComicNumber.removeSource(_latestComicNumber)
     }
 
+    // To do: if no internet connection?
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
         viewModelScope.launch {
             fetchLatestComic()
         }
-        // To do: if no internet connection?
         _currentComicNumber.addSource(_latestComicNumber) { latestComicNumber ->
             Timber.d("${latestComicNumber}")
             setCurrentComicNumber(latestComicNumber)
         }
-        // _latestComicNumber.observeForever { comicNumber ->
-        //     setCurrentComicNumber(comicNumber)
-        // }
     }
 
     fun toFirstComic() {
