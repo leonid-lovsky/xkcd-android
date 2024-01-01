@@ -3,6 +3,7 @@ package com.example.xkcd_android
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -22,7 +23,7 @@ class ComicViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private val _currentComicNumber = MutableLiveData<Int>()
+    private val _currentComicNumber = MediatorLiveData<Int>()
     private val _latestComicNumber = MutableLiveData<Int>()
     private val _loading = MutableLiveData<Boolean>()
     private val _message = MutableLiveData<String>()
@@ -57,6 +58,7 @@ class ComicViewModel @Inject constructor(
                 fetchComic(comicNumber)
             }
         }
+        _currentComicNumber.removeSource(_latestComicNumber)
     }
 
     fun toFirstComic() {
@@ -101,8 +103,9 @@ class ComicViewModel @Inject constructor(
         viewModelScope.launch {
             fetchLatestComic()
         }
-        // To do: have to update current comic number!
-        // To do: have to update current comic!
+        _currentComicNumber.addSource(_latestComicNumber) { comicNumber ->
+            _currentComicNumber.value = comicNumber
+        }
         // To do: if no internet connection?
     }
 
