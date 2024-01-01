@@ -100,6 +100,7 @@ class ComicViewModel @Inject constructor(
 
     fun toLatestComic() {
         Timber.i("${this::class.simpleName}")
+        // To do: if no internet connection?
         viewModelScope.launch {
             fetchLatestComic()
         }
@@ -109,7 +110,6 @@ class ComicViewModel @Inject constructor(
         // _latestComicNumber.observeForever { comicNumber ->
         //     _currentComicNumber.value = comicNumber
         // }
-        // To do: if no internet connection?
     }
 
     private suspend fun fetchComic(comicNumber: Int) {
