@@ -106,6 +106,9 @@ class ComicViewModel @Inject constructor(
         _currentComicNumber.addSource(_latestComicNumber) { comicNumber ->
             _currentComicNumber.value = comicNumber
         }
+        // _latestComicNumber.observeForever { comicNumber ->
+        //     _currentComicNumber.value = comicNumber
+        // }
         // To do: if no internet connection?
     }
 
