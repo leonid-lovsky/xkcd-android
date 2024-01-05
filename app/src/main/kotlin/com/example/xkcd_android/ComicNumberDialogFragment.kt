@@ -15,7 +15,7 @@ class ComicNumberDialogFragment(
     private val comicViewModel: ComicViewModel,
 ) : DialogFragment(), OnClickListener {
 
-    private val comicNumberInput: TextView by lazy { requireDialog().findViewById(R.id.comic_number_input) }
+    private val comicNumberEditText: TextView by lazy { requireDialog().findViewById(R.id.comic_number_edit_text) }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity = activity ?: throw IllegalStateException("Activity cannot be null")
@@ -33,9 +33,9 @@ class ComicNumberDialogFragment(
         when (which) {
             BUTTON_POSITIVE -> {
                 try {
-                    val newComicNumber = comicNumberInput.text.toString().toInt()
-                    Timber.d("New comic number: ${newComicNumber}")
-                    comicViewModel.navigateToComicByNumber(newComicNumber)
+                    val desiredComicNumber = comicNumberEditText.text.toString().toInt()
+                    Timber.d("Desired comic number: ${desiredComicNumber}")
+                    comicViewModel.navigateToComicByNumber(desiredComicNumber)
                 } catch (e: Throwable) {
                     Timber.e(e)
                 }

@@ -21,11 +21,14 @@ class ComicViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private val _currentComicNumber = MutableLiveData<Int>()
-    private val _latestComicNumber = MutableLiveData<Int>()
-
     private val _isLoading = MutableLiveData<Boolean>()
     private val _message = MutableLiveData<String>()
+
+    val isLoading = _isLoading as LiveData<Boolean>
+    val message = _message as LiveData<String>
+
+    private val _currentComicNumber = MutableLiveData<Int>()
+    private val _latestComicNumber = MutableLiveData<Int>()
 
     val comic = _currentComicNumber.switchMap { comicNumber ->
         Timber.i("${this::class.simpleName}")
@@ -54,8 +57,14 @@ class ComicViewModel @Inject constructor(
         comicDao.getComicLiveDataByNumber(comicNumber)
     }
 
-    val isLoading = _isLoading as LiveData<Boolean>
-    val message = _message as LiveData<String>
+    init {
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
+        Timber.d("Current comic number: ${currentComicNumber}")
+        _currentComicNumber.value = currentComicNumber
+        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        _latestComicNumber.value = latestComicNumber
+    }
 
     fun navigateToComicByNumber(comicNumber: Int) {
         Timber.i("${this::class.simpleName}")
@@ -143,14 +152,5 @@ class ComicViewModel @Inject constructor(
         val desiredComicNumber = Random.nextInt(1, latestComicNumber)
         Timber.d("Desired comic number: ${latestComicNumber}")
         _currentComicNumber.value = desiredComicNumber
-    }
-
-    init {
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
-        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
-        Timber.d("Current comic number: ${currentComicNumber}")
-        Timber.d("Latest comic number: ${latestComicNumber}")
-        _currentComicNumber.value = currentComicNumber
-        _latestComicNumber.value = latestComicNumber
     }
 }
