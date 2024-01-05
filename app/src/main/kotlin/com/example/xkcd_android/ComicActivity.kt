@@ -51,13 +51,13 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         swipeRefreshLayout.setOnRefreshListener(this)
 
         comicViewModel.isRefreshing.observe(this) { isRefreshing ->
-            Timber.i("Is refreshing: ${isRefreshing}")
+            Timber.d("Is refreshing: ${isRefreshing}")
             progressBar.visibility = if (isRefreshing) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = isRefreshing
         }
 
         comicViewModel.comic.observe(this) { comic ->
-            Timber.i("Comic: ${comic}")
+            Timber.d("Comic: ${comic}")
             if (comic != null) {
                 comicTitleView.text = comic.title
                 Picasso.get().load(comic.img).into(comicImageView)
@@ -67,7 +67,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         }
 
         comicViewModel.message.observe(this) { message ->
-            Timber.i("Message: ${message}")
+            Timber.d("Message: ${message}")
         }
     }
 

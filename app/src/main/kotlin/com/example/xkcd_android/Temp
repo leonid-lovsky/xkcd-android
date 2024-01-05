@@ -1,19 +1,19 @@
 
     private fun getComicLiveData(comicNumber: Int): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
+        Timber.d("${this::class.simpleName}")
         Timber.d("Comic number: ${comicNumber}")
         return comicDao.getComicLiveDataByNumber(comicNumber)
     }
 
     private fun putCurrentComicNumber(newCurrentComicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
+        Timber.d("${this::class.simpleName}")
         Timber.d("New current comic number: ${newCurrentComicNumber}")
         putCurrentComicNumberLiveData(newCurrentComicNumber)
         putCurrentComicNumberPreferences(newCurrentComicNumber)
     }
 
     private fun putLatestComicNumber(newLatestComicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
+        Timber.d("${this::class.simpleName}")
         Timber.d("New latest comic number: ${newLatestComicNumber}")
         putLatestComicNumberLiveData(newLatestComicNumber)
         putLatestComicNumberPreferences(newLatestComicNumber)
@@ -52,7 +52,7 @@
     // TODO: range
     @SuppressLint("ApplySharedPref")
     private fun putLatestComicNumberPreferences(newLatestComicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
+        Timber.d("${this::class.simpleName}")
         Timber.d("New latest comic number: ${newLatestComicNumber}")
         val savedLatestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
         Timber.d("Saved latest comic number: ${newLatestComicNumber}")

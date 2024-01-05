@@ -1,0 +1,26 @@
+   val comic = _currentComicNumber.switchMap { comicNumber ->
+        Timber.d("${this::class.simpleName}")
+        Timber.d("Comic number: ${comicNumber}")
+        viewModelScope.launch {
+            try {
+                _isRefreshing.value = true
+                val response = if (comicNumber > LATEST_COMIC_NUMBER) {
+                    comicService.requestComicByNumber(comicNumber)
+                } else {
+                    comicService.requestLatestComic()
+                }
+                Timber.d("Response: ${response}")
+                val body = response.body()
+                Timber.d("Body: ${body}")
+                if (body != null) {
+                    comicDao.putComic(body)
+                    // putLatestComicNumber(body.num)
+                }
+            } catch (e: Throwable) {
+                Timber.e(e)
+            } finally {
+                _isRefreshing.value = false
+            }
+        }
+        comicDao.getComicLiveDataByNumber(comicNumber)
+    }
