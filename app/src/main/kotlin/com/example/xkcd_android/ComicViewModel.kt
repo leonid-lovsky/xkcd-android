@@ -1,6 +1,5 @@
 package com.example.xkcd_android
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,76 +21,11 @@ class ComicViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private fun getComicLiveData(comicNumber: Int): LiveData<Comic> {
-        Timber.i("${this::class.simpleName}")
-        Timber.d("Comic number: ${comicNumber}")
-        return comicDao.getComicLiveDataByNumber(comicNumber)
-    }
-
-    private fun putCurrentComicNumber(newCurrentComicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
-        Timber.d("New current comic number: ${newCurrentComicNumber}")
-        putCurrentComicNumberLiveData(newCurrentComicNumber)
-        putCurrentComicNumberPreferences(newCurrentComicNumber)
-    }
-
-    private fun putLatestComicNumber(newLatestComicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
-        Timber.d("New latest comic number: ${newLatestComicNumber}")
-        putLatestComicNumberLiveData(newLatestComicNumber)
-        putLatestComicNumberPreferences(newLatestComicNumber)
-    }
-
-    // TODO: range
-    private fun putCurrentComicNumberLiveData(newCurrentComicNumber: Int) {
-        Timber.d("${this::class.simpleName}")
-        Timber.d("New current comic number: ${newCurrentComicNumber}")
-        if (newCurrentComicNumber > 0) {
-            _currentComicNumber.value = newCurrentComicNumber
-        }
-    }
-
-    // TODO: range
-    @SuppressLint("ApplySharedPref")
-    private fun putCurrentComicNumberPreferences(newCurrentComicNumber: Int) {
-        Timber.d("${this::class.simpleName}")
-        Timber.d("New current comic number: ${newCurrentComicNumber}")
-        if (newCurrentComicNumber > 0) {
-            sharedPreferences.edit().putInt("current_comic_number", newCurrentComicNumber).apply()
-        }
-    }
-
-    // TODO: range
-    private fun putLatestComicNumberLiveData(newLatestComicNumber: Int) {
-        Timber.d("${this::class.simpleName}")
-        Timber.d("New latest comic number: ${newLatestComicNumber}")
-        val savedLatestComicNumber = _latestComicNumber.value ?: 0
-        Timber.d("Saved latest comic number: ${newLatestComicNumber}")
-        if (newLatestComicNumber > savedLatestComicNumber) {
-            _latestComicNumber.value = newLatestComicNumber
-        }
-    }
-
-    // TODO: range
-    @SuppressLint("ApplySharedPref")
-    private fun putLatestComicNumberPreferences(newLatestComicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
-        Timber.d("New latest comic number: ${newLatestComicNumber}")
-        val savedLatestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
-        Timber.d("Saved latest comic number: ${newLatestComicNumber}")
-        if (newLatestComicNumber > savedLatestComicNumber) {
-            sharedPreferences.edit().putInt("latest_comic_number", newLatestComicNumber).apply()
-        }
-    }
+    private val _currentComicNumber = MutableLiveData<Int>()
+    private val _latestComicNumber = MutableLiveData<Int>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     private val _message = MutableLiveData<String>()
-
-    val isLoading = _isLoading as LiveData<Boolean>
-    val message = _message as LiveData<String>
-
-    private val _currentComicNumber = MutableLiveData<Int>()
-    private val _latestComicNumber = MutableLiveData<Int>()
 
     val comic = _currentComicNumber.switchMap { comicNumber ->
         Timber.i("${this::class.simpleName}")
@@ -109,7 +43,7 @@ class ComicViewModel @Inject constructor(
                 Timber.d("Body: ${body}")
                 if (body != null) {
                     comicDao.putComic(body)
-                    putLatestComicNumber(body.num)
+                    // putLatestComicNumber(body.num)
                 }
             } catch (e: Throwable) {
                 Timber.e(e)
@@ -120,13 +54,18 @@ class ComicViewModel @Inject constructor(
         comicDao.getComicLiveDataByNumber(comicNumber)
     }
 
+    val isLoading = _isLoading as LiveData<Boolean>
+    val message = _message as LiveData<String>
+
     fun navigateToComicByNumber(comicNumber: Int) {
         Timber.i("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(comicNumber)
+        val desiredComicNumber = comicNumber
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToLatestComic() {
@@ -135,7 +74,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(0)
+        val desiredComicNumber = 0
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToFirstComic() {
@@ -144,7 +85,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(1)
+        val desiredComicNumber = 1
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToPreviousComic() {
@@ -153,7 +96,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(currentComicNumber - 1)
+        val desiredComicNumber = currentComicNumber - 1
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToCurrentComic() {
@@ -162,7 +107,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(currentComicNumber)
+        val desiredComicNumber = currentComicNumber
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToNextComic() {
@@ -171,7 +118,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(currentComicNumber + 1)
+        val desiredComicNumber = currentComicNumber + 1
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToLastComic() {
@@ -180,7 +129,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(latestComicNumber)
+        val desiredComicNumber = latestComicNumber
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToRandomComic() {
@@ -189,7 +140,9 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        navigateToComicByNumber(Random.nextInt(1, latestComicNumber))
+        val desiredComicNumber = Random.nextInt(1, latestComicNumber)
+        Timber.d("Desired comic number: ${latestComicNumber}")
+        _currentComicNumber.value = desiredComicNumber
     }
 
     init {
@@ -197,7 +150,7 @@ class ComicViewModel @Inject constructor(
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
-        putCurrentComicNumberLiveData(currentComicNumber)
-        putLatestComicNumberLiveData(latestComicNumber)
+        _currentComicNumber.value = currentComicNumber
+        _latestComicNumber.value = latestComicNumber
     }
 }

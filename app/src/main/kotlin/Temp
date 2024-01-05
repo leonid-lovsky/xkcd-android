@@ -1,0 +1,62 @@
+
+    private fun getComicLiveData(comicNumber: Int): LiveData<Comic> {
+        Timber.i("${this::class.simpleName}")
+        Timber.d("Comic number: ${comicNumber}")
+        return comicDao.getComicLiveDataByNumber(comicNumber)
+    }
+
+    private fun putCurrentComicNumber(newCurrentComicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        Timber.d("New current comic number: ${newCurrentComicNumber}")
+        putCurrentComicNumberLiveData(newCurrentComicNumber)
+        putCurrentComicNumberPreferences(newCurrentComicNumber)
+    }
+
+    private fun putLatestComicNumber(newLatestComicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        Timber.d("New latest comic number: ${newLatestComicNumber}")
+        putLatestComicNumberLiveData(newLatestComicNumber)
+        putLatestComicNumberPreferences(newLatestComicNumber)
+    }
+
+    // TODO: range
+    private fun putCurrentComicNumberLiveData(newCurrentComicNumber: Int) {
+        Timber.d("${this::class.simpleName}")
+        Timber.d("New current comic number: ${newCurrentComicNumber}")
+        if (newCurrentComicNumber > 0) {
+            _currentComicNumber.value = newCurrentComicNumber
+        }
+    }
+
+    // TODO: range
+    @SuppressLint("ApplySharedPref")
+    private fun putCurrentComicNumberPreferences(newCurrentComicNumber: Int) {
+        Timber.d("${this::class.simpleName}")
+        Timber.d("New current comic number: ${newCurrentComicNumber}")
+        if (newCurrentComicNumber > 0) {
+            sharedPreferences.edit().putInt("current_comic_number", newCurrentComicNumber).apply()
+        }
+    }
+
+    // TODO: range
+    private fun putLatestComicNumberLiveData(newLatestComicNumber: Int) {
+        Timber.d("${this::class.simpleName}")
+        Timber.d("New latest comic number: ${newLatestComicNumber}")
+        val savedLatestComicNumber = _latestComicNumber.value ?: 0
+        Timber.d("Saved latest comic number: ${newLatestComicNumber}")
+        if (newLatestComicNumber > savedLatestComicNumber) {
+            _latestComicNumber.value = newLatestComicNumber
+        }
+    }
+
+    // TODO: range
+    @SuppressLint("ApplySharedPref")
+    private fun putLatestComicNumberPreferences(newLatestComicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        Timber.d("New latest comic number: ${newLatestComicNumber}")
+        val savedLatestComicNumber = sharedPreferences.getInt("latest_comic_number", 0)
+        Timber.d("Saved latest comic number: ${newLatestComicNumber}")
+        if (newLatestComicNumber > savedLatestComicNumber) {
+            sharedPreferences.edit().putInt("latest_comic_number", newLatestComicNumber).apply()
+        }
+    }
