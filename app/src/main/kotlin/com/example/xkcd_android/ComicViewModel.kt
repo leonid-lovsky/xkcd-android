@@ -9,7 +9,6 @@ import androidx.lifecycle.switchMap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
@@ -28,6 +27,7 @@ class ComicViewModel @Inject constructor(
 
     val isRefreshing = _isRefreshing as LiveData<Boolean>
 
+    // TODO
     val comic = _currentComicNumber.switchMap { comicNumber ->
         Timber.d("${this::class.simpleName}")
         Timber.d("Comic number: ${comicNumber}")
@@ -38,7 +38,7 @@ class ComicViewModel @Inject constructor(
 
     init {
         Timber.d("${this::class.simpleName}")
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", LATEST_COMIC_NUMBER)
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", FIRST_COMIC_NUMBER)
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", FIRST_COMIC_NUMBER)
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
@@ -61,7 +61,7 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         val latestComicNumber = _latestComicNumber.value ?: return
-        val desiredComicNumber = LATEST_COMIC_NUMBER
+        val desiredComicNumber = FIRST_COMIC_NUMBER - 1
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         Timber.d("Desired comic number: ${desiredComicNumber}")
@@ -127,7 +127,7 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         val latestComicNumber = _latestComicNumber.value ?: return
-        val desiredComicNumber = Random.nextInt(FIRST_COMIC_NUMBER, latestComicNumber)
+        val desiredComicNumber = (FIRST_COMIC_NUMBER..latestComicNumber).random()
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         Timber.d("Desired comic number: ${desiredComicNumber}")
@@ -137,6 +137,5 @@ class ComicViewModel @Inject constructor(
     companion object {
 
         const val FIRST_COMIC_NUMBER = 1
-        const val LATEST_COMIC_NUMBER = 0
     }
 }
