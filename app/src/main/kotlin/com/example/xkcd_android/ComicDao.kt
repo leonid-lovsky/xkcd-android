@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface ComicDao {
 
     @Query("SELECT * FROM comics WHERE num = :comicNumber")
-    suspend fun getComic(comicNumber: Int): Comic?
+    suspend fun getComicByNumber(comicNumber: Int): Comic?
 
     @Query("SELECT * FROM comics WHERE num = :comicNumber")
-    fun getComicLiveData(comicNumber: Int): LiveData<Comic> // distinctUntilChanged
+    fun getComicLiveDataByNumber(comicNumber: Int): LiveData<Comic> // distinctUntilChanged
 
     @Query("SELECT * FROM comics WHERE num = :comicNumber")
     fun getComicFlow(comicNumber: Int): Flow<Comic> // distinctUntilChanged

@@ -50,7 +50,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
         swipeRefreshLayout.setOnRefreshListener(this)
 
-        viewModel.loading.observe(this) { value ->
+        viewModel.isLoading.observe(this) { value ->
             Timber.i("${value}")
             progressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = value
@@ -80,13 +80,13 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
             R.id.refresh_current_comic -> {
-                viewModel.refreshComic()
+                viewModel.reloadComic()
             }
             R.id.to_random_comic -> {
-                viewModel.toRandomComic()
+                viewModel.displayRandomComic()
             }
             R.id.to_latest_comic -> {
-                viewModel.toLatestComic()
+                viewModel.displayLatestComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,21 +96,21 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         if (v == null) return
         when (v.id) {
             R.id.to_first_comic -> {
-                viewModel.toFirstComic()
+                viewModel.displayFirstComic()
             }
             R.id.to_previous_comic -> {
-                viewModel.toPreviousComic()
+                viewModel.displayPreviousComic()
             }
             R.id.to_next_comic -> {
-                viewModel.toNextComic()
+                viewModel.displayNextComic()
             }
             R.id.to_last_comic -> {
-                viewModel.toLastComic()
+                viewModel.displayLastComic()
             }
         }
     }
 
     override fun onRefresh() {
-        viewModel.refreshComic()
+        viewModel.reloadComic()
     }
 }
