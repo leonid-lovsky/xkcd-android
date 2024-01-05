@@ -56,14 +56,18 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             swipeRefreshLayout.isRefreshing = value
         }
 
-        viewModel.currentComic.observe(this) { value ->
-            Timber.i("${value}")
-            if (value != null) {
-                comicTitleView.text = value.title
-                Picasso.get().load(value.img).into(comicImageView)
-                comicUrlView.text = value.url
-                comicImageUrlView.text = value.img
+        viewModel.currentComic.observe(this) { currentComic ->
+            Timber.i("Current comic: ${currentComic}")
+            if (currentComic != null) {
+                comicTitleView.text = currentComic.title
+                Picasso.get().load(currentComic.img).into(comicImageView)
+                comicUrlView.text = currentComic.url
+                comicImageUrlView.text = currentComic.img
             }
+        }
+
+        viewModel.latestComic.observe(this) { latestComic ->
+            Timber.i("Latest comic: ${latestComic}")
         }
     }
 
@@ -80,13 +84,13 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
             R.id.refresh_current_comic -> {
-                viewModel.reloadComic()
+                viewModel.reloadCurrentComic()
             }
             R.id.to_random_comic -> {
-                viewModel.displayRandomComic()
+                viewModel.navigateToRandomComic()
             }
             R.id.to_latest_comic -> {
-                viewModel.displayLatestComic()
+                viewModel.navigateToLatestComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,21 +100,21 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
         if (v == null) return
         when (v.id) {
             R.id.to_first_comic -> {
-                viewModel.displayFirstComic()
+                viewModel.navigateToFirstComic()
             }
             R.id.to_previous_comic -> {
-                viewModel.displayPreviousComic()
+                viewModel.navigateToPreviousComic()
             }
             R.id.to_next_comic -> {
-                viewModel.displayNextComic()
+                viewModel.navigateToNextComic()
             }
             R.id.to_last_comic -> {
-                viewModel.displayLastComic()
+                viewModel.navigateToLastComic()
             }
         }
     }
 
     override fun onRefresh() {
-        viewModel.reloadComic()
+        viewModel.reloadCurrentComic()
     }
 }
