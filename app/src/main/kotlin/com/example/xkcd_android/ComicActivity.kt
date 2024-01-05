@@ -56,7 +56,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             swipeRefreshLayout.isRefreshing = value
         }
 
-        comicViewModel.currentComic.observe(this) { currentComic ->
+        comicViewModel.comic.observe(this) { currentComic ->
             Timber.i("Current comic: ${currentComic}")
             if (currentComic != null) {
                 comicTitleView.text = currentComic.title
@@ -64,10 +64,6 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
                 comicUrlView.text = currentComic.url
                 comicImageUrlView.text = currentComic.img
             }
-        }
-
-        comicViewModel.latestComic.observe(this) { latestComic ->
-            Timber.i("Latest comic: ${latestComic}")
         }
     }
 
