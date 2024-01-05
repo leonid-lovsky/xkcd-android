@@ -22,92 +22,6 @@ class ComicViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    private val _message = MutableLiveData<String>()
-
-    val isLoading = _isLoading as LiveData<Boolean>
-    val message = _message as LiveData<String>
-
-    private val _currentComicNumber = MutableLiveData<Int>()
-    private val _latestComicNumber = MutableLiveData<Int>()
-
-    // TODO: usecase
-    val comic = _currentComicNumber.switchMap { comicNumber ->
-        Timber.d("Comic number: ${comicNumber}")
-        viewModelScope.launch {
-            val currentComic = comicDao.getComicByNumber(comicNumber)
-            Timber.d("${currentComic}")
-            if (currentComic == null) {
-                fetchComicByNumber(comicNumber)
-            }
-        }
-        comicDao.getComicLiveDataByNumber(comicNumber)
-    }
-
-    // TODO: usecase
-    init {
-        Timber.d("${this::class.simpleName}")
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
-        Timber.d("${currentComicNumber}")
-        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
-        Timber.d("${latestComicNumber}")
-        putCurrentComicNumberLiveData(currentComicNumber)
-        putLatestComicNumberLiveData(latestComicNumber)
-    }
-
-    fun navigateToComicByNumber(comicNumber: Int) {
-        Timber.i("${this::class.simpleName}")
-        Timber.i("Navigate to comic number: ${comicNumber}")
-        _currentComicNumber.value = comicNumber
-    }
-
-    fun navigateToLatestComic() {
-        Timber.i("${this::class.simpleName}")
-        navigateToComicByNumber(0)
-    }
-
-    fun navigateToFirstComic() {
-        Timber.i("${this::class.simpleName}")
-        val savedCurrentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Saved current comic number: ${savedCurrentComicNumber}")
-        navigateToComicByNumber(1)
-    }
-
-    fun navigateToPreviousComic() {
-        Timber.i("${this::class.simpleName}")
-        val savedCurrentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Saved current comic number: ${savedCurrentComicNumber}")
-        navigateToComicByNumber(savedCurrentComicNumber - 1)
-    }
-
-    fun reloadCurrentComic() {
-        Timber.i("${this::class.simpleName}")
-        val savedCurrentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Saved current comic number: ${savedCurrentComicNumber}")
-        navigateToComicByNumber(savedCurrentComicNumber)
-    }
-
-    fun navigateToNextComic() {
-        Timber.i("${this::class.simpleName}")
-        val savedCurrentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Saved current comic number: ${savedCurrentComicNumber}")
-        navigateToComicByNumber(savedCurrentComicNumber + 1)
-    }
-
-    fun navigateToLastComic() {
-        Timber.i("${this::class.simpleName}")
-        val savedLatestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Saved latest comic number: ${savedLatestComicNumber}")
-        navigateToComicByNumber(savedLatestComicNumber)
-    }
-
-    fun navigateToRandomComic() {
-        Timber.i("${this::class.simpleName}")
-        val savedLatestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Saved latest comic number: ${savedLatestComicNumber}")
-        navigateToComicByNumber(Random.nextInt(1, savedLatestComicNumber))
-    }
-
     private fun getComicLiveData(comicNumber: Int): LiveData<Comic> {
         Timber.i("${this::class.simpleName}")
         Timber.d("Comic number: ${comicNumber}")
@@ -170,8 +84,16 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    // TODO: usecase
-    private fun fetchComicByNumber(comicNumber: Int) {
+    private val _isLoading = MutableLiveData<Boolean>()
+    private val _message = MutableLiveData<String>()
+
+    val isLoading = _isLoading as LiveData<Boolean>
+    val message = _message as LiveData<String>
+
+    private val _currentComicNumber = MutableLiveData<Int>()
+    private val _latestComicNumber = MutableLiveData<Int>()
+
+    val comic = _currentComicNumber.switchMap { comicNumber ->
         Timber.i("${this::class.simpleName}")
         Timber.i("Comic number: ${comicNumber}")
         viewModelScope.launch {
@@ -195,5 +117,87 @@ class ComicViewModel @Inject constructor(
                 _isLoading.value = false
             }
         }
+        comicDao.getComicLiveDataByNumber(comicNumber)
+    }
+
+    fun navigateToComicByNumber(comicNumber: Int) {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(comicNumber)
+    }
+
+    fun navigateToLatestComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(0)
+    }
+
+    fun navigateToFirstComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(1)
+    }
+
+    fun navigateToPreviousComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(currentComicNumber - 1)
+    }
+
+    fun navigateToCurrentComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(currentComicNumber)
+    }
+
+    fun navigateToNextComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(currentComicNumber + 1)
+    }
+
+    fun navigateToLastComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(latestComicNumber)
+    }
+
+    fun navigateToRandomComic() {
+        Timber.i("${this::class.simpleName}")
+        val currentComicNumber = _currentComicNumber.value ?: return
+        Timber.d("Current comic number: ${currentComicNumber}")
+        val latestComicNumber = _latestComicNumber.value ?: return
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        navigateToComicByNumber(Random.nextInt(1, latestComicNumber))
+    }
+
+    init {
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
+        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        putCurrentComicNumberLiveData(currentComicNumber)
+        putLatestComicNumberLiveData(latestComicNumber)
     }
 }
