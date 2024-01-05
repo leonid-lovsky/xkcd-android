@@ -37,99 +37,100 @@ class ComicViewModel @Inject constructor(
     val message = _message as LiveData<String>
 
     init {
+        Timber.d("${this::class.simpleName}")
         val currentComicNumber = sharedPreferences.getInt("current_comic_number", LATEST_COMIC_NUMBER)
-        Timber.d("Current comic number: ${currentComicNumber}")
-        _currentComicNumber.value = currentComicNumber
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", FIRST_COMIC_NUMBER)
+        Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
+        _currentComicNumber.value = currentComicNumber
         _latestComicNumber.value = latestComicNumber
     }
 
     fun navigateToComicByNumber(comicNumber: Int) {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = comicNumber
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToLatestComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = LATEST_COMIC_NUMBER
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToFirstComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = FIRST_COMIC_NUMBER
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToPreviousComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = currentComicNumber - 1
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToCurrentComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = currentComicNumber
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToNextComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = currentComicNumber + 1
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToLastComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = latestComicNumber
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
     fun navigateToRandomComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
-        Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
-        Timber.d("Latest comic number: ${latestComicNumber}")
         val desiredComicNumber = Random.nextInt(FIRST_COMIC_NUMBER, latestComicNumber)
-        Timber.d("Desired comic number: ${latestComicNumber}")
+        Timber.d("Current comic number: ${currentComicNumber}")
+        Timber.d("Latest comic number: ${latestComicNumber}")
+        Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
     }
 
