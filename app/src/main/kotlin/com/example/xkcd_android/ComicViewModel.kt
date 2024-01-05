@@ -94,10 +94,10 @@ class ComicViewModel @Inject constructor(
         }
     }
 
-    fun navigateToComic(comicNumber: Int) {
+    fun navigateToComicByNumber(newComicNumber: Int) {
         Timber.i("${this::class.simpleName}")
-        Timber.i("Comic number: ${comicNumber}")
-        putCurrentComicNumber(comicNumber)
+        Timber.i("New comic number: ${newComicNumber}")
+        putCurrentComicNumber(newComicNumber)
     }
 
     fun navigateToFirstComic() {

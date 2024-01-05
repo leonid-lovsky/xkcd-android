@@ -29,34 +29,34 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     private val progressBar: ProgressBar by lazy { findViewById(R.id.progress_bar) }
 
-    private val toFirstComicButton: Button by lazy { findViewById(R.id.to_first_comic) }
-    private val toPreviousComicButton: Button by lazy { findViewById(R.id.to_previous_comic) }
-    private val toNextButton: Button by lazy { findViewById(R.id.to_next_comic) }
-    private val toLastComicButton: Button by lazy { findViewById(R.id.to_last_comic) }
+    private val firstComicButton: Button by lazy { findViewById(R.id.navigate_to_first_comic) }
+    private val previousComicButton: Button by lazy { findViewById(R.id.navigate_to_previous_comic) }
+    private val nextButton: Button by lazy { findViewById(R.id.navigate_to_next_comic) }
+    private val lastComicButton: Button by lazy { findViewById(R.id.navigate_to_last_comic) }
 
     private val swipeRefreshLayout: SwipeRefreshLayout by lazy { findViewById(R.id.swipe_refresh_layout) }
 
-    private val viewModel: ComicViewModel by viewModels()
+    private val comicViewModel: ComicViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.comic_activity)
         setSupportActionBar(toolbar)
 
-        toFirstComicButton.setOnClickListener(this)
-        toPreviousComicButton.setOnClickListener(this)
-        toNextButton.setOnClickListener(this)
-        toLastComicButton.setOnClickListener(this)
+        firstComicButton.setOnClickListener(this)
+        previousComicButton.setOnClickListener(this)
+        nextButton.setOnClickListener(this)
+        lastComicButton.setOnClickListener(this)
 
         swipeRefreshLayout.setOnRefreshListener(this)
 
-        viewModel.isLoading.observe(this) { value ->
+        comicViewModel.isLoading.observe(this) { value ->
             Timber.i("${value}")
             progressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = value
         }
 
-        viewModel.currentComic.observe(this) { currentComic ->
+        comicViewModel.currentComic.observe(this) { currentComic ->
             Timber.i("Current comic: ${currentComic}")
             if (currentComic != null) {
                 comicTitleView.text = currentComic.title
@@ -66,7 +66,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
             }
         }
 
-        viewModel.latestComic.observe(this) { latestComic ->
+        comicViewModel.latestComic.observe(this) { latestComic ->
             Timber.i("Latest comic: ${latestComic}")
         }
     }
@@ -79,18 +79,18 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.to_comic -> {
-                val comicNumberDialogFragment = ComicNumberDialogFragment(viewModel)
+            R.id.navigate_to_comic_by_number -> {
+                val comicNumberDialogFragment = ComicNumberDialogFragment(comicViewModel)
                 comicNumberDialogFragment.show(supportFragmentManager, ComicNumberDialogFragment::class.qualifiedName)
             }
-            R.id.refresh_current_comic -> {
-                viewModel.reloadCurrentComic()
+            R.id.reload_current_comic -> {
+                comicViewModel.reloadCurrentComic()
             }
-            R.id.to_random_comic -> {
-                viewModel.navigateToRandomComic()
+            R.id.navigate_to_random_comic -> {
+                comicViewModel.navigateToRandomComic()
             }
-            R.id.to_latest_comic -> {
-                viewModel.navigateToLatestComic()
+            R.id.navigate_to_latest_comic -> {
+                comicViewModel.navigateToLatestComic()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -99,22 +99,22 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     override fun onClick(v: View?) {
         if (v == null) return
         when (v.id) {
-            R.id.to_first_comic -> {
-                viewModel.navigateToFirstComic()
+            R.id.navigate_to_first_comic -> {
+                comicViewModel.navigateToFirstComic()
             }
-            R.id.to_previous_comic -> {
-                viewModel.navigateToPreviousComic()
+            R.id.navigate_to_previous_comic -> {
+                comicViewModel.navigateToPreviousComic()
             }
-            R.id.to_next_comic -> {
-                viewModel.navigateToNextComic()
+            R.id.navigate_to_next_comic -> {
+                comicViewModel.navigateToNextComic()
             }
-            R.id.to_last_comic -> {
-                viewModel.navigateToLastComic()
+            R.id.navigate_to_last_comic -> {
+                comicViewModel.navigateToLastComic()
             }
         }
     }
 
     override fun onRefresh() {
-        viewModel.reloadCurrentComic()
+        comicViewModel.reloadCurrentComic()
     }
 }

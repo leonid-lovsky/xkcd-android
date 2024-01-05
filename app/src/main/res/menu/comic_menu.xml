@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/to_latest_comic"
+        android:id="@+id/navigate_to_latest_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="@string/latest_comic_menu_item" />
 
     <item
-        android:id="@+id/to_comic"
+        android:id="@+id/navigate_to_comic_by_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="@string/select_comic_menu_item" />
 
     <item
-        android:id="@+id/refresh_current_comic"
+        android:id="@+id/reload_current_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="@string/refresh_comic_menu_item" />
 
     <item
-        android:id="@+id/to_random_comic"
+        android:id="@+id/navigate_to_random_comic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:title="@string/random_comic_menu_item" />

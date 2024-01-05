@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import timber.log.Timber
 
 class ComicNumberDialogFragment(
-    private val viewModel: ComicViewModel,
+    private val comicViewModel: ComicViewModel,
 ) : DialogFragment(), OnClickListener {
 
     private val comicNumberInput: TextView by lazy { requireDialog().findViewById(R.id.comic_number_input) }
@@ -33,8 +33,9 @@ class ComicNumberDialogFragment(
         when (which) {
             BUTTON_POSITIVE -> {
                 try {
-                    val comicNumber = comicNumberInput.text.toString().toInt()
-                    viewModel.navigateToComic(comicNumber)
+                    val newComicNumber = comicNumberInput.text.toString().toInt()
+                    Timber.d("New comic number: ${newComicNumber}")
+                    comicViewModel.navigateToComicByNumber(newComicNumber)
                 } catch (e: Throwable) {
                     Timber.e(e)
                 }
