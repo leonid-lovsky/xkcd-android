@@ -21,21 +21,21 @@ class ComicViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
-    private val _inProgress = MutableLiveData<Boolean>()
+    private val _isRefreshing = MutableLiveData<Boolean>()
 
     private val _currentComicNumber = MutableLiveData<Int>()
     private val _latestComicNumber = MutableLiveData<Int>()
 
     private val _message = MutableLiveData<String>()
 
-    val inProgress = _inProgress as LiveData<Boolean>
+    val isRefreshing = _isRefreshing as LiveData<Boolean>
 
     val comic = _currentComicNumber.switchMap { comicNumber ->
         Timber.i("${this::class.simpleName}")
         Timber.i("Comic number: ${comicNumber}")
         viewModelScope.launch {
             try {
-                _inProgress.value = true
+                _isRefreshing.value = true
                 val response = if (comicNumber > LATEST_COMIC_NUMBER) {
                     comicService.requestComicByNumber(comicNumber)
                 } else {
@@ -51,7 +51,7 @@ class ComicViewModel @Inject constructor(
             } catch (e: Throwable) {
                 Timber.e(e)
             } finally {
-                _inProgress.value = false
+                _isRefreshing.value = false
             }
         }
         comicDao.getComicLiveDataByNumber(comicNumber)

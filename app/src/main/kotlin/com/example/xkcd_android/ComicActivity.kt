@@ -50,20 +50,24 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
         swipeRefreshLayout.setOnRefreshListener(this)
 
-        comicViewModel.inProgress.observe(this) { value ->
-            Timber.i("${value}")
-            progressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
-            swipeRefreshLayout.isRefreshing = value
+        comicViewModel.isRefreshing.observe(this) { isRefreshing ->
+            Timber.i("Is refreshing: ${isRefreshing}")
+            progressBar.visibility = if (isRefreshing) View.VISIBLE else View.VISIBLE
+            swipeRefreshLayout.isRefreshing = isRefreshing
         }
 
-        comicViewModel.comic.observe(this) { currentComic ->
-            Timber.i("Current comic: ${currentComic}")
-            if (currentComic != null) {
-                comicTitleView.text = currentComic.title
-                Picasso.get().load(currentComic.img).into(comicImageView)
-                comicUrlView.text = currentComic.url
-                comicImageUrlView.text = currentComic.img
+        comicViewModel.comic.observe(this) { comic ->
+            Timber.i("Comic: ${comic}")
+            if (comic != null) {
+                comicTitleView.text = comic.title
+                Picasso.get().load(comic.img).into(comicImageView)
+                comicUrlView.text = comic.url
+                comicImageUrlView.text = comic.img
             }
+        }
+
+        comicViewModel.message.observe(this) { message ->
+            Timber.i("Message: ${message}")
         }
     }
 
