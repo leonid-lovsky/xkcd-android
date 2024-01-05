@@ -40,14 +40,14 @@ class ComicViewModel @Inject constructor(
         return comicDao.getComicLiveDataByNumber(comicNumber)
     }
 
-    val currentComic = _currentComicNumber.switchMap { currentComicNumber ->
-        Timber.d("Current comic number: ${currentComicNumber}")
-        getComicLiveData(currentComicNumber)
+    val currentComic = _currentComicNumber.switchMap { newCurrentComicNumber ->
+        Timber.d("New current comic number: ${newCurrentComicNumber}")
+        getComicLiveData(newCurrentComicNumber)
     }
 
-    val latestComic = _latestComicNumber.switchMap { latestComicNumber ->
-        Timber.d("Latest comic number: ${latestComicNumber}")
-        getComicLiveData(latestComicNumber)
+    val latestComic = _latestComicNumber.switchMap { newLatestComicNumber ->
+        Timber.d("New latest comic number: ${newLatestComicNumber}")
+        getComicLiveData(newLatestComicNumber)
     }
 
     val isLoading = _isLoading as LiveData<Boolean>
