@@ -58,10 +58,10 @@ class ComicViewModel @Inject constructor(
     }
 
     init {
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", LATEST_COMIC_NUMBER)
         Timber.d("Current comic number: ${currentComicNumber}")
         _currentComicNumber.value = currentComicNumber
-        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
+        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", FIRST_COMIC_NUMBER)
         Timber.d("Latest comic number: ${latestComicNumber}")
         _latestComicNumber.value = latestComicNumber
     }
@@ -149,8 +149,14 @@ class ComicViewModel @Inject constructor(
         Timber.d("Current comic number: ${currentComicNumber}")
         val latestComicNumber = _latestComicNumber.value ?: return
         Timber.d("Latest comic number: ${latestComicNumber}")
-        val desiredComicNumber = Random.nextInt(1, latestComicNumber)
+        val desiredComicNumber = Random.nextInt(FIRST_COMIC_NUMBER, latestComicNumber)
         Timber.d("Desired comic number: ${latestComicNumber}")
         _currentComicNumber.value = desiredComicNumber
+    }
+
+    companion object {
+
+        const val FIRST_COMIC_NUMBER = 1
+        const val LATEST_COMIC_NUMBER = 0
     }
 }
