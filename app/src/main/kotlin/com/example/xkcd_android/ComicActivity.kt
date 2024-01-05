@@ -50,7 +50,7 @@ class ComicActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
 
         swipeRefreshLayout.setOnRefreshListener(this)
 
-        comicViewModel.isLoading.observe(this) { value ->
+        comicViewModel.inProgress.observe(this) { value ->
             Timber.i("${value}")
             progressBar.visibility = if (value) View.VISIBLE else View.VISIBLE
             swipeRefreshLayout.isRefreshing = value
