@@ -39,7 +39,7 @@ class ComicViewModel @Inject constructor(
     init {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
-        val latestComicNumber = sharedPreferences.getInt("0", 1)
+        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         _currentComicNumber.value = currentComicNumber
