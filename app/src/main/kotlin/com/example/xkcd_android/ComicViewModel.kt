@@ -2,6 +2,7 @@ package com.example.xkcd_android
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -13,8 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicService: ComicService,
-    private val comicDao: ComicDao,
+    private val comicInteractor: ComicInteractor,
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
@@ -27,18 +27,18 @@ class ComicViewModel @Inject constructor(
 
     val isRefreshing = _isRefreshing as LiveData<Boolean>
 
-    // TODO
     val comic = _currentComicNumber.switchMap { comicNumber ->
         Timber.d("${this::class.simpleName}")
         Timber.d("Comic number: ${comicNumber}")
-        comicDao.getComicLiveDataByNumber(comicNumber)
+        sharedPreferences.edit().putInt("current_comic_number", comicNumber).apply()
+        comicInteractor.getComicLiveDataByNumber(comicNumber)
     }
 
     val message = _message as LiveData<String>
 
     init {
         Timber.d("${this::class.simpleName}")
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 1)
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
@@ -90,7 +90,7 @@ class ComicViewModel @Inject constructor(
         _currentComicNumber.value = desiredComicNumber
     }
 
-    fun navigateToCurrentComic() {
+    fun refreshCurrentComic() {
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         val latestComicNumber = _latestComicNumber.value ?: return
