@@ -6,15 +6,17 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ComicViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val comicInteractor: ComicInteractor,
+    private val comicService: ComicService,
+    private val comicDao: ComicDao,
     private val sharedPreferences: SharedPreferences,
 ) : ViewModel() {
 
@@ -27,18 +29,45 @@ class ComicViewModel @Inject constructor(
 
     val isRefreshing = _isRefreshing as LiveData<Boolean>
 
-    val comic = _currentComicNumber.switchMap { comicNumber ->
-        Timber.d("${this::class.simpleName}")
-        Timber.d("Comic number: ${comicNumber}")
-        sharedPreferences.edit().putInt("current_comic_number", comicNumber).apply()
-        comicInteractor.getComicLiveDataByNumber(comicNumber)
+    val comic = MediatorLiveData<Comic>().apply {
+        addSource(_currentComicNumber) { comicNumber ->
+            Timber.d("Comic number: ${comicNumber}")
+            if (comicNumber == this.value?.num) {
+                viewModelScope.launch {
+                    try {
+                        val response = comicService.requestComicByNumber(comicNumber)
+                        Timber.d("Response: ${response}")
+                        val body = response.body()
+                        Timber.d("Response: ${body}")
+                        if (body != null) {
+                            comicDao.putComic(body)
+                        }
+                    } catch (e: Throwable) {
+                        Timber.e(e)
+                    }
+                }
+            }
+            if (comicNumber >= 1) {
+                removeSource(_latestComicNumber)
+                sharedPreferences.edit().putInt("current_comic_number", comicNumber).apply()
+                val comicLiveData = comicDao.getComicLiveDataByNumber(comicNumber)
+                addSource(comicLiveData) { comic ->
+                    this.value = comic
+                }
+            }
+            if (comicNumber <= 0) {
+                addSource(_latestComicNumber) {
+
+                }
+            }
+        }
     }
 
     val message = _message as LiveData<String>
 
     init {
         Timber.d("${this::class.simpleName}")
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 1)
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
         val latestComicNumber = sharedPreferences.getInt("latest_comic_number", 1)
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
