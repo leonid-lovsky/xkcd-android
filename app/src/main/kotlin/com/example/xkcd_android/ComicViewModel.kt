@@ -38,8 +38,8 @@ class ComicViewModel @Inject constructor(
 
     init {
         Timber.d("${this::class.simpleName}")
-        val currentComicNumber = sharedPreferences.getInt("current_comic_number", FIRST_COMIC_NUMBER)
-        val latestComicNumber = sharedPreferences.getInt("latest_comic_number", FIRST_COMIC_NUMBER)
+        val currentComicNumber = sharedPreferences.getInt("current_comic_number", 0)
+        val latestComicNumber = sharedPreferences.getInt("0", 1)
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         _currentComicNumber.value = currentComicNumber
@@ -61,7 +61,7 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         val latestComicNumber = _latestComicNumber.value ?: return
-        val desiredComicNumber = FIRST_COMIC_NUMBER - 1
+        val desiredComicNumber = 0
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         Timber.d("Desired comic number: ${desiredComicNumber}")
@@ -72,7 +72,7 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         val latestComicNumber = _latestComicNumber.value ?: return
-        val desiredComicNumber = FIRST_COMIC_NUMBER
+        val desiredComicNumber = 1
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         Timber.d("Desired comic number: ${desiredComicNumber}")
@@ -127,15 +127,10 @@ class ComicViewModel @Inject constructor(
         Timber.d("${this::class.simpleName}")
         val currentComicNumber = _currentComicNumber.value ?: return
         val latestComicNumber = _latestComicNumber.value ?: return
-        val desiredComicNumber = (FIRST_COMIC_NUMBER..latestComicNumber).random()
+        val desiredComicNumber = (1..latestComicNumber).random()
         Timber.d("Current comic number: ${currentComicNumber}")
         Timber.d("Latest comic number: ${latestComicNumber}")
         Timber.d("Desired comic number: ${desiredComicNumber}")
         _currentComicNumber.value = desiredComicNumber
-    }
-
-    companion object {
-
-        const val FIRST_COMIC_NUMBER = 1
     }
 }
